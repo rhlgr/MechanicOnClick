@@ -2,6 +2,9 @@ from django.shortcuts import render
 
 # Create your views here.
 def home(request):
+    if request.method == 'POST':
+        print('here')
+        print(request.POST.values())
     return render(request,'Base/home.html')
 
 def about(request):
