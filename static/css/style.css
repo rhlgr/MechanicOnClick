@@ -1,13 +1,9 @@
 /********** Template CSS **********/
-
 :root {
     --primary: #004AAD;
     --secondary: #F71F14;
     --light: #F2F2F2;
     --dark: #111111;
-}
-.body{
-    background-color: #111111;
 }
 
 .fw-medium {
@@ -145,7 +141,10 @@
         opacity: 1;
     }
 }
-
+/**About Image change**/
+.about-top-img{
+    background-image: url('../img/carousel-bg-1.jpg');
+}
 
 /*** Header ***/
 .carousel-caption {
@@ -223,7 +222,7 @@
 
 /*** Booking ***/
 .booking {
-    background: linear-gradient(rgba(0, 0, 0, .7), rgba(0, 0, 0, .7)), url('static/img/carousel-bg-2.jpg') center center no-repeat;
+    background: linear-gradient(rgba(0, 0, 0, .7), rgba(0, 0, 0, .7)), url(../img/carousel-bg-2.jpg) center center no-repeat;
     background-size: cover;
 }
 
