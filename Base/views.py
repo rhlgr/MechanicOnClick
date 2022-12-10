@@ -16,9 +16,9 @@ def home(request):
                 return redirect('booking_page')
         else :
              print('The form is Not Valid')
-    context ={}
-    context['form']= BookingForm()
-    return render(request,'Base/home.html',context=context)
+  
+ 
+    return render(request,'Base/home.html')
 
 def about(request):
     return render(request,'Base/aboutus.html')
@@ -27,4 +27,18 @@ def services(request):
     return render(request,'Base/service_page.html')
 
 def booking(request):
+    if request.method == 'POST':
+        print('In BOOKING post method')
+        form = BookingForm(request.POST)
+        if form.is_valid:
+            print('The form is Valid')
+            try :
+                form.save()
+                
+                return redirect('about_page')
+            except :
+                #messages.error(request, 'Invalid Credentials')
+                return redirect('booking_page')
+        else :
+             print('The form is Not Valid')
     return render(request,'Base/booking_page.html')

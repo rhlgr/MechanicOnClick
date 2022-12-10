@@ -7,3 +7,6 @@ class Booking(models.Model):
     ProvidedServices = models.ForeignKey(ProvidedService,null=True , blank=True , on_delete=models.SET_NULL)
     date = models.DateField(null=True , blank=True)
     content = models.CharField(max_length=200, null=True , blank=True)
+
+    def __str__(self) -> str:
+        return self.name 
