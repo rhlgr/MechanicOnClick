@@ -9,3 +9,6 @@ def about(request):
 
 def services(request):
     return render(request,'Base/service_page.html')
+
+def booking(request):
+    return render(request,'Base/booking_page.html')
