@@ -40,7 +40,8 @@ INSTALLED_APPS = [
     # My Apps
     'account',
     'ERP',
-    'Franchise'
+    'Franchise',
+    'Base',
 ]
 
 MIDDLEWARE = [
