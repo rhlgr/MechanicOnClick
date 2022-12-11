@@ -1,5 +1,6 @@
 from django.db import models
 from ERP.models import ProvidedService
+from account.models import Employee
 # Create your models here.
 class Booking(models.Model):
     name = models.CharField(max_length=50, null=True , blank=True)
@@ -10,7 +11,12 @@ class Booking(models.Model):
 
     def __str__(self) -> str:
         return self.name 
+class EmployeeDisplay(models.Model):
+    title = models.CharField(max_length=50, null=True , blank=True)
+    employees = models.ManyToManyField(Employee)
 
+    def __str__(self) -> str:
+        return self.title
 class Contact(models.Model):
     name = models.CharField(max_length=50, null=True , blank=True)
     email = models.EmailField(null=True , blank=True)
