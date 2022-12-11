@@ -10,3 +10,12 @@ class Booking(models.Model):
 
     def __str__(self) -> str:
         return self.name 
+
+class Contact(models.Model):
+    name = models.CharField(max_length=50, null=True , blank=True)
+    email = models.EmailField(null=True , blank=True)
+    subject = models.CharField(max_length=500, null=True , blank=True)
+    message = models.CharField(max_length=500, null=True , blank=True) 
+
+    def __str__(self) -> str:
+        return self.name + '-' + self.subject
