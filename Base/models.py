@@ -14,6 +14,18 @@ class Booking(models.Model):
 class EmployeeDisplay(models.Model):
     title = models.CharField(max_length=50, null=True , blank=True)
     employees = models.ManyToManyField(Employee)
+    
+    is_active = models.BooleanField(default=False)
+    def save(self, *args, **kwargs):
+        if self.is_active:
+            try:
+                temp = EmployeeDisplay.objects.get(is_active=True)
+                if self != temp:
+                    temp.is_active = False
+                    temp.save()
+            except EmployeeDisplay.DoesNotExist:
+                pass
+        super(EmployeeDisplay, self).save(*args, **kwargs)
 
     def __str__(self) -> str:
         return self.title
