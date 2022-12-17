@@ -12,9 +12,12 @@ class Vehical(models.Model):
         return self.number
 class ProvidedService(models.Model):
     name = models.CharField(max_length=100)
+    description = models.CharField(max_length=400, default="Diam dolor diam ipsum sit amet diam et eos erat ipsum")
     duration = models.DurationField()
     renew_time = models.DurationField()
     price = models.IntegerField(default=500)
+    on_display = models.BooleanField(default=False)
+    icon = models.CharField(max_length=50 , default="fa fa-certificate fa-3x text-primary flex-shrink-0")
 
     def __str__(self) -> str:
         return self.name

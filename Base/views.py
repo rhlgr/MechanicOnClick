@@ -2,6 +2,7 @@ from django.shortcuts import render , redirect
 from .forms import BookingForm , ContactForm
 from account.models import Employee
 from .models import Testimonial
+from ERP.models import ProvidedService
 # Create your views here.
 def home(request):
     if request.method == 'POST':
@@ -22,10 +23,12 @@ def home(request):
     context = {}
     employees = Employee.objects.filter(on_display = True)
     testimonials = Testimonial.objects.filter(on_display = True)
+    provided_services = ProvidedService.objects.filter(on_display = True)
     print("Hello")
     print(testimonials.values())
     context['employees'] = employees
     context['testimonials'] = testimonials
+    context['provided_services'] = provided_services
 
  
     return render(request,'Base/home.html', context=context)
