@@ -4,6 +4,18 @@ from account.models import Employee
 from .models import Testimonial
 from ERP.models import ProvidedService
 # Create your views here.
+def get_context():
+    context = {}
+    employees = Employee.objects.filter(on_display = True)
+    testimonials = Testimonial.objects.filter(on_display = True)
+    provided_services = ProvidedService.objects.filter(on_display = True)
+    print("Hello")
+    print(testimonials.values())
+    context['employees'] = employees
+    context['testimonials'] = testimonials
+    context['provided_services'] = provided_services
+    return context
+
 def home(request):
     if request.method == 'POST':
         print('In home post method')
@@ -20,24 +32,16 @@ def home(request):
         else :
              print('The form is Not Valid')
     
-    context = {}
-    employees = Employee.objects.filter(on_display = True)
-    testimonials = Testimonial.objects.filter(on_display = True)
-    provided_services = ProvidedService.objects.filter(on_display = True)
-    print("Hello")
-    print(testimonials.values())
-    context['employees'] = employees
-    context['testimonials'] = testimonials
-    context['provided_services'] = provided_services
-
- 
+    context = get_context() 
     return render(request,'Base/home.html', context=context)
 
 def about(request):
-    return render(request,'Base/aboutus.html')
+    context = get_context()
+    return render(request,'Base/aboutus.html' , context=context)
 
 def services(request):
-    return render(request,'Base/service_page.html')
+    context = get_context()
+    return render(request,'Base/service_page.html', context=context)
 
 def booking(request):
     if request.method == 'POST':
@@ -54,8 +58,8 @@ def booking(request):
                 return redirect('booking_page')
         else :
              print('The form is Not Valid')
-   
-    return render(request,'Base/booking_page.html')
+    context = get_context()
+    return render(request,'Base/booking_page.html' , context=context)
 
 def contact(request):
     if request.method == 'POST':
@@ -72,5 +76,5 @@ def contact(request):
                 return redirect('booking_page')
         else :
              print('The form is Not Valid')
-    
-    return render(request,'Base/contact_page.html')
+    context = get_context()
+    return render(request,'Base/contact_page.html',context=context)
