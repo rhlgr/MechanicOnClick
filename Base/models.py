@@ -23,3 +23,12 @@ class Contact(models.Model):
 
     def __str__(self) -> str:
         return self.name + '-' + self.subject
+class Testimonial(models.Model):
+    name = models.CharField(max_length=50, null=True , blank=True)
+    profession = models.CharField(max_length=50, null=True , blank=True)
+    content = models.CharField(max_length=500, null=True , blank=True)
+    img = models.ImageField(upload_to='media/testimg', default= 'media/testimg/AviDP.jpeg')
+    on_display = models.BooleanField(default=False)
+
+    def __str__(self) -> str:
+        return self.name
