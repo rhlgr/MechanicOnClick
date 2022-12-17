@@ -1,6 +1,6 @@
 from django.shortcuts import render , redirect
 from .forms import BookingForm , ContactForm
-
+from account.models import Employee
 # Create your views here.
 def home(request):
     if request.method == 'POST':
@@ -17,9 +17,13 @@ def home(request):
                 return redirect('booking_page')
         else :
              print('The form is Not Valid')
+    
     context = {}
-  
-    context['employees'] = None
+    employees = Employee.objects.filter(on_display = True)
+    print("Hello")
+    print(employees.values())
+    context['employees'] = employees
+
  
     return render(request,'Base/home.html', context=context)
 

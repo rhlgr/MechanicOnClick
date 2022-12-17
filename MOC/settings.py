@@ -23,7 +23,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-s2&v8rl@+_p8$urlkb10_i)zq%fh-q7(y7#jtw9h&phe2!mp87'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['153.92.5.250','mechaniconclick.com','http://mechaniconclick.com/','https://mechaniconclick.com/' , '127.0.0.1']
 
