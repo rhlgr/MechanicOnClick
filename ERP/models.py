@@ -40,3 +40,4 @@ class Service(models.Model):
     def __str__(self) -> str:
         return self.vehical.number + " " + str(self.service_date)
 
+
