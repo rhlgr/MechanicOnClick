@@ -6,7 +6,8 @@ from ERP.models import ProvidedService
 # Create your views here.
 def get_context():
     context = {}
-    employees = Employee.objects.filter(on_display = True)
+    employees = Employee.objects.filter(on_emp_display = True)
+    techs = Employee.objects.filter(on_tech_display = True)
     testimonials = Testimonial.objects.filter(on_display = True)
     provided_services = ProvidedService.objects.filter(on_display = True)
     carasoule_active_ele = CarasouleElement.objects.get(is_active = True)
@@ -14,6 +15,7 @@ def get_context():
     print("Got Context")
     print(testimonials.values())
     context['employees'] = employees
+    context['techs'] = techs
     context['testimonials'] = testimonials
     context['provided_services'] = provided_services
     context['carasoule_active_ele'] = carasoule_active_ele
