@@ -34,8 +34,8 @@ class Service(models.Model):
     ]
     progress = models.CharField(max_length=20 , choices=progress_choices , default= 'Step 1')
     # Customer Already in vehical
-    #customer = models.ForeignKey(Customer , on_delete=models.SET_NULL, blank=True , null= True)
     services = models.ManyToManyField(ProvidedService)
+    #customer = models.ForeignKey(Customer , on_delete=models.SET_NULL, blank=True , null= True)
 
     def __str__(self) -> str:
         return self.vehical.number + " " + str(self.service_date)
