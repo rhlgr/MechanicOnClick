@@ -1,7 +1,21 @@
 from django.db import models
-from django.contrib.auth.models import User
+#from django.contrib.auth.models import User
+from django.contrib.auth.models import AbstractUser
 from Franchise.models import Center , JobRole
 # Create your models here.
+class User(AbstractUser):
+    class Role(models.TextChoices):
+        ADMIN = "ADMIN" , "Admin"
+        CUSTOMER = 'CUSTOMER' , "Customer"
+        EMPLOYEE = 'EMPLOYEE' , 'Employee'
+    base_role = Role.ADMIN
+    abc = models.CharField(max_length=50)
+    role = models.CharField(max_length=50 , choices=Role.choices)
+
+    def save(self, *args , **kwargs):
+        if not self.pk :
+            self.role = self.base_role
+        return super().save(*args,**kwargs)
 class Customer(models.Model):
     user = models.OneToOneField(User , on_delete=models.CASCADE)
     location = models.CharField(max_length=200)
@@ -21,4 +35,4 @@ class Employee(models.Model):
     twitter_link = models.CharField(max_length=100, blank=True , null=True)
     insta_link = models.CharField(max_length=100, blank=True , null=True)
     def __str__(self) -> str:
-        return self.user.first_name + " "+ self.user.last_name
+        return self.user.first_name + " "+ self.UserModel.last_name
