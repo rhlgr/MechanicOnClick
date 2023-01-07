@@ -23,9 +23,11 @@ class ProvidedService(models.Model):
         return self.name
 
 class Service(models.Model):
+    
     vehical = models.ForeignKey(Vehical , on_delete=models.SET_NULL, blank=True , null= True)
     service_time = models.DurationField()
     service_date = models.DateTimeField()
+    service_estimate = models.FloatField(default= 100)
     center = models.ForeignKey(Center , on_delete=models.SET_NULL, blank=True , null= True)
     progress_choices = [
         ('RO Open' , 'RO Open'),
@@ -41,3 +43,10 @@ class Service(models.Model):
         return self.vehical.number + " " + str(self.service_date)
 
 
+class Update(models.Model):
+    update_image = models.ImageField(upload_to='media/updateimg' , blank= True , null= True)
+    update_title = models.CharField(max_length=50 , blank= True , null= True)
+    update_description = models.CharField(max_length=200 , blank= True , null= True)
+    service = models.ForeignKey(Service , on_delete=models.CASCADE)
+    
+    

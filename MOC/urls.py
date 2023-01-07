@@ -22,5 +22,6 @@ admin.site.index_title = 'MOC Administration'                 # default: "Site a
 admin.site.site_title = 'MOC Administration'
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('',include('Base.urls'))
+    path('',include('Base.urls')),
+    path('',include('account.urls')),
 ]+ static(MEDIA_URL, document_root=MEDIA_ROOT)
