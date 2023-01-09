@@ -20,8 +20,11 @@ def customer_register(request):
                 user.save()
                 print("done")
                 #location = "Bhopal"
-                customer = Customer.objects.create(user = user , location = location)
-                customer.save()
+                try :
+                    customer = Customer.objects.create(user = user , location = location)
+                    customer.save()
+                except :
+                    user.delete()
             return render(request, 'account/register.html' , context=context)
         except :
             return render(request, 'account/register.html' , context=context)

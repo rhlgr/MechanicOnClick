@@ -1,14 +1,17 @@
 from django.shortcuts import render , redirect
-from .forms import BookingForm , ContactForm
-from account.models import Employee
-from .models import Testimonial ,CarasouleElement
-from ERP.models import ProvidedService
+from .forms import BookingForm 
+from account.models import User
+from account.decorators import allowed_users
+from django.contrib.auth.decorators import login_required
+
 # Create your views here.
 def get_context():
     context = {}
     
     return context
 
+@login_required(login_url= 'customer_login')
+@allowed_users(allowed_roles=[User.Role.CUSTOMER])
 def home(request):
     if request.method == 'POST':
         print('In home post method')
@@ -28,3 +31,5 @@ def home(request):
     context = get_context() 
     return render(request,'Base/home.html', context=context)
 
+def unauth_error(request):
+    return render(request,'error/unauthorized.html')
