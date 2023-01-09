@@ -1,7 +1,7 @@
 from django.urls import path
-from .views import add_vehical
+from .views import add_vehical , edit_vehical
 urlpatterns = [
-    path('vehicel/add/', add_vehical ,name='add_vehical_page'),
-    #path('/unauthorized', unauth_error ,name='unauth_page'),
+    path('vehical/add/', add_vehical ,name='add_vehical_page'),
+    path('vehical/edit/', edit_vehical ,name='edit_vehical_page'),
     
     ]

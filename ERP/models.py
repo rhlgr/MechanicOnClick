@@ -4,8 +4,8 @@ from Franchise.models import Center
 # Create your models here.
 
 class Vehical(models.Model):
-    customer = models.OneToOneField(Customer , on_delete=models.CASCADE)
-    number = models.CharField(max_length=20)
+    customer = models.ForeignKey(Customer , on_delete=models.CASCADE)
+    number = models.CharField(max_length=20 , unique= True)
     type = models.CharField(max_length=20)
 
     def __str__(self) -> str:
