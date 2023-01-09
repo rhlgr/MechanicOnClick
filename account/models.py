@@ -8,15 +8,16 @@ class User(AbstractUser):
         ADMIN = "ADMIN" , "Admin"
         CUSTOMER = 'CUSTOMER' , "Customer"
         EMPLOYEE = 'EMPLOYEE' , 'Employee'
-    base_role = Role.ADMIN
+    base_role = Role.CUSTOMER
     phone = models.CharField(max_length=13,unique=True , null=True , blank=True)
     role = models.CharField(max_length=50 , choices=Role.choices)
 
     def save(self, *args , **kwargs):
         if not self.pk :
             self.role = self.base_role
-
         return super().save(*args,**kwargs)
+
+
 class Customer(models.Model):
     user = models.OneToOneField(User , on_delete=models.CASCADE , null= True , blank= True)
     location = models.CharField(max_length=200)

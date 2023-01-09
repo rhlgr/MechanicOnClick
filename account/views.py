@@ -1,5 +1,7 @@
 from django.shortcuts import render , redirect
 from .models import Customer , User , Employee
+from django.contrib import messages
+from django.contrib.auth.models import auth
 from .forms import CustomerForm
 # Create your views here.
 def customer_register(request):
@@ -25,3 +27,20 @@ def customer_register(request):
             return render(request, 'account/register.html' , context=context)
     else :
         return render(request , 'account/register.html' , context=context)
+
+def customer_login(request):
+    context = {}
+    if request.method == "POST":
+        username = request.POST['username']
+        password = request.POST['password']
+
+        user = auth.authenticate(username = username , password = password)
+
+        if user is not None:
+            auth.login(request, user)
+            return redirect('/')
+        else :
+            messages.error(request , "Invalid Credentials")
+            return render(request , 'account/login.html')
+    else :
+        return render(request , 'account/login.html')
