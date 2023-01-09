@@ -4,6 +4,7 @@ from account.models import User
 from account.decorators import allowed_users
 from django.contrib.auth.decorators import login_required
 
+
 # Create your views here.
 def get_context():
     context = {}
