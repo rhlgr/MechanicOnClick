@@ -8,14 +8,11 @@ class User(AbstractUser):
         ADMIN = "ADMIN" , "Admin"
         CUSTOMER = 'CUSTOMER' , "Customer"
         EMPLOYEE = 'EMPLOYEE' , 'Employee'
-    base_role = Role.CUSTOMER
+    #base_role = Role.CUSTOMER
     phone = models.CharField(max_length=13,unique=True , null=True , blank=True)
-    role = models.CharField(max_length=50 , choices=Role.choices)
+    role = models.CharField(max_length=50 , choices=Role.choices ,default= Role.CUSTOMER)
 
-    def save(self, *args , **kwargs):
-        if not self.pk :
-            self.role = self.base_role
-        return super().save(*args,**kwargs)
+    
 
 
 class Customer(models.Model):
@@ -39,4 +36,4 @@ class Employee(models.Model):
     insta_link = models.CharField(max_length=100, blank=True , null=True)
     is_active = models.BooleanField(default=False)
     def __str__(self) -> str:
-        return self.user.first_name + " "+ self.UserModel.last_name
+        return self.user.first_name + " "+ self.user.last_name

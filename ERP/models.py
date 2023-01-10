@@ -7,7 +7,9 @@ class Vehical(models.Model):
     customer = models.ForeignKey(Customer , on_delete=models.CASCADE)
     number = models.CharField(max_length=20 , unique= True)
     type = models.CharField(max_length=20)
-
+    def save(self,*args , **kwargs):
+        self.number = self.number.upper()
+        return super().save(*args , **kwargs)
     def __str__(self) -> str:
         return self.number
 class ProvidedService(models.Model):
@@ -20,13 +22,13 @@ class ProvidedService(models.Model):
     icon = models.CharField(max_length=50 , default="fa fa-certificate fa-3x text-primary flex-shrink-0")
 
     def __str__(self) -> str:
-        return self.name
+        return self.name + " : " + str(self.price)
 
 class Service(models.Model):
     
     vehical = models.ForeignKey(Vehical , on_delete=models.SET_NULL, blank=True , null= True)
-    service_time = models.DurationField()
-    service_date = models.DateTimeField()
+    #service_time = models.DurationField()
+    #service_date = models.DateTimeField()
     service_estimate = models.FloatField(default= 100)
     center = models.ForeignKey(Center , on_delete=models.SET_NULL, blank=True , null= True)
     progress_choices = [
@@ -37,10 +39,12 @@ class Service(models.Model):
     progress = models.CharField(max_length=20 , choices=progress_choices , default= 'Step 1')
     # Customer Already in vehical
     services = models.ManyToManyField(ProvidedService)
+    additional_services = models.CharField(max_length=200, blank = True , null = True)
+    additional_services_cost = models.IntegerField(blank = True , null = True)
     #customer = models.ForeignKey(Customer , on_delete=models.SET_NULL, blank=True , null= True)
 
     def __str__(self) -> str:
-        return self.vehical.number + " " + str(self.service_date)
+        return self.vehical.number
 
 
 class Update(models.Model):

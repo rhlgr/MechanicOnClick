@@ -36,14 +36,21 @@ def customer_login(request):
     if request.method == "POST":
         username = request.POST['username']
         password = request.POST['password']
-
+        print(username , password)
         user = auth.authenticate(username = username , password = password)
 
         if user is not None:
             auth.login(request, user)
             return redirect('/')
         else :
+            print('Login Fsile')
             messages.error(request , "Invalid Credentials")
             return render(request , 'account/login.html')
     else :
         return render(request , 'account/login.html')
+
+def customer_logout(request):
+    auth.logout()
+    return redirect('login_page')
+
+

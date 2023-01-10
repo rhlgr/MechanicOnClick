@@ -1,0 +1,15 @@
+{% extends 'Base/base.html' %}
+{% load static %}
+{% block content %}
+
+<table style="border : 2px;">
+    <tr><th>Number</th><th>Type</th</tr>
+
+        {% for vehical in vehicals %}
+        <tr><td>{{vehical.number}}</td><td>{{vehical.type}}</td></tr>
+        {% endfor %}
+
+
+</table>
+
+{% endblock %}

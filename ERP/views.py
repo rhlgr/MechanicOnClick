@@ -1,28 +1,29 @@
 from django.shortcuts import render , redirect
 from account.decorators import allowed_users
 from django.contrib.auth.decorators import login_required
-from account.models import User , Customer
-from .models import Vehical
-# Create your views here.
+import datetime
+from account.models import User , Customer , Employee
+from .models import Vehical , ProvidedService ,Service
+
+# Customer Views :- Vehicals
 @login_required(login_url= 'customer_login')
 @allowed_users(allowed_roles=[User.Role.CUSTOMER])
 def add_vehical(request):
     context = {}
     if request.method == 'POST':
         try :
-            print('Here 1')
+            
             user = request.user
-            print('Here 2')
+            
             customer = Customer.objects.get(user = user)
-            print(customer)
+            
             vehicalnumber = request.POST['vehicalnumber']
-            print('Here 4')
+            
             vechicaltype = request.POST['vehicaltype']
-            print('Here 5')
+            
             new_vehcial =  Vehical.objects.create(customer = customer , number = vehicalnumber , type = vechicaltype)
-            print('Here 6')
             new_vehcial.save()
-            print('Here 7')
+            
         except Exception as e:
             print(e)
             return redirect('add_vehical_page')
@@ -36,17 +37,92 @@ def edit_vehical(request):
     #print(user)
     customer = Customer.objects.get(user = user)
     vehicals = list(Vehical.objects.filter(customer = customer))
-    print(vehicals)
+    #print(vehicals)
     context = {'vehicals' : vehicals}
     if request.method == 'POST':
         try :
             user = request.user
-            print(user)
+            #print(user)
             customer = Customer.objects.get(user = user)
+            vehical_id = request.POST['vehical']
             vehicalnumber = request.POST['vehicalnumber']
-            vechicaltype = request.POST['vehicaltype']
-            new_vehcial =  Vehical.objects.create(customer = customer , number = vehicalnumber , type = vechicaltype)
-            new_vehcial.save()
-        except :
+            vehicaltype = request.POST['vehicaltype']
+            print('info 1 :',vehicaltype , vehicalnumber , vehical_id)
+            vehical =  Vehical.objects.get(id = 1)
+            if len(vehicalnumber) == 0:
+                vehicalnumber = vehical.number
+            if len(vehicaltype) == 0:
+                vehicaltype = vehical.type
+            print('info 2 :',vehicaltype , vehicalnumber , vehical_id)
+            vehical.number = vehicalnumber
+            vehical.type = vehicaltype
+            vehical.save()
+        except Exception as e :
+            print(e)
             return redirect('edit_vehical_page')
     return render(request , 'ERP/vehical/edit_vehical_page.html' , context)
+
+
+@login_required(login_url= 'customer_login')
+@allowed_users(allowed_roles=[User.Role.CUSTOMER])
+def info_vehical(request):
+    user = request.user
+    #print(user)
+    customer = Customer.objects.get(user = user)
+    vehicals = list(Vehical.objects.filter(customer = customer))
+    #print(vehicals)
+    context = {'vehicals' : vehicals}
+    
+    return render(request , 'ERP/vehical/info_vehical_page.html' , context)
+
+
+
+    # Employee Views :- 
+@login_required(login_url= 'customer_login')
+@allowed_users(allowed_roles=[User.Role.EMPLOYEE])
+def add_service(request):
+    print('hi')
+    if request.method == 'POST':
+        print('here 1')
+        try :
+            employee = Employee.objects.get(user = request.user)
+           
+            vehical = Vehical.objects.get(id = request.POST['vehical'])
+           
+            service_time = request.POST['service_time']
+           
+            service_date = request.POST['service_date']
+            service_estimate = request.POST['estimate']
+            center = employee.center
+            service_ids = request.POST['services']
+            new_services = []
+            for id in service_ids:
+                new_services.append(ProvidedService.objects.get(id=id))
+            additional_services = request.POST['add_services']
+            additional_service_cost = request.POST['add_price']
+            print(type(service_date) , service_date)
+            service = Service.objects.create(
+                vehical=vehical,
+                #service_time = service_time,
+                #service_date = datetime.datetime.strptime(service_date, "%Y-%m-%d").date(),
+                center = center,
+                progress = 'RO Open',
+                
+                additional_services = additional_services,
+                additional_services_cost = additional_service_cost
+                )
+
+            print('here 1')
+            service.save()
+            service.services.set(new_services)
+            print('here 5')
+        except Exception as e:
+            print('he')
+            print(e)
+            return redirect('home_page')
+    services = ProvidedService.objects.all()
+    vehicals = Vehical.objects.all()
+    context = {'services':services,
+    'vehicals' : vehicals
+    }
+    return render(request , 'ERP/service/add.html' , context)
