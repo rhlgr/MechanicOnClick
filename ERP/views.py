@@ -6,7 +6,7 @@ from account.models import User , Customer , Employee
 from .models import Vehical , ProvidedService ,Service
 
 # Customer Views :- Vehicals
-@login_required(login_url= 'customer_login')
+@login_required(login_url= 'login_page')
 @allowed_users(allowed_roles=[User.Role.CUSTOMER])
 def add_vehical(request):
     context = {}
@@ -30,7 +30,7 @@ def add_vehical(request):
 
     return render(request , 'ERP/vehical/add_vehical_page.html' , context)
 
-@login_required(login_url= 'customer_login')
+@login_required(login_url= 'login_page')
 @allowed_users(allowed_roles=[User.Role.CUSTOMER])
 def edit_vehical(request):
     user = request.user
@@ -63,7 +63,7 @@ def edit_vehical(request):
     return render(request , 'ERP/vehical/edit_vehical_page.html' , context)
 
 
-@login_required(login_url= 'customer_login')
+@login_required(login_url= 'login_page')
 @allowed_users(allowed_roles=[User.Role.CUSTOMER])
 def info_vehical(request):
     user = request.user
@@ -78,8 +78,8 @@ def info_vehical(request):
 
 
     # Employee Views :- 
-@login_required(login_url= 'customer_login')
-@allowed_users(allowed_roles=[User.Role.EMPLOYEE])
+@login_required(login_url= 'login_page')
+@allowed_users(allowed_roles=[User.Role.EMPLOYEE,User.Role.ADMIN])
 def add_service(request):
     print('hi')
     if request.method == 'POST':
