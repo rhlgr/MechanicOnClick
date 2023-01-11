@@ -11,26 +11,30 @@
         <th>Progress</th>
         <th>Services</th>
         <th>Additional Services</th>
+        <th>Action</th>
         </tr>
+        
 
         {% for service in app_services %}
         <tr>
             <td>{{service.vehical.number}}</td>
             <td>{{service.vehical.type}}</td>
-            <td>{{service.estimate}}</td>
+            <td>{{service.service_estimate }} </td>
             <td>{{service.center.name}}</td>
             <td>{{service.progress}}</td>
             <td>
-                <ul>
+                        
                 {% for ser in service.services.all %}
-                <li>{{ser.name}}</li>
+            <p>{{ser.name}},</p>
                     {% endfor %}
-            </ul>
+            
             </td>
             <td>{{service.additional_services}}</td>
+            <td> <a class="btn btn-outline-info" href="services/update/{{service.id}}">Check Update</a></td>
         </tr>
-        </table>
         {% endfor %}
+        </table>
+        
 <h1>Not Approved Services</h1>
         <table class = 'table' >
             <tr>
@@ -48,18 +52,18 @@
                 <tr>
                     <td>{{service.vehical.number}}</td>
                     <td>{{service.vehical.type}}</td>
-                    <td>{{service.estimate}}</td>
+                    <td>{{service.service_estimate}}</td>
                     <td>{{service.center.name}}</td>
                     <td>{{service.progress}}</td>
                     <td>
-                        <ul>
+                        
                         {% for ser in service.services.all %}
-                        <li>{{ser.name}}</li>
+                      <p>  {{ser.name}},</p>
                             {% endfor %}
-                    </ul>
+                    
                     </td>
                     <td>{{service.additional_services}}</td>
-                    <td> <a href="services/approve/{{service.id}}">Approve Service</a></td>
+                    <td> <a class="btn btn-outline-dark" href="services/approve/{{service.id}}">Approve Service</a></td>
                 </tr>
                 {% endfor %}
 

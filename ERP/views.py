@@ -3,7 +3,7 @@ from account.decorators import allowed_users
 from django.contrib.auth.decorators import login_required
 import datetime
 from account.models import User , Customer , Employee
-from .models import Vehical , ProvidedService ,Service
+from .models import Vehical , ProvidedService ,Service , Update
 
 # Customer Views :- Vehicals
 @login_required(login_url= 'login_page')
@@ -97,8 +97,15 @@ def approve_service(request , pk):
         service.is_approved = True
         service.save()
     return redirect('customer_service_page')
-
- # Employee Views :- 
+# Customer Service Updates
+@login_required(login_url= 'login_page')
+@allowed_users(allowed_roles=[User.Role.CUSTOMER])
+def service_updates(request, pk):
+    context = {}
+    updates = Update.objects.filter(service = pk)
+    context['updates'] = updates
+    return render(request,'ERP/service/customer_update_view.html',context)
+# Employee Views :- 
 @login_required(login_url= 'login_page')
 @allowed_users(allowed_roles=[User.Role.EMPLOYEE,User.Role.ADMIN])
 def add_service(request):
