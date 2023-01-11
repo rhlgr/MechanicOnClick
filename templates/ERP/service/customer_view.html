@@ -1,0 +1,68 @@
+{% extends 'Base/base.html' %}
+{% load static %}
+{% block content %}
+<h1>Approved Services</h1>
+<table class = 'table'>
+    <tr>
+        <th>Number</th>
+        <th>Type</th>
+        <th>estimate</th>
+        <th>Center</th>
+        <th>Progress</th>
+        <th>Services</th>
+        <th>Additional Services</th>
+        </tr>
+
+        {% for service in app_services %}
+        <tr>
+            <td>{{service.vehical.number}}</td>
+            <td>{{service.vehical.type}}</td>
+            <td>{{service.estimate}}</td>
+            <td>{{service.center.name}}</td>
+            <td>{{service.progress}}</td>
+            <td>
+                <ul>
+                {% for ser in service.services.all %}
+                <li>{{ser.name}}</li>
+                    {% endfor %}
+            </ul>
+            </td>
+            <td>{{service.additional_services}}</td>
+        </tr>
+        </table>
+        {% endfor %}
+<h1>Not Approved Services</h1>
+        <table class = 'table' >
+            <tr>
+                <th>Number</th>
+                <th>Type</th>
+                <th>estimate</th>
+                <th>Center</th>
+                <th>Progress</th>
+                <th>Services</th>
+                <th>Additional Services</th>
+                <th>Action</th>
+                </tr>
+        
+                {% for service in not_app_services %}
+                <tr>
+                    <td>{{service.vehical.number}}</td>
+                    <td>{{service.vehical.type}}</td>
+                    <td>{{service.estimate}}</td>
+                    <td>{{service.center.name}}</td>
+                    <td>{{service.progress}}</td>
+                    <td>
+                        <ul>
+                        {% for ser in service.services.all %}
+                        <li>{{ser.name}}</li>
+                            {% endfor %}
+                    </ul>
+                    </td>
+                    <td>{{service.additional_services}}</td>
+                    <td> <a href="services/approve/{{service.id}}">Approve Service</a></td>
+                </tr>
+                {% endfor %}
+
+</table>
+
+{% endblock %}

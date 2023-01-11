@@ -74,10 +74,31 @@ def info_vehical(request):
     context = {'vehicals' : vehicals}
     
     return render(request , 'ERP/vehical/info_vehical_page.html' , context)
+#Customer :- Service Views
+@login_required(login_url= 'login_page')
+@allowed_users(allowed_roles=[User.Role.CUSTOMER])
+def customer_services(request):
+    
+    vehicals = Vehical.objects.filter(customer = Customer.objects.get(user=request.user))
+    context = {}
+    app_services = Service.objects.filter(is_approved = True , vehical__in = vehicals)
+    #app_services = Service.objects.filter(is_approved = True )
+    not_app_services = Service.objects.filter(is_approved = False, vehical__in = vehicals)
+    context['app_services'] = app_services
+    context['not_app_services'] = not_app_services
+    return render(request , 'ERP/service/customer_view.html',context)
 
 
+def approve_service(request , pk):
+    vehicals = Vehical.objects.filter(customer = Customer.objects.get(user=request.user))
+    service = Service.objects.get(id=pk)
+    print('Ser', service.vehical in vehicals)
+    if service.vehical in vehicals:
+        service.is_approved = True
+        service.save()
+    return redirect('customer_service_page')
 
-    # Employee Views :- 
+ # Employee Views :- 
 @login_required(login_url= 'login_page')
 @allowed_users(allowed_roles=[User.Role.EMPLOYEE,User.Role.ADMIN])
 def add_service(request):

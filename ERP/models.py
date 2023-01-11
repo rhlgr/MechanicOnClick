@@ -41,6 +41,7 @@ class Service(models.Model):
     services = models.ManyToManyField(ProvidedService)
     additional_services = models.CharField(max_length=200, blank = True , null = True)
     additional_services_cost = models.IntegerField(blank = True , null = True)
+    is_approved = models.BooleanField(default=False)
     #customer = models.ForeignKey(Customer , on_delete=models.SET_NULL, blank=True , null= True)
 
     def __str__(self) -> str:
