@@ -6,6 +6,6 @@ class ServiceForm(ModelForm):
         model = Service
         fields ='__all__'
 class UpdateForm(Form):
-    update_image = forms.ImageField(upload_to='media/updateimg' , blank= True , null= True)
-    update_title = forms.CharField(max_length=50 , blank= True , null= True)
+    update_image = forms.ImageField()
+    update_title = forms.CharField(max_length=50 )
     update_description = forms.CharField(max_length = 200)

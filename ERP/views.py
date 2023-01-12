@@ -1,7 +1,7 @@
 from django.shortcuts import render , redirect
 from account.decorators import allowed_users
 from django.contrib.auth.decorators import login_required
-import datetime
+from .forms import UpdateForm
 from account.models import User , Customer , Employee
 from .models import Vehical , ProvidedService ,Service , Update
 
@@ -105,6 +105,25 @@ def service_updates(request, pk):
     updates = Update.objects.filter(service = pk)
     context['updates'] = updates
     return render(request,'ERP/service/customer_update_view.html',context)
+############### Employee Service Updates
+@login_required(login_url= 'login_page')
+@allowed_users(allowed_roles=[User.Role.EMPLOYEE])
+def employee_service_updates(request,pk):
+    context = {}
+    if request.method == 'POST':
+        try :
+            update_image = request.POST['update_image']
+            update_title = request.POST['update_title']
+            update_description = request.POST['update_description']
+            
+            update = Update.objects.create(update_image = update_image , update_description = update_description , update_title = update_title , service = Service.objects.get(id = pk))
+            return redirect('add_service_page')
+        except Exception as e:
+            print(e)
+            return redirect('employee_service_update_page')
+    context['form'] = UpdateForm()
+
+    return render(request,'ERP/service/employee_update_form.html',context)
 # Employee Views :- 
 @login_required(login_url= 'login_page')
 @allowed_users(allowed_roles=[User.Role.EMPLOYEE,User.Role.ADMIN])
