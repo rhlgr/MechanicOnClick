@@ -112,12 +112,16 @@ def employee_service_updates(request,pk):
     context = {}
     if request.method == 'POST':
         try :
-            update_image = request.POST['update_image']
-            update_title = request.POST['update_title']
-            update_description = request.POST['update_description']
-            
-            update = Update.objects.create(update_image = update_image , update_description = update_description , update_title = update_title , service = Service.objects.get(id = pk))
-            return redirect('add_service_page')
+            service = Service.objects.get(id = pk)
+            form = UpdateForm(request.POST or None, request.FILES or None)
+            if form.is_valid():
+                update = form.save(commit=False)
+                update.service = service
+                update.save()
+                return redirect('employee_service_list')
+            else :
+                print('Not valid')
+                return redirect('employee_service_update_page')
         except Exception as e:
             print(e)
             return redirect('employee_service_update_page')
@@ -128,42 +132,33 @@ def employee_service_updates(request,pk):
 @login_required(login_url= 'login_page')
 @allowed_users(allowed_roles=[User.Role.EMPLOYEE,User.Role.ADMIN])
 def add_service(request):
-
     if request.method == 'POST':
-        
         try :
             employee = Employee.objects.get(user = request.user)
-           
             vehical = Vehical.objects.get(id = request.POST['vehical'])
-           
-          
-           
-            service_date = request.POST['service_date']
-           
             center = employee.center
             service_ids = request.POST['services']
             new_services = []
             for id in service_ids:
                 new_services.append(ProvidedService.objects.get(id=id))
             additional_services = request.POST['add_services']
-            additional_service_cost = request.POST['add_price']
-            print(type(service_date) , service_date)
+        
+           
             service = Service.objects.create(
                 vehical=vehical,
                 #service_time = service_time,
                 #service_date = datetime.datetime.strptime(service_date, "%Y-%m-%d").date(),
                 center = center,
-                progress = 'RO Open',
-                
+                progress = Service.Progress.WAITING,
                 additional_services = additional_services,
-                additional_services_cost = additional_service_cost
                 )
 
             
             service.save()
             service.services.set(new_services)
-          
+            return redirect('employee_service_list')
         except Exception as e:
+            print('-------------------------------------------------------------------------------')
             print(e)
             return redirect('home_page')
     services = ProvidedService.objects.all()

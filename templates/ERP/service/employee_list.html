@@ -1,13 +1,14 @@
 {% extends 'Base/base.html' %}
 {% load static %}
 {% block content %}
-<h1>Approved Services</h1>
+<h1>Services</h1>
 <table class = 'table'>
     <tr>
         <th>Number</th>
         <th>Type</th>
         <th>estimate</th>
         <th>Center</th>
+        <th>Approved</th>
         <th>Progress</th>
         <th>Services</th>
         <th>Additional Services</th>
@@ -21,6 +22,7 @@
             <td>{{service.vehical.type}}</td>
             <td>{{service.service_estimate }} </td>
             <td>{{service.center.name}}</td>
+            <td>{{service.is_approved}}</td>
             <td>{{service.progress}}</td>
             <td>
                         
