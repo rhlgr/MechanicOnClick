@@ -54,4 +54,6 @@ class Update(models.Model):
     update_description = models.CharField(max_length=200 , blank= True , null= True)
     service = models.ForeignKey(Service , on_delete=models.CASCADE)
     
+    def __str__(self):
+        return self.update_title
     
