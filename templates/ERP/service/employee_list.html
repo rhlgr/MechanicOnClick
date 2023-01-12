@@ -1,0 +1,43 @@
+{% extends 'Base/base.html' %}
+{% load static %}
+{% block content %}
+<h1>Approved Services</h1>
+<table class = 'table'>
+    <tr>
+        <th>Number</th>
+        <th>Type</th>
+        <th>estimate</th>
+        <th>Center</th>
+        <th>Progress</th>
+        <th>Services</th>
+        <th>Additional Services</th>
+        <th>Action</th>
+        </tr>
+        
+
+        {% for service in services %}
+        <tr>
+            <td>{{service.vehical.number}}</td>
+            <td>{{service.vehical.type}}</td>
+            <td>{{service.service_estimate }} </td>
+            <td>{{service.center.name}}</td>
+            <td>{{service.progress}}</td>
+            <td>
+                        
+                {% for ser in service.services.all %}
+            <p>{{ser.name}},</p>
+                    {% endfor %}
+            
+            </td>
+            <td>{{service.additional_services}}</td>
+            <td> 
+                <a class="btn btn-outline-info" href="{% url 'progress_update_page' service.id %}">Update Progress</a>
+                <a class="btn btn-outline-secondary" href="{% url 'employee_service_update_page' service.id %}">Add Update</a>
+            </td>
+        </tr>
+        {% endfor %}
+        </table>
+        
+
+
+{% endblock %}

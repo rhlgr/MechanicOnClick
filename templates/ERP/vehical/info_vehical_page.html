@@ -2,11 +2,15 @@
 {% load static %}
 {% block content %}
 
-<table style="border : 2px;">
-    <tr><th>Number</th><th>Type</th</tr>
+<table class ="table" >
+    <tr><th>Number</th><th>Type</th><th>Edit Info</th></tr>
 
         {% for vehical in vehicals %}
-        <tr><td>{{vehical.number}}</td><td>{{vehical.type}}</td></tr>
+        <tr>
+            <td>{{vehical.number}}</td>
+            <td>{{vehical.type}}</td>
+            <td><a class="btn btn-outline-dark" href="{% url 'edit_vehical_page' vehical.id %}">edit</a></td>
+        </tr>
         {% endfor %}
 
 

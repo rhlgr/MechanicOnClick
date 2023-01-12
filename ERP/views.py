@@ -1,7 +1,7 @@
 from django.shortcuts import render , redirect
 from account.decorators import allowed_users
 from django.contrib.auth.decorators import login_required
-from .forms import UpdateForm
+from .forms import UpdateForm , UpdateProgressForm
 from account.models import User , Customer , Employee
 from .models import Vehical , ProvidedService ,Service , Update
 
@@ -32,7 +32,7 @@ def add_vehical(request):
 
 @login_required(login_url= 'login_page')
 @allowed_users(allowed_roles=[User.Role.CUSTOMER])
-def edit_vehical(request):
+def edit_vehical(request , pk):
     user = request.user
     #print(user)
     customer = Customer.objects.get(user = user)
@@ -44,7 +44,7 @@ def edit_vehical(request):
             user = request.user
             #print(user)
             customer = Customer.objects.get(user = user)
-            vehical_id = request.POST['vehical']
+            vehical_id = pk
             vehicalnumber = request.POST['vehicalnumber']
             vehicaltype = request.POST['vehicaltype']
             print('info 1 :',vehicaltype , vehicalnumber , vehical_id)
@@ -61,7 +61,6 @@ def edit_vehical(request):
             print(e)
             return redirect('edit_vehical_page')
     return render(request , 'ERP/vehical/edit_vehical_page.html' , context)
-
 
 @login_required(login_url= 'login_page')
 @allowed_users(allowed_roles=[User.Role.CUSTOMER])
@@ -88,7 +87,8 @@ def customer_services(request):
     context['not_app_services'] = not_app_services
     return render(request , 'ERP/service/customer_view.html',context)
 
-
+@login_required(login_url= 'login_page')
+@allowed_users(allowed_roles=[User.Role.CUSTOMER])
 def approve_service(request , pk):
     vehicals = Vehical.objects.filter(customer = Customer.objects.get(user=request.user))
     service = Service.objects.get(id=pk)
@@ -128,18 +128,18 @@ def employee_service_updates(request,pk):
 @login_required(login_url= 'login_page')
 @allowed_users(allowed_roles=[User.Role.EMPLOYEE,User.Role.ADMIN])
 def add_service(request):
-    print('hi')
+
     if request.method == 'POST':
-        print('here 1')
+        
         try :
             employee = Employee.objects.get(user = request.user)
            
             vehical = Vehical.objects.get(id = request.POST['vehical'])
            
-            service_time = request.POST['service_time']
+          
            
             service_date = request.POST['service_date']
-            service_estimate = request.POST['estimate']
+           
             center = employee.center
             service_ids = request.POST['services']
             new_services = []
@@ -159,12 +159,11 @@ def add_service(request):
                 additional_services_cost = additional_service_cost
                 )
 
-            print('here 1')
+            
             service.save()
             service.services.set(new_services)
-            print('here 5')
+          
         except Exception as e:
-            print('he')
             print(e)
             return redirect('home_page')
     services = ProvidedService.objects.all()
@@ -173,3 +172,20 @@ def add_service(request):
     'vehicals' : vehicals
     }
     return render(request , 'ERP/service/add.html' , context)
+
+@login_required(login_url= 'login_page')
+@allowed_users(allowed_roles=[User.Role.EMPLOYEE,User.Role.ADMIN])
+def employee_service_list(request):
+    context = {}
+    employee = Employee.objects.get(user = request.user ) 
+    services = list(Service.objects.filter(center = employee.center))
+    print(services)
+    context['services'] = services
+    return render(request , 'ERP/service/employee_list.html', context)
+
+def update_progress(request,pk):
+    form = UpdateProgressForm
+    context = {}
+    context['form'] = form
+
+    return render(request , 'ERP/service/progress_form.html' , context)

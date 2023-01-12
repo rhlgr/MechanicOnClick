@@ -31,12 +31,10 @@ class Service(models.Model):
     #service_date = models.DateTimeField()
     service_estimate = models.FloatField(default= 100)
     center = models.ForeignKey(Center , on_delete=models.SET_NULL, blank=True , null= True)
-    progress_choices = [
-        ('RO Open' , 'RO Open'),
-        ('Step 2' , 'Step 2'),
-        ('Step 3' , 'Step 3'),
-    ]
-    progress = models.CharField(max_length=20 , choices=progress_choices , default= 'Step 1')
+    class Progress(models.TextChoices):
+        WAITING = 'WAITING' , 'Waiting'
+        DOING = 'DOING' , 'Doing'
+    progress = models.CharField(max_length=20 , choices=Progress.choices , default= Progress.WAITING)
     # Customer Already in vehical
     services = models.ManyToManyField(ProvidedService)
     additional_services = models.CharField(max_length=200, blank = True , null = True)
