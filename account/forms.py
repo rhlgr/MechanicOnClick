@@ -1,9 +1,12 @@
 from django.contrib.auth.forms import UserCreationForm , UserChangeForm
 from django.forms import ModelForm
 #from django.contrib.auth.models import User
-from .models import Customer , Employee
-
-class CustomerForm(ModelForm):
+from .models import Customer , Employee ,User
+class UserForm(UserCreationForm):
     class Meta:
-        model = Customer
-        fields = "__all__"
+        model = User
+        fields = ['username' , 'first_name' , 'last_name','email'  ,'phone' , 'password1' , 'password2']
+class EmployeeForm(ModelForm):
+    class Meta:
+        model = Employee
+        fields = ['center' , 'emp_img']

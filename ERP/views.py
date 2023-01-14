@@ -179,8 +179,17 @@ def employee_service_list(request):
     return render(request , 'ERP/service/employee_list.html', context)
 
 def update_progress(request,pk):
-    form = UpdateProgressForm
+    form = UpdateProgressForm()
     context = {}
     context['form'] = form
-
+    if request.method == 'POST':
+        try :
+            progress = request.POST['progress']
+            service = Service.objects.get(id = pk)
+            service.progress = progress
+            service.save()
+            return redirect('employee_service_list' , pk)
+        except Exception as e:
+            print(e)
+            return redirect('progress_update_page')
     return render(request , 'ERP/service/progress_form.html' , context)
