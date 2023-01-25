@@ -11,8 +11,8 @@ def get_context():
     
     return context
 
-@login_required(login_url= 'customer_login')
-@allowed_users(allowed_roles=[User.Role.CUSTOMER])
+# @login_required(login_url= 'customer_login')
+# @allowed_users(allowed_roles=[User.Role.CUSTOMER])
 def home(request):
     if request.method == 'POST':
         print('In home post method')

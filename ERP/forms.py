@@ -7,7 +7,7 @@ class ServiceForm(ModelForm):
         fields ='__all__'
 class UpdateForm(ModelForm):
     class Meta:
-        model = Update
+        model =Update
         fields = ['update_image','update_title' , 'update_description']
         #fields = '__all__'
 class UpdateProgressForm(Form):
