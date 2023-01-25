@@ -326,10 +326,12 @@ nav{
 #page1{
     width: 100%;
     height: 100vh;
-    /* background-color: aquamarine; */
-    background-image: url(./images/bglan.jpg);
-    background-size: contain;
     position: relative;
+    /* background-color: aquamarine; */
+    overflow: hidden;
+    /* background-image: url(./images/bglan.jpg);
+    background-size: contain; */
+    /* position: relative; */
 }
 #page1>.dets{
     width: 32%;
@@ -345,7 +347,7 @@ nav{
     -webkit-backdrop-filter: blur(5px);
     border: 1px solid rgba(255, 255, 255, 0.3);
     padding: 25px;
-
+    z-index: 2;
 }
 #page1>.dets>h1{
     color: var(--black);
@@ -365,10 +367,16 @@ nav{
     text-transform: capitalize;
     font-size: 1.6rem;
 }
+#page1>img{
+  width: 100%;
+  position: absolute;
+  z-index: 1;
+}
 .booking-form{
-    z-index: 2;
+    z-index: 3;
     position: fixed;
     right: 28px;
+
     width: 30%;
     background-color: #dededfc6;
     /* float: right; */

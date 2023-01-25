@@ -15,16 +15,16 @@
     <link href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400&display=swap" rel="stylesheet">
     <title>MOCTech Pvt. Ltd.</title>
+    
 </head>
 <body>
 
-    
-    <div class="test">Hello</div>
+    {% include 'Base/navbar.html' %}
     {% block content %}
 	
 
     {% endblock %}
-	
+	{% include 'Base/footer.html' %}
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <script src="{% static 'js/testo.js' %}"></script>
