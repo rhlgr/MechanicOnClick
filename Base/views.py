@@ -1,14 +1,13 @@
 from django.shortcuts import render , redirect
 from .forms import BookingForm 
-from account.models import User
-from account.decorators import allowed_users
-from django.contrib.auth.decorators import login_required
+
 
 
 # Create your views here.
 def get_context():
     context = {}
-    
+    booking_form = BookingForm()
+    context['booking_form'] = booking_form
     return context
 
 # @login_required(login_url= 'customer_login')
@@ -22,15 +21,16 @@ def home(request):
             try :
                 form.save()
                 
-                return redirect('about_page')
+                return redirect('home_page')
             except :
                 #messages.error(request, 'Invalid Credentials')
-                return redirect('booking_page')
+                return redirect('home_page')
         else :
              print('The form is Not Valid')
     
     context = get_context() 
     return render(request,'Base/home.html', context=context)
-
+def service(request):
+    return render(request ,'Base/service.html')
 def unauth_error(request):
     return render(request,'error/unauthorized.html')

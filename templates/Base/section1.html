@@ -8,23 +8,9 @@
       <div class="booking-form">
           <h1>Want To Get Your Vehicles Best Care.</h1>
           <p>Search for your vehicle</p>
-          <form action="">
-              <select class="round" name="type" id="type" required>
-                  <option selected disabled hidden value="">Type of Vehicle</option>
-                </select>
-              <select class="round" name="brand" id="brand" required>
-                  <option selected disabled hidden value="">Select Brand</option>
-                </select>
-              <select class="round" name="model" id="model" required>
-                  <option selected disabled hidden value="">Select Model</option>
-              </select>
-              <select class="round" name="fuel" id="fuel" required>
-                  <option selected disabled hidden value="">Select Fuel Type</option>
-                  <option value="Petrol">Petrol</option>
-                  <option value="Diesel">Diesel</option>
-               </select>
-               <input type="tel" name="phone" id="phone" placeholder="9876543210" pattern="[0-9]{10}" required>
-               <input type="text" name="request" id="phone" placeholder="Special Request">
+          <form method="post">
+            {% csrf_token %}
+              {{booking_form.as_p}}
                <input id="submit" type="submit" value="Submit">
           </form>
       </div>
