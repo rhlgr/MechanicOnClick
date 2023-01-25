@@ -177,7 +177,8 @@ def employee_service_list(request):
     print(services)
     context['services'] = services
     return render(request , 'ERP/service/employee_list.html', context)
-
+@login_required(login_url= 'login_page')
+@allowed_users(allowed_roles=[User.Role.EMPLOYEE,User.Role.ADMIN])
 def update_progress(request,pk):
     form = UpdateProgressForm()
     context = {}
@@ -193,3 +194,9 @@ def update_progress(request,pk):
             print(e)
             return redirect('progress_update_page')
     return render(request , 'ERP/service/progress_form.html' , context)
+
+def dashboard(request):
+    if request.user.role == User.Role.CUSTOMER:
+        return render(request ,'ERP/dashboard/customer.html')
+    if request.user.role == User.Role.EMPLOYEE:
+        return render(request ,'ERP/dashboard/employee.html')
