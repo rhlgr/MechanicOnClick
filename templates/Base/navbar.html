@@ -12,12 +12,12 @@
     </div>
     <ul class="nav-links">
         <li><a href="{% url 'home_page' %}">Home</a></li>
-        <li><a href="./about.html">About</a></li>
-        <li><a href="./contact.html">Contact</a></li>
+        <li><a href="{% url 'service_page' %}">About</a></li>
+        <li><a href="{% url 'contact_page' %}">Contact</a></li>
         <li><a href="{% url 'service_page' %}">Services</a></li>
-        <li><a href="#">Pages</a></li>
-        <li><button class="login-button" onclick="window.open('./login.html','_self');">Login</button></li>
-        <li><button class="join-button" onclick="window.open('./registration.html','_self');">Join</button></li>
+      
+        <li><a href="{% url 'login_page' %}" class="login-button">Login</a></li>
+        <li><a href="{% url 'customer_register' %}" class="join-button" >Join</a></li>
     </ul>
 </nav>
 

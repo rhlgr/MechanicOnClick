@@ -20,7 +20,7 @@ class Contact(models.Model):
     message = models.CharField(max_length=500, null=True , blank=True) 
     
     def __str__(self) -> str:
-        return self.name + '-' + self.subject
+        return str(self.name) + '-' + str(self.subject)
 class Testimonial(models.Model):
     name = models.CharField(max_length=50, null=True , blank=True)
     profession = models.CharField(max_length=50, null=True , blank=True)

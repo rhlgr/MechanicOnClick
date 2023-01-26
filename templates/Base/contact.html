@@ -1,0 +1,9 @@
+{% load static %}
+<div class="booking-form">
+    
+    <form method="post">
+      {% csrf_token %}
+        {{contact_form.as_p}}
+         <input id="submit" type="submit" value="Submit">
+    </form>
+</div>
