@@ -1,0 +1,228 @@
+*{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+html,
+body{
+    width: 100%;
+    height: 100%;
+}
+.dropdown {
+    display: inline-block;
+    position: relative;
+  }
+  
+  button{
+    border:none;
+    border-radius:5px;
+    padding:0px 10px;
+    font-size:18px;
+    cursor:pointer;
+    background-color: #ddd;
+  }
+  
+  button:hover{
+    background-color:#ddd;
+  }
+  
+  .dropdown-options {
+    display: none;
+    position: absolute;
+    overflow: auto;
+    background-color:#fff;
+    border-radius:5px;
+    box-shadow: 0px 10px 10px 0px rgba(0,0,0,0.4);
+  }
+  
+  .dropdown:hover .dropdown-options {
+    display: block;
+  }
+  
+  .dropdown-options a {
+    display: block;
+    color: #000000;
+    padding: 5px;
+    text-decoration: none;
+    padding:15px 40px;
+  }
+  
+  .dropdown-options a:hover {
+    color: #0a0a23;
+    background-color: #ddd;
+    border-radius:5px;
+  }
+
+/* FOR MOBILE VIEW */
+
+@media screen and (max-width: 480px) {
+    #page1{
+        height: 140vh;
+    }
+    #page1>img{
+        margin-top: 5em;
+    }
+    #page1>.dets{
+        width: 90%;
+        padding: 5px;
+        top: 25%;
+    }
+    #page1>.dets>h1{
+        color: var(--red);
+    }
+    #page1>.dets>h4{
+        margin-top: 1rem;
+        font-size: 1.1em;
+    }
+    .booking-form{
+        position: absolute;
+        width: 90%;
+        right: -26px;
+        top: 33%;
+        overflow: hidden;
+        z-index: 1;
+    }
+    .marquee{
+        height: auto;
+    }
+    h3.pg-header{
+        font-size: 1.5em;
+    }
+    #about>h1{
+        width: 100%;
+    }
+    #about>p{
+        width: 100%;
+    }
+    #about .steps{
+        width: 100%;
+        padding: 20px 10px;
+    }
+    #about .steps .srno{
+        width: 15%;
+    }
+    #about .steps .srcont{
+        width: 85%;
+        margin-left: 10px;
+    }
+    #services>#carser{
+        width: 100%;
+    }
+    #services>#bikser{
+        width: 100%;
+    }
+    .grid-container{
+        grid-template-columns: auto auto;
+    }
+    .teamcrd{
+        width: 100%;
+        grid-template-columns: auto auto;
+    }
+    .teamcrd>.teamper{
+        width: 180px;
+    }
+
+}
+
+
+@media screen and (min-device-width: 480px) and (max-device-width: 760px){
+    #page1{
+        height: 140vh;
+    }
+    #page1>img{
+        margin-top: 5em;
+    }
+    #page1>.dets{
+        width: 90%;
+        padding: 5px;
+        top: 30%;
+    }
+    #page1>.dets>h1{
+        color: var(--red);
+    }
+    #page1>.dets>h4{
+        margin-top: 1rem;
+        font-size: 1.1em;
+    }
+    .booking-form{
+        position: absolute;
+        width: 90%;
+        right: -26px;
+        top: 35%;
+        overflow: hidden;
+        z-index: 1;
+    }
+    .marquee{
+        height: auto;
+    }
+    h3.pg-header{
+        font-size: 1.5em;
+    }
+    #about>h1{
+        width: 100%;
+    }
+    #about>p{
+        width: 100%;
+    }
+    #about .steps{
+        width: 100%;
+        padding: 20px 10px;
+    }
+    #about .steps .srno{
+        width: 15%;
+    }
+    #about .steps .srcont{
+        width: 85%;
+        margin-left: 10px;
+    }
+    #services>#carser{
+        width: 100%;
+    }
+    #services>#bikser{
+        width: 100%;
+    }
+    .grid-container{
+        grid-template-columns: auto auto;
+    }
+    .teamcrd{
+        width: 100%;
+        grid-template-columns: auto auto;
+    }
+    .teamcrd>.teamper{
+        width: 180px;
+    }
+
+}
+
+/* FOR TABLET VIEW */
+
+@media screen and (min-device-width: 768px) and (max-device-width: 1024px) {
+    #page1>.dets{
+        width: 45%;
+        top: 35%;
+    }
+    #page1>.dets>h1{
+        font-size: 1.5rem;
+    }
+    #page1>.dets>h4{
+        font-size: 1.2rem;
+        margin-top: 2rem;
+    }
+    .booking-form{
+        width: 40%;
+        right: 0;
+        margin-right: 0;
+    }
+    .booking-form>h1{
+        font-size: 1.5rem;
+    }
+    #about .steps .srcont{
+        padding: 0 0 0 30px;
+    }
+    .grid-container{
+        grid-template-columns: auto auto;
+    }
+    .teamcrd{
+        grid-template-columns: auto auto;
+    }
+}
