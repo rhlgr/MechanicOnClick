@@ -71,13 +71,11 @@ def info_vehical(request):
     vehicals = list(Vehical.objects.filter(customer = customer))
     #print(vehicals)
     context = {'vehicals' : vehicals}
-    
     return render(request , 'ERP/vehical/info_vehical_page.html' , context)
 #Customer :- Service Views
 @login_required(login_url= 'login_page')
 @allowed_users(allowed_roles=[User.Role.CUSTOMER])
 def customer_services(request):
-    
     vehicals = Vehical.objects.filter(customer = Customer.objects.get(user=request.user))
     context = {}
     app_services = Service.objects.filter(is_approved = True , vehical__in = vehicals)
@@ -180,21 +178,24 @@ def employee_service_list(request):
 @login_required(login_url= 'login_page')
 @allowed_users(allowed_roles=[User.Role.EMPLOYEE,User.Role.ADMIN])
 def update_progress(request,pk):
-    form = UpdateProgressForm()
-    context = {}
-    context['form'] = form
+    print(pk)
+    context = {}   
     if request.method == 'POST':
         try :
             progress = request.POST['progress']
             service = Service.objects.get(id = pk)
+            print(progress)
             service.progress = progress
             service.save()
-            return redirect('employee_service_list' , pk)
+            return redirect('employee_service_list')
         except Exception as e:
             print(e)
             return redirect('progress_update_page')
+    form = UpdateProgressForm()
+    context['form'] = form
     return render(request , 'ERP/service/progress_form.html' , context)
-
+@login_required(login_url= 'login_page')
+@allowed_users(allowed_roles=[User.Role.EMPLOYEE,User.Role.ADMIN , User.Role.CUSTOMER])
 def dashboard(request):
     if request.user.role == User.Role.CUSTOMER:
         return render(request ,'ERP/dashboard/customer.html')
