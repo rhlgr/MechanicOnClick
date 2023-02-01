@@ -1,5 +1,5 @@
 from django.forms import ModelForm , Form
-from .models import Service ,Update
+from .models import Service ,Update , Vehical
 from django import forms
 class ServiceForm(ModelForm):
     class Meta:

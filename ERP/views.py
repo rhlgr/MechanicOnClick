@@ -4,7 +4,7 @@ from django.contrib.auth.decorators import login_required
 from .forms import UpdateForm , UpdateProgressForm
 from account.models import User , Customer , Employee
 from .models import Vehical , ProvidedService ,Service , Update
-
+from django.contrib import messages
 # Customer Views :- Vehicals
 @login_required(login_url= 'login_page')
 @allowed_users(allowed_roles=[User.Role.CUSTOMER])
@@ -12,33 +12,26 @@ def add_vehical(request):
     context = {}
     if request.method == 'POST':
         try :
-            
             user = request.user
-            
             customer = Customer.objects.get(user = user)
-            
             vehicalnumber = request.POST['vehicalnumber']
-            
             vechicaltype = request.POST['vehicaltype']
-            
             new_vehcial =  Vehical.objects.create(customer = customer , number = vehicalnumber , type = vechicaltype)
             new_vehcial.save()
-            
         except Exception as e:
             print(e)
+            messages.error(request, 'Error in adding Vehical')
             return redirect('add_vehical_page')
-
+    
     return render(request , 'ERP/vehical/add_vehical_page.html' , context)
 
 @login_required(login_url= 'login_page')
 @allowed_users(allowed_roles=[User.Role.CUSTOMER])
 def edit_vehical(request , pk):
-    user = request.user
-    #print(user)
-    customer = Customer.objects.get(user = user)
-    vehicals = list(Vehical.objects.filter(customer = customer))
+  
+    vehical = Vehical.objects.get(id = pk)
     #print(vehicals)
-    context = {'vehicals' : vehicals}
+    context = {'vehical' : vehical}
     if request.method == 'POST':
         try :
             user = request.user
@@ -47,18 +40,20 @@ def edit_vehical(request , pk):
             vehical_id = pk
             vehicalnumber = request.POST['vehicalnumber']
             vehicaltype = request.POST['vehicaltype']
-            print('info 1 :',vehicaltype , vehicalnumber , vehical_id)
+            #print('info 1 :',vehicaltype , vehicalnumber , vehical_id)
             vehical =  Vehical.objects.get(id = 1)
             if len(vehicalnumber) == 0:
                 vehicalnumber = vehical.number
             if len(vehicaltype) == 0:
                 vehicaltype = vehical.type
-            print('info 2 :',vehicaltype , vehicalnumber , vehical_id)
+            #print('info 2 :',vehicaltype , vehicalnumber , vehical_id)
             vehical.number = vehicalnumber
             vehical.type = vehicaltype
             vehical.save()
+            return redirect('info_vehical_page')
         except Exception as e :
             print(e)
+            messages.error(request, 'Error in Editing Vehical. Please try again')
             return redirect('edit_vehical_page')
     return render(request , 'ERP/vehical/edit_vehical_page.html' , context)
 
@@ -178,7 +173,7 @@ def employee_service_list(request):
 @login_required(login_url= 'login_page')
 @allowed_users(allowed_roles=[User.Role.EMPLOYEE,User.Role.ADMIN])
 def update_progress(request,pk):
-    print(pk)
+    #print(pk)
     context = {}   
     if request.method == 'POST':
         try :
