@@ -195,11 +195,8 @@ def update_progress(request,pk):
     context['form'] = form
     return render(request , 'ERP/service/progress_form.html' , context)
 @login_required(login_url= 'login_page')
-<<<<<<< HEAD
 @allowed_users(allowed_roles=[User.Role.EMPLOYEE,User.Role.ADMIN , User.Role.CUSTOMER])
-=======
 @allowed_users(allowed_roles=[User.Role.CUSTOMER,User.Role.EMPLOYEE,User.Role.ADMIN])
->>>>>>> e63abb5abf7fbba0dfd91f695fe2cac692b23e00
 def dashboard(request):
     if request.user.role == User.Role.CUSTOMER:
         return render(request ,'ERP/dashboard/customer.html')

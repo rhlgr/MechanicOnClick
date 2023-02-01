@@ -6,6 +6,8 @@ class Location(models.Model):
     state = models.CharField(max_length=50)
     city = models.CharField(max_length=50)
     pincode = models.CharField(max_length=10)
+    def __str__(self) -> str:
+        return str(self.city) + '-' + str(self.pincode)
 class Center(models.Model):
     name = models.CharField(max_length=100)
     location = models.ForeignKey(Location , null=True , blank= True , on_delete= models.SET_NULL)

@@ -12,38 +12,33 @@ class Vehical(models.Model):
         return super().save(*args , **kwargs)
     def __str__(self) -> str:
         return self.number
-class ProvidedService(models.Model):
+class ProvidedService():
+    pass
+class CenterServices(models.Model):
     name = models.CharField(max_length=100)
     description = models.CharField(max_length=400, default="Diam dolor diam ipsum sit amet diam et eos erat ipsum")
-    duration = models.DurationField()
-    renew_time = models.DurationField()
     price = models.IntegerField(default=500)
-    on_display = models.BooleanField(default=False)
-    icon = models.CharField(max_length=50 , default="fa fa-certificate fa-3x text-primary flex-shrink-0")
-
+    center = models.ForeignKey(Center,on_delete= models.CASCADE)
     def __str__(self) -> str:
-        return self.name + " : " + str(self.price)
+        return str(self.name) + ' - ' + str(self.center) + '- ' + str(self.price)
 
 class Service(models.Model):
-    
-    vehical = models.ForeignKey(Vehical , on_delete=models.SET_NULL, blank=True , null= True)
-    #service_time = models.DurationField()
-    #service_date = models.DateTimeField()
-    service_estimate = models.FloatField(default= 100)
-    center = models.ForeignKey(Center , on_delete=models.SET_NULL, blank=True , null= True)
     class Progress(models.TextChoices):
         WAITING = 'WAITING' , 'Waiting'
         DOING = 'DOING' , 'Doing'
+    vehical = models.ForeignKey(Vehical , on_delete=models.SET_NULL, blank=True , null= True)
+    service_estimate = models.CharField(max_length=10 ,default= '1000')
+    center = models.ForeignKey(Center , on_delete=models.SET_NULL, blank=True , null= True)
+    services = models.ManyToManyField(CenterServices)
     progress = models.CharField(max_length=20 , choices=Progress.choices , default= Progress.WAITING)
     # Customer Already in vehical
-    services = models.ManyToManyField(ProvidedService)
-    additional_services = models.CharField(max_length=200, blank = True , null = True)
-    #additional_services_cost = models.IntegerField(blank = True , null = True)
+    additional_services = models.CharField(max_length=200 ,default = None)
+    additional_services_cost = models.IntegerField(default=0)
     is_approved = models.BooleanField(default=False)
     #customer = models.ForeignKey(Customer , on_delete=models.SET_NULL, blank=True , null= True)
 
     def __str__(self) -> str:
-        return self.vehical.number
+        return str(self.vehical.number) + ' - '+ str(self.center.name)
 
 
 class Update(models.Model):
