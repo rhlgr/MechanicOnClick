@@ -1,0 +1,6 @@
+<select class = "round" name="model" required>
+    <option selected>Select Vehical Model</option>
+    {% for model in models %}
+    <option value="{{model.id}}">{{model.name}}</option>
+    {% endfor %}
+</select>

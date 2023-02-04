@@ -19,12 +19,13 @@ class VehicalModel(models.Model):
         return str(self.brand) + ' - ' +str(self.name)
 
 class Booking(models.Model):
+    model = models.ForeignKey(VehicalModel, null=True , blank=True , on_delete=models.SET_NULL)
     fule_type = models.CharField(max_length=50)
     phone = models.CharField(max_length=50, )
     issue = models.CharField(max_length=200, null=True , blank=True)
     
     def __str__(self) -> str:
-        return self.name 
+        return str(self.phone) + " - " + str(self.issue)
 
 class Contact(models.Model):
     name = models.CharField(max_length=50, null=True , blank=True)

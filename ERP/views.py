@@ -213,10 +213,9 @@ def estimates(request):
     context['estimates'] = estimates
     return render(request , 'ERP/estimate/estimates_view.html',context=context)
 def genrate_estimate(request , pk):
-    
     service = Service.objects.get(id = pk)
     print(service)
-    file_name = os.path.join(BASE_DIR ,MEDIA_ROOT , 'media' , 'estimates' ,f'{str(service.center)}{str(service.vehical)}.pdf')
+    file_name = os.path.join(BASE_DIR ,MEDIA_ROOT , 'media' , 'estimates' ,f'{str(service.id)}{str(service.vehical)}.pdf')
     table_data = [['Name' , 'Price' , 'Tax' , 'Total']]
     for ser in list(service.services.all()):
         tot = ser.price * ((100 + ser.tax)/100)

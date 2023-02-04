@@ -10,8 +10,28 @@
           <p>Search for your vehicle</p>
           <form method="post">
             {% csrf_token %}
-              {{booking_form.as_p}}
+              <select class="round" name="brands" hx-get="{% url 'get_models' %}" hx-trigger="change" hx-target="#models">
+                <option selected>Select Brand</option>
+                {% for brand in brands %}
+                <option value="{{brand.id}}">{{brand.name}}</option>
+                {% endfor %}
+              </select>
+              <div id = 'models'>{% include 'Base/partial/models.html' %}</div>
+              <select class="round" name="fuel">
+                <option selected>Select Fuel Type</option>
+                <option value="Petrol">Petrol</option>
+                <option value="Diesel">Diesel</option>
+             </select>
+              <input type="tel" name="phone"  placeholder="Phone Number" pattern="[0-9]{10}" required>
+              <input type="text" name="request"  placeholder="Special Request">
                <input id="submit" type="submit" value="Submit">
           </form>
+          {% if messages %}
+<ul class="messages">
+    {% for message in messages %}
+    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+    {% endfor %}
+</ul>
+{% endif %}
       </div>
   </div>
