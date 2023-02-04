@@ -68,7 +68,7 @@ def employee_register(request):
         password1 = request.POST['password1']
         password2 = request.POST['password2']
         center = Center.objects.get(id =request.POST['center'])
-        emp_img = request.POST['emp_img'] 
+        #emp_img = request.POST['emp_img'] 
         try :
             if password1 == password2:
                 user = User.objects.create_user(username=username ,role = User.Role.EMPLOYEE, password = password1 , phone = phone , first_name = first_name , last_name = last_name)
@@ -76,11 +76,13 @@ def employee_register(request):
                 print("done")
                 #location = "Bhopal"
                 try :
-                    employee = Employee.objects.create(user = user , center = center , emp_img = emp_img)
+                    employee = Employee.objects.create(user = user , center = center)
                     employee.save()
                     return redirect('login_page')
-                except :
+                except Exception as e :
+                    print(e)
                     user.delete()
+                    messages.error(request, 'Something Went Wrong')
                     return redirect('employee_register')
             
         except :
