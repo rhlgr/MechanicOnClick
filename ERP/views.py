@@ -204,8 +204,9 @@ def update_progress(request,pk):
 def dashboard(request):
     if request.user.role == User.Role.CUSTOMER:
         return render(request ,'ERP/dashboard/customer.html')
-    if request.user.role == User.Role.EMPLOYEE:
+    if request.user.role == User.Role.EMPLOYEE or request.user.role == User.Role.ADMIN:
         return render(request ,'ERP/dashboard/employee.html')
+
 
 def estimates(request):
     context = {}
