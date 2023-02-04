@@ -41,10 +41,14 @@ def login(request):
         password = request.POST['password']
         print(username , password)
         user = auth.authenticate(username = username , password = password)
-
+        
         if user is not None:
-            auth.login(request, user)
-            return redirect('dashboard')
+            try :
+                auth.login(request, user)
+                return redirect('dashboard')
+            except :
+                messages.error(request , "You are not authorized Yet Please Contact Admin")
+            return redirect('login_page')
         else :
             print('Login Failed')
             messages.error(request , "Invalid Credentials")
