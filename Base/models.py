@@ -3,22 +3,24 @@ from ERP.models import ProvidedService
 from account.models import Employee
 # Create your models here.
 class Brand(models.Model):
-    logo = models.ImageField(upload_to='/brands/logos')
+    logo = models.ImageField(upload_to='media/brands/logos')
     name = models.TextField(max_length=50)
     has_two_wheeler = models.BooleanField(default=True)
     has_four_wheeler = models.BooleanField(default=True)
-class VechicalModel(models.Model):
-    class FuleType(models.TextChoices):
-        PETROL = 'PETROL' , 'PETROL'
-        DIESEL = 'DIESEL' , 'DIESEL'
-        CNG = 'CNG' , 'CNG'
-    fule_type = models.TextField(max_length=50 , choices=FuleType.choices)
-    brand = models.ForeignKey(Brand , on_delete=models.CASCADE)
+
+    def __str__(self) -> str:
+        return str(self.name)
+
+class VehicalModel(models.Model):
+    brand = models.ForeignKey(Brand , on_delete=models.CASCADE , related_name= 'brand')
     name = models.TextField(max_length=50)
 
-class Booking(models.Model):
+    def __str__(self) -> str:
+        return str(self.brand) + ' - ' +str(self.name)
 
-    phone = models.CharField(max_length=50, null=True , blank=True)
+class Booking(models.Model):
+    fule_type = models.CharField(max_length=50)
+    phone = models.CharField(max_length=50, )
     issue = models.CharField(max_length=200, null=True , blank=True)
     
     def __str__(self) -> str:
