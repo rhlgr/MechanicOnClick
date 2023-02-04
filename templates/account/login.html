@@ -34,11 +34,17 @@
           <button type="submit" class="log-in"> Log In </button>
        </div>
       </form>
-
+          {% if messages %}
+<ul class="messages">
+    {% for message in messages %}
+    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+    {% endfor %}
+</ul>
+{% endif %}
       
        <div class="other">
           <button class="btn submits frgt-pass">Forgot Password</button>
-          <button  class="btn submits sign-up" onclick="window.open('{% url % }','_self');">Sign Up 
+          <button  class="btn submits sign-up">Sign Up 
           <i class="fa fa-user-plus" aria-hidden="true"></i>
           </button>
        </div>

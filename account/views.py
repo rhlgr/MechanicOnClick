@@ -2,6 +2,7 @@ from django.shortcuts import render , redirect
 from .models import Customer , User , Employee ,EmployeeAdmin
 from django.contrib import messages
 from django.contrib.auth.models import auth
+from django.contrib import messages
 from ERP.models import Center
 # Create your views here.
 def customer_register(request):
@@ -47,7 +48,7 @@ def login(request):
         else :
             print('Login Failed')
             messages.error(request , "Invalid Credentials")
-            return render(request , 'account/login.html')
+            return redirect('login_page')
     else :
         return render(request , 'account/login.html')
 
