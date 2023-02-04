@@ -78,6 +78,7 @@ def employee_register(request):
                 try :
                     employee = Employee.objects.create(user = user , center = center)
                     employee.save()
+                    messages.info(request, 'You can login as admin If Authorized By Your Local Admin')
                     return redirect('login_page')
                 except Exception as e :
                     print(e)
@@ -86,6 +87,7 @@ def employee_register(request):
                     return redirect('employee_register')
             
         except :
+            messages.error(request, 'Something Went Wrong')
             return redirect('employee_register')
     else :
         centers = Center.objects.all()
@@ -103,7 +105,7 @@ def admin_register(request):
         password1 = request.POST['password1']
         password2 = request.POST['password2']
         center = Center.objects.get(id =request.POST['center'])
-        emp_img = request.POST['emp_img'] 
+        #emp_img = request.POST['emp_img'] 
         try :
             if password1 == password2:
                 user = User.objects.create_user(username=username ,role = User.Role.ADMIN, password = password1 , phone = phone , first_name = first_name , last_name = last_name)
@@ -111,19 +113,22 @@ def admin_register(request):
                 print("done")
                 #location = "Bhopal"
                 try :
-                    print('Trying')
-                    employee = EmployeeAdmin.objects.create(user = user , center = center , emp_img = emp_img)
+                    #print('Trying')
+                    employee = EmployeeAdmin.objects.create(user = user , center = center )
                     employee.save()
-                    print('Hurray')
+                    #print('Hurray')
+                    messages.info(request, 'You can login as admin If Authorized By MOC')
                     return redirect('login_page')
                 except Exception as e :
                     print(e)
                     user.delete()
+                    messages.error(request, 'Something Went Wrong')
                     return redirect('employee_admin_register')
                 
         except Exception as e :
             print('Oops')
             print(e)
+            messages.error(request, 'Something Went Wrong')
             return redirect('employee_admin_register')
     else :
         centers = Center.objects.all()
