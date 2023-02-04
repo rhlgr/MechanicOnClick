@@ -2,7 +2,6 @@ from django.shortcuts import render , redirect
 from .models import Customer , User , Employee ,EmployeeAdmin
 from django.contrib import messages
 from django.contrib.auth.models import auth
-from django.contrib import messages
 from ERP.models import Center
 # Create your views here.
 def customer_register(request):
@@ -27,6 +26,7 @@ def customer_register(request):
                     return redirect('login_page')
                 except :
                     user.delete()
+                    messages.error(request ,'Something Went Wrong!')
                     return redirect('customer_register')
             
         except :
