@@ -1,7 +1,7 @@
 from django.urls import path
 from .views import (add_vehical , edit_vehical , info_vehical , add_service , customer_services , approve_service, 
  service_updates , employee_service_updates , employee_service_list , update_progress , dashboard , genrate_estimate,
- estimates
+ estimates , delete_estimate
  )
 urlpatterns = [
     # Vehical Paths
@@ -20,4 +20,5 @@ urlpatterns = [
     # Estimate Paths
     path('estimate/gen/<str:pk>', genrate_estimate , name ='genrate_estimate'),
     path('estimates/', estimates , name ='estimates'),
+    path('estimate/del/<str:pk>', delete_estimate , name ='delete_estimate'),
     ]

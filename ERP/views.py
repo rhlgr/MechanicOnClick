@@ -208,7 +208,10 @@ def dashboard(request):
         return render(request ,'ERP/dashboard/employee.html')
 
 def estimates(request):
-    pass
+    context = {}
+    estimates = list(Estimate.objects.all())
+    context['estimates'] = estimates
+    return render(request , 'ERP/estimate/estimates_view.html',context=context)
 def genrate_estimate(request , pk):
     
     service = Service.objects.get(id = pk)
@@ -229,7 +232,13 @@ def genrate_estimate(request , pk):
     
    
     
-    return redirect('employee_service_list')
+    return redirect('estimates')
+
+def delete_estimate(request , pk):
+    estimate = Estimate.objects.get(id = pk)
+    estimate.delete()
+    return redirect('estimates')
    
+
   
     
