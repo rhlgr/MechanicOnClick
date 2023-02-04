@@ -30,7 +30,7 @@
         <tr>
             <td>{{service.vehical.number}}</td>
             <td>{{service.vehical.type}}</td>
-            <td>{{service.service_estimate }} </td>
+            <td><a class="btn btn-outline-secondary"> Download</a></td>
             <td>{{service.center.name}}</td>
             <td>{{service.is_approved}}</td>
             <td>{{service.progress}}</td>
@@ -43,6 +43,7 @@
             </td>
             <td>{{service.additional_services}}</td>
             <td> 
+                <a class="btn btn-outline-info" href="{% url 'genrate_estimate' service.id %}">Genrate Estimate</a>
                 <a class="btn btn-outline-info" href="{% url 'progress_update_page' service.id %}">Update Progress</a>
                 <a class="btn btn-outline-secondary" href="{% url 'employee_service_update_page' service.id %}">Add Update</a>
             </td>

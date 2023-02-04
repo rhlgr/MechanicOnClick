@@ -16,7 +16,6 @@ def allowed_users(allowed_roles= []):
             print(role)
             
             if role in allowed_roles:
-                print('here')
                 return view_func(request , *args, **kwargs)
             else :
                 print('User Not allowed')
