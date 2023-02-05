@@ -75,7 +75,7 @@ def employee_register(request):
         #emp_img = request.POST['emp_img'] 
         try :
             if password1 == password2:
-                user = User.objects.create_user(username=username ,role = User.Role.EMPLOYEE, password = password1 , phone = phone , first_name = first_name , last_name = last_name)
+                user = User.objects.create_user(username=username ,role = User.Role.NA, password = password1 , phone = phone , first_name = first_name , last_name = last_name)
                 user.save()
                 print("done")
                 #location = "Bhopal"
