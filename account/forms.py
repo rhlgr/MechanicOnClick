@@ -5,8 +5,12 @@ from .models import Customer , Employee ,User
 class UserForm(UserCreationForm):
     class Meta:
         model = User
-        fields = ['username' , 'first_name' , 'last_name','email'  ,'phone' , 'password1' , 'password2']
+        fields = ['username' , 'role' ,'first_name' , 'last_name','email'  ,'phone' , 'password1' , 'password2']
+class RoleForm(ModelForm):
+    class Meta:
+        model = User
+        fields = [ 'role']
 class EmployeeForm(ModelForm):
     class Meta:
         model = Employee
-        fields = ['center' , 'emp_img']
+        fields = ['center']

@@ -1,7 +1,7 @@
 from django.urls import path
 from .views import (add_vehical , edit_vehical , info_vehical , add_service , customer_services , approve_service, 
  service_updates , employee_service_updates , employee_service_list , update_progress , dashboard , genrate_estimate,
- estimates , delete_estimate , approve_page , activate_employee , deactivate_employee
+ estimates , delete_estimate , approve_page , activate_employee , deactivate_employee , change_role
  )
 urlpatterns = [
     # Vehical Paths
@@ -25,5 +25,6 @@ urlpatterns = [
     path('approve/', approve_page , name ='approve_page'),
     path('activate/<str:pk>', activate_employee , name ='activate_employee'),
     path('deactivate/<str:pk>', deactivate_employee , name ='deactivate_employee'),
+    path('change/role/<str:pk>', change_role , name ='change_role'),
 
     ]

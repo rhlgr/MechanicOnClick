@@ -7,6 +7,8 @@ from .models import Vehical  ,Service , Update , CenterServices , Estimate
 from django.contrib import messages
 from .reports import make_report
 import os
+
+from account.forms import RoleForm
 from MOC.settings import MEDIA_ROOT , BASE_DIR
 # Customer Views :- Vehicals
 @login_required(login_url= 'login_page')
@@ -224,7 +226,28 @@ def deactivate_employee(request , pk):
     employee.user.is_active = False
     employee.user.save()
     return redirect('approve_page')
+@login_required(login_url= 'login_page')
+@allowed_users(allowed_roles=[User.Role.ADMIN])
+def change_role(request , pk):
+    employee = Employee.objects.get(id = pk)
+    if request.method == 'POST':
+        try :
+            role = request.POST['role']
+            employee.user.role = role
+            employee.user.save()
+            messages.info(request , 'Role Changed Succesfully')
+            return redirect('change_role' , pk)
+        except Exception as e :
+            print(e)
+            messages.info(request , 'Something Went Wrong ' + str(e))
+            return redirect('change_role' , pk)
 
+    context = {
+        'employee' : employee,
+        'form' : RoleForm()
+    }
+
+    return render(request , 'ERP/HR/change_role_page.html',context)
 @login_required(login_url= 'login_page')
 @allowed_users(allowed_roles=[User.Role.EMPLOYEE,User.Role.ADMIN , User.Role.CUSTOMER])
 def dashboard(request):
