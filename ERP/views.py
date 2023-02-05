@@ -168,6 +168,7 @@ def add_service(request):
     'vehicals' : vehicals
     }
     return render(request , 'ERP/service/add.html' , context)
+#
 
 @login_required(login_url= 'login_page')
 @allowed_users(allowed_roles=[User.Role.EMPLOYEE,User.Role.ADMIN])
@@ -198,6 +199,31 @@ def update_progress(request,pk):
     form = UpdateProgressForm()
     context['form'] = form
     return render(request , 'ERP/service/progress_form.html' , context)
+
+# Admin Only Views
+@login_required(login_url= 'login_page')
+@allowed_users(allowed_roles=[User.Role.ADMIN])
+def approve_page(request):
+    admin = Employee.objects.get(user = request.user)
+    employees = Employee.objects.filter(center = admin.center)
+    context = {'employees' : employees}
+    return render(request , 'ERP/HR/approve_page.html' , context)
+
+@login_required(login_url= 'login_page')
+@allowed_users(allowed_roles=[User.Role.ADMIN])
+def activate_employee(request , pk):
+    employee = Employee.objects.get(id = pk)
+    employee.user.is_active = True
+    employee.user.save()
+    return redirect('approve_page')
+
+@login_required(login_url= 'login_page')
+@allowed_users(allowed_roles=[User.Role.ADMIN])
+def deactivate_employee(request , pk):
+    employee = Employee.objects.get(id = pk)
+    employee.user.is_active = False
+    employee.user.save()
+    return redirect('approve_page')
 
 @login_required(login_url= 'login_page')
 @allowed_users(allowed_roles=[User.Role.EMPLOYEE,User.Role.ADMIN , User.Role.CUSTOMER])

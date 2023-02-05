@@ -8,6 +8,7 @@ class User(AbstractUser):
         ADMIN = "ADMIN" , "Admin"
         CUSTOMER = 'CUSTOMER' , "Customer"
         EMPLOYEE = 'EMPLOYEE' , 'Employee'
+        NA = 'NA' , 'NA'
     #base_role = Role.CUSTOMER
     phone = models.CharField(max_length=13,unique=True , null=True , blank=True)
     role = models.CharField(max_length=50 , choices=Role.choices ,default= Role.CUSTOMER)

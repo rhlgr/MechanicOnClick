@@ -1,0 +1,32 @@
+{% extends 'ERP/base.html' %}
+{% load static %}
+{% block content %}
+<h1>Hi {{request.user}} !</h1>  
+<h1>Employees</h1>
+{% include 'ERP/search_widget.html' %}
+<table id="myTable" class = 'table'>
+    <tr>
+        <th>Name</th>
+        <th>Phone</th>
+        <th>Role</th>
+        <th>Action</th>
+        </tr>
+        
+
+        {% for employee in employees %}
+        <tr>
+            <td>{{employee.user}}</td>
+            <td>{{employee.user.phone}}</td>
+            <td>{{employee.user.role}}</td>
+            <td> 
+                <a class="btn btn-outline-info" href="{% url 'activate_employee' employee.id %}">Activate Employee Id</a>
+                <a class="btn btn-outline-info" href="{% url 'deactivate_employee' employee.id %}">Deactivate Employee Id</a>
+                <a class="btn btn-outline-secondary" href="">Change Role</a>
+            </td>
+        </tr>
+        {% endfor %}
+        </table>
+        
+
+       
+{% endblock %}
