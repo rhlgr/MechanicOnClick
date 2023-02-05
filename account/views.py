@@ -82,13 +82,16 @@ def employee_register(request):
                 try :
                     employee = Employee.objects.create(user = user , center = center)
                     employee.save()
-                    messages.info(request, 'You can login as admin If Authorized By Your Local Admin')
+                    messages.info(request, 'You can login  if authorized By Your Local Admin')
                     return redirect('login_page')
                 except Exception as e :
                     print(e)
                     user.delete()
                     messages.error(request, 'Something Went Wrong')
                     return redirect('employee_register')
+            else :
+                 messages.error(request, 'Make sure you enter correct password in both fields.')
+                 return redirect('employee_register')
             
         except :
             messages.error(request, 'Something Went Wrong')
