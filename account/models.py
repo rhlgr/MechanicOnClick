@@ -8,7 +8,18 @@ class User(AbstractUser):
         ADMIN = "ADMIN" , "Admin"
         CUSTOMER = 'CUSTOMER' , "Customer"
         EMPLOYEE = 'EMPLOYEE' , 'Employee'
+        HR = 'HR' , 'Human Resource Manager'
+        SM = 'SM' , 'Service Manager'
+        SA = 'SA' , 'Service Advisor'
         NA = 'NA' , 'NA'
+        BSM = 'BSM' , 'Body Shop Manager'
+        BSA = 'BSA' , 'Body Shop Advisor'
+        CRM = 'CRM' , 'Customer Relationship Manager'
+        SPM = 'SPM' , 'Spare Part Manager'
+        SPE = 'SPE' , 'Spare Part Executive'
+        AM  = 'AM' , 'Account Manager'
+    
+
     #base_role = Role.CUSTOMER
     phone = models.CharField(max_length=13,unique=True , null=True , blank=True)
     role = models.CharField(max_length=50 , choices=Role.choices ,default= Role.CUSTOMER)
