@@ -3,10 +3,7 @@
 {% block content %}
 <h1>Hi {{request.user}} !</h1>  
 <h1>Services</h1>
-<div >
-    <input placeholder="Search" type="text" id="searchbox" onkeyup="searchFunction()">
-    <a href="" class="btn btn-info">Reset</a>
-</div>
+{% include 'ERP/search_widget.html' %}
 <table id="myTable" class = 'table'>
     <tr>
         <th>Number</th>

@@ -2,7 +2,8 @@
 {% load static %}
 {% block content %}
 <h1>Hi {{request.user}} !</h1>  
-<table class ="table" >
+{% include 'ERP/search_widget.html' %}
+<table id="myTable" class ="table" >
     <tr><th>Number</th><th>Type</th><th>Edit Info</th></tr>
 
         {% for vehical in vehicals %}

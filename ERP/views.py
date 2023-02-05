@@ -207,13 +207,20 @@ def dashboard(request):
     if request.user.role == User.Role.EMPLOYEE or request.user.role == User.Role.ADMIN:
         return render(request ,'ERP/dashboard/employee.html')
 
-
+@login_required(login_url= 'login_page')
+@allowed_users(allowed_roles=[User.Role.EMPLOYEE,User.Role.ADMIN])
 def estimates(request):
     context = {}
-    estimates = list(Estimate.objects.all())
+    employee = Employee.objects.get(user = request.user)
+    services = Service.objects.filter(center = employee.center)
+    estimates = list(Estimate.objects.filter(service__in = services))
     context['estimates'] = estimates
     return render(request , 'ERP/estimate/estimates_view.html',context=context)
+
+@login_required(login_url= 'login_page')
+@allowed_users(allowed_roles=[User.Role.EMPLOYEE,User.Role.ADMIN])
 def genrate_estimate(request , pk):
+
     service = Service.objects.get(id = pk)
     print(service)
     file_name = os.path.join(BASE_DIR ,MEDIA_ROOT , 'media' , 'estimates' ,f'{str(service.id)}{str(service.vehical)}.pdf')
@@ -234,6 +241,8 @@ def genrate_estimate(request , pk):
     
     return redirect('estimates')
 
+@login_required(login_url= 'login_page')
+@allowed_users(allowed_roles=[User.Role.EMPLOYEE,User.Role.ADMIN])
 def delete_estimate(request , pk):
     estimate = Estimate.objects.get(id = pk)
     estimate.delete()
