@@ -1,5 +1,5 @@
 from django.shortcuts import render , redirect
-from .forms import BookingForm , ContactForm
+from .forms import ContactForm
 from .models import Brand , VehicalModel , Booking
 from django.contrib import messages
 
@@ -7,9 +7,8 @@ from django.contrib import messages
 # Create your views here.
 def get_context():
     context = {}
-    booking_form = BookingForm()
+
     brands = Brand.objects.all()
-    context['booking_form'] = booking_form
     context['contact_form'] = ContactForm
     context['brands'] = brands
     
@@ -53,8 +52,8 @@ def unauth_error(request):
 
 def contact(request):
     if request.method == 'POST':
-        form = ContactForm()
-        if form.is_valid:
+        form = ContactForm(request.POST)
+        if form.is_valid():
             print('The form is Valid')
             try :
                 form.save()
