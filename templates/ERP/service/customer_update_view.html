@@ -1,9 +1,12 @@
 {% extends 'ERP/base.html' %}
 {% load static %}
 {% block content %}
+
 <h1>Hi {{request.user}} !</h1>  
-<div class = 'card-deck'>
+<div class="container">
+<div class='card-deck'>
     {% for update in updates %}
+    
 <div class="card" style="width: 18rem;">
     <img class="card-img-top" src="{{update.update_image.url}}" alt="Card image cap">
     <div class="card-body">
@@ -14,5 +17,6 @@
     
   </div>
   {% endfor %}
+</div>
 </div>
 {% endblock %}

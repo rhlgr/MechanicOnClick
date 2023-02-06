@@ -7,7 +7,6 @@ from .models import Vehical  ,Service , Update , CenterServices , Estimate
 from django.contrib import messages
 from .reports import make_report
 import os
-
 from account.forms import RoleForm
 from MOC.settings import MEDIA_ROOT , BASE_DIR
 # Customer Views :- Vehicals
@@ -94,7 +93,22 @@ def approve_service(request , pk):
     if service.vehical in vehicals:
         service.is_approved = True
         service.save()
-    return redirect('customer_service_page')
+    return redirect('approve_estimate' , pk)
+
+def approve_estimate(request , pk):
+    service = Service.objects.get(id = pk)
+    vehicals = Vehical.objects.filter(customer = Customer.objects.get(user=request.user))
+    if service.vehical in vehicals:
+        try :
+            estimate = Estimate.objects.get(service = service)
+            context = {'estimate' : estimate}
+            return render(request , 'ERP/estimate/approve_estimate_page.html' , context)
+        except Exception as e:
+            print(e)
+            return render(request , 'ERP/estimate/not_ready.html')
+
+    else:
+        return redirect('unauth_page')
 # Customer Service Updates
 @login_required(login_url= 'login_page')
 @allowed_users(allowed_roles=[User.Role.CUSTOMER])

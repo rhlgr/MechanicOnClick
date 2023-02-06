@@ -1,0 +1,19 @@
+{% extends 'ERP/base.html' %}
+{% load static %}
+{% block content %}
+<h1> Estimate View</h1>
+{% include 'ERP/search_widget.html' %}
+<table id = "myTable" class = 'table'>
+<tr><th>ID</th><th>Service</th><th>Price</th><th>Date</th><th>Actions</th></tr>
+
+<tr>
+    <td>{{estimate.id}}</td>
+    <td>{{estimate.service}}</td>
+    <td>{{estimate.price}}</td>
+    <td>{{estimate.created_at}}</td>
+    <td><a href = '{{estimate.report.url}}' class="btn btn-outline-secondary"> Download</a>
+        <a href = '{% url "approve_service" estimate.service.id %}' class="btn btn-outline-secondary"> Approve</a></td>
+</tr>
+
+</table>
+{% endblock %}

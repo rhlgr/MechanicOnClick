@@ -31,7 +31,7 @@
             
             </td>
             <td>{{service.additional_services}}</td>
-            <td> <a class="btn btn-outline-info" href="services/view/update/{{service.id}}">Check Update</a></td>
+            <td> <a class="btn btn-outline-info" href="{% url 'customer_service_updates_page' service.id %}">Check Update</a></td>
         </tr>
         {% endfor %}
         </table>
@@ -64,7 +64,7 @@
                     
                     </td>
                     <td>{{service.additional_services}}</td>
-                    <td> <a class="btn btn-outline-dark" href="services/approve/{{service.id}}">Approve Service</a></td>
+                    <td> <a class="btn btn-outline-dark" href="{% url 'approve_estimate' service.id %}">View Estimate</a></td>
                 </tr>
                 {% endfor %}
 
