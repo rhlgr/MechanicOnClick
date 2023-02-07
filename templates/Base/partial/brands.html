@@ -1,0 +1,6 @@
+<select class="round" name="brands" hx-get="{% url 'get_models' %}" hx-trigger="change" hx-target="#models">
+    <option selected>Select Brand</option>
+    {% for brand in brands %}
+    <option value="{{brand.id}}">{{brand.name}}</option>
+    {% endfor %}
+</select>

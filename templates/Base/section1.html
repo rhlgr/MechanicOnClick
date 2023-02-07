@@ -10,12 +10,12 @@
           <p>Search for your vehicle</p>
           <form method="post">
             {% csrf_token %}
-              <select class="round" name="brands" hx-get="{% url 'get_models' %}" hx-trigger="change" hx-target="#models">
-                <option selected>Select Brand</option>
-                {% for brand in brands %}
-                <option value="{{brand.id}}">{{brand.name}}</option>
-                {% endfor %}
+              <select class="round" name="type" hx-get="{% url 'get_brands' %}" hx-trigger="change" hx-target="#brandss">
+                <option selected>Select Type</option> 
+                <option value="1">Two Wheeler</option>
+                <option value="2">Four Wheeler</option>
               </select>
+              <div id = 'brands'>{% include 'Base/partial/brands.html' %}</div>
               <div id = 'models'>{% include 'Base/partial/models.html' %}</div>
               <select class="round" name="fuel">
                 <option selected>Select Fuel Type</option>

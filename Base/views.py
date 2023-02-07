@@ -7,10 +7,7 @@ from django.contrib import messages
 # Create your views here.
 def get_context():
     context = {}
-
-    brands = Brand.objects.all()
     context['contact_form'] = ContactForm
-    context['brands'] = brands
     
     return context
 #htmx Helper funtion
@@ -22,6 +19,14 @@ def get_models(request):
     context = {'models' : models}
 
     return render(request , 'Base/partial/models.html' , context)
+def get_brands(request):
+    type = request.GET.get('type')
+    if type == '1':
+        brands = Brand.objects.filter(has_two_wheeler = True)
+    elif type == '2':
+        brands = Brand.objects.filter(has_four_wheeler = True)
+    context = {'brands' : brands}
+    return render(request , 'Base/partial/brands.html' , context)
 # @login_required(login_url= 'customer_login')
 # @allowed_users(allowed_roles=[User.Role.CUSTOMER])
 def home(request):
@@ -33,7 +38,7 @@ def home(request):
             fuel =  request.POST.get('fuel')
             issue = request.POST.get('request')
             phone = request.POST.get('phone')
-            print(fuel , issue , model , phone)
+            #print(fuel , issue , model , phone)
         
             x = Booking.objects.create(model=model ,phone = phone , fule_type = fuel , issue = issue)
             x.save()
