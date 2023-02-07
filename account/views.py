@@ -1,5 +1,5 @@
 from django.shortcuts import render , redirect
-from .models import Customer , User , Employee ,EmployeeAdmin
+from .models import Customer , User , Employee 
 from django.contrib import messages
 from django.contrib.auth.models import auth
 from ERP.models import Center
@@ -121,7 +121,7 @@ def admin_register(request):
                 #location = "Bhopal"
                 try :
                     #print('Trying')
-                    employee = EmployeeAdmin.objects.create(user = user , center = center )
+                    employee = Employee.objects.create(user = user , center = center )
                     employee.save()
                     #print('Hurray')
                     messages.info(request, 'You can login as admin If Authorized By MOC')

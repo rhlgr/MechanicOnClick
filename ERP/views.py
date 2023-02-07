@@ -94,7 +94,8 @@ def approve_service(request , pk):
         service.is_approved = True
         service.save()
     return redirect('approve_estimate' , pk)
-
+@login_required(login_url= 'login_page')
+@allowed_users(allowed_roles=[User.Role.CUSTOMER])
 def approve_estimate(request , pk):
     service = Service.objects.get(id = pk)
     vehicals = Vehical.objects.filter(customer = Customer.objects.get(user=request.user))
@@ -267,9 +268,10 @@ def change_role(request , pk):
 def dashboard(request):
     if request.user.role == User.Role.CUSTOMER:
         return render(request ,'ERP/dashboard/customer.html')
-    if request.user.role == User.Role.EMPLOYEE or request.user.role == User.Role.ADMIN:
+    if request.user.role == User.Role.EMPLOYEE:
         return render(request ,'ERP/dashboard/employee.html')
-
+    if request.user.role == User.Role.ADMIN:
+        return render(request ,'ERP/dashboard/admin.html')
 @login_required(login_url= 'login_page')
 @allowed_users(allowed_roles=[User.Role.EMPLOYEE,User.Role.ADMIN])
 def estimates(request):
@@ -297,17 +299,23 @@ def genrate_estimate(request , pk):
     table_data.append(x)
     print(table_data)
     make_report(table_data=table_data , file_name=file_name , center_name=str(service.center))
-    new_estimate = Estimate.objects.create(service = service , report = file_name)
-    new_estimate.save()
+    try :
+        new_estimate = Estimate.objects.create(service = service , report = file_name)
+        new_estimate.save()
+        return redirect('estimates')
+    except :
+        messages.error(request , 'Only one estimate can be genrated for a service.')
+        return redirect('employee_service_list')
     
    
     
-    return redirect('estimates')
 
 @login_required(login_url= 'login_page')
 @allowed_users(allowed_roles=[User.Role.EMPLOYEE,User.Role.ADMIN])
 def delete_estimate(request , pk):
     estimate = Estimate.objects.get(id = pk)
+    estimate.service.is_approved = False
+    estimate.service.save()
     estimate.delete()
     return redirect('estimates')
    

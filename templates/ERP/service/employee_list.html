@@ -4,6 +4,14 @@
 <h1>Hi {{request.user}} !</h1>  
 <h1>Services</h1>
 {% include 'ERP/search_widget.html' %}
+{% if messages %}
+<ul class="messages">
+    {% for message in messages %}
+    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+    {% endfor %}
+</ul>
+{% endif %}
+
 <table id="myTable" class = 'table'>
     <tr>
         <th>Number</th>
@@ -42,6 +50,7 @@
         </tr>
         {% endfor %}
         </table>
+     
         
 
        
