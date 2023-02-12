@@ -1,7 +1,8 @@
 from django.db import models
 import uuid
-from account.models import Customer
+from account.models import Customer , Employee
 from Franchise.models import Center
+import datetime
 # Create your models here.
 
 class Vehical(models.Model):
@@ -68,4 +69,10 @@ class Update(models.Model):
     service = models.ForeignKey(Service , on_delete=models.CASCADE)
     def __str__(self):
         return self.update_title
-    
+class PaySlip(models.Model):
+    employee = models.ForeignKey(Employee , null=True , blank= True ,  on_delete= models.SET_NULL)
+    amount = models.FloatField()
+    date = models.DateField(default= datetime.date.today)
+    slip = models.FileField(null=True , blank=True)
+    proof = models.FileField(null=True , blank=True)
+    txnid = models.CharField(max_length=100)
