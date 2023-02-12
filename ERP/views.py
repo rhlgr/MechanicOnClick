@@ -150,7 +150,7 @@ def add_service(request):
     center = employee.center
     if request.method == 'POST':
         try :
-            vehical = Vehical.objects.get(id = request.POST['vehical'])
+            vehical = Vehical.objects.get(number = request.POST['vehical'])
             print('Center = '+ str(center))
             service_ids = request.POST['services']
             services = []
