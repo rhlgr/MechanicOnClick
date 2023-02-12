@@ -4,13 +4,14 @@
 <h1>Hi {{request.user}} !</h1>  
 {% include 'ERP/search_widget.html' %}
 <table id="myTable" class ="table" >
-    <tr><th>Number</th><th>Type</th><th>Edit Info</th></tr>
+    <tr><th>Number</th><th>Type</th><th>Edit Info</th> <th>Services</th></tr>
 
         {% for vehical in vehicals %}
         <tr>
             <td>{{vehical.number}}</td>
             <td>{{vehical.type}}</td>
             <td><a class="btn btn-outline-dark" href="{% url 'edit_vehical_page' vehical.number %}">edit</a></td>
+            <td><a class="btn btn-outline-warning" href="{% url 'vehical_services_page' vehical.id %}">View Services</a></td>
         </tr>
         {% endfor %}
 

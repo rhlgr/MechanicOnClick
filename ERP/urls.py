@@ -3,12 +3,13 @@ from .views import ( add_service  , employee_service_updates , employee_service_
  estimates , delete_estimate , approve_page , activate_employee , deactivate_employee , change_role
  )
 from .customer_views import (add_vehical , edit_vehical , info_vehical , customer_services , approve_service, approve_estimate, 
- service_updates )
+ service_updates , vehical_services )
 urlpatterns = [
     # Vehical Paths
     path('vehical/add/', add_vehical ,name='add_vehical_page'),
     path('vehical/edit/<str:pk>', edit_vehical ,name='edit_vehical_page'),
     path('vehical/', info_vehical ,name='info_vehical_page'),
+    path('vehical/services/<str:pk>', vehical_services ,name='vehical_services_page'),
     # Service Paths
     path('service/add/', add_service ,name='add_service_page'),
     path('services/', customer_services ,name='customer_service_page'),

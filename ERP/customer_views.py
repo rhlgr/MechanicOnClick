@@ -118,4 +118,19 @@ def service_updates(request, pk):
     updates = Update.objects.filter(service = pk)
     context['updates'] = updates
     return render(request,'ERP/service/customer_update_view.html',context)
-#  Employee Service Updates
+
+def vehical_services(request , pk):
+    vehical = Vehical.objects.get(id = pk)
+    #services = Service.objects.filter(vehical = vehical)
+    customer = Customer.objects.get(user = request.user)
+    if customer == vehical.customer:
+        context = {}
+        app_services = Service.objects.filter(is_approved = True , vehical = vehical)
+        #app_services = Service.objects.filter(is_approved = True )
+        not_app_services = Service.objects.filter(is_approved = False, vehical = vehical)
+        context['app_services'] = app_services
+        context['not_app_services'] = not_app_services
+        return render(request , 'ERP/service/customer_view.html',context)
+
+    else:
+        return redirect('unauth_page')
