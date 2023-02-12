@@ -10,7 +10,7 @@
         <tr>
             <td>{{vehical.number}}</td>
             <td>{{vehical.type}}</td>
-            <td><a class="btn btn-outline-dark" href="{% url 'edit_vehical_page' vehical.id %}">edit</a></td>
+            <td><a class="btn btn-outline-dark" href="{% url 'edit_vehical_page' vehical.number %}">edit</a></td>
         </tr>
         {% endfor %}
 

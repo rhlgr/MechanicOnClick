@@ -33,7 +33,7 @@ def add_vehical(request):
 @allowed_users(allowed_roles=[User.Role.CUSTOMER])
 def edit_vehical(request , pk):
   
-    vehical = Vehical.objects.get(id = pk)
+    vehical = Vehical.objects.get(number = pk)
     #print(vehicals)
     context = {'vehical' : vehical}
     if request.method == 'POST':

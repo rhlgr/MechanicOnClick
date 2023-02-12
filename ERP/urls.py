@@ -17,7 +17,7 @@ urlpatterns = [
     path('services/list/', employee_service_list ,name='employee_service_list'),
     path('services/update/progress/<str:pk>', update_progress , name ='progress_update_page'),
     path('dashboard/', dashboard , name ='dashboard'),
-    # Estimate Paths
+    #Estimate Paths
     path('estimate/gen/<str:pk>', genrate_estimate , name ='genrate_estimate'),
     path('estimates/', estimates , name ='estimates'),
     path('estimate/del/<str:pk>', delete_estimate , name ='delete_estimate'),
@@ -27,5 +27,4 @@ urlpatterns = [
     path('activate/<str:pk>', activate_employee , name ='activate_employee'),
     path('deactivate/<str:pk>', deactivate_employee , name ='deactivate_employee'),
     path('change/role/<str:pk>', change_role , name ='change_role'),
-
     ]

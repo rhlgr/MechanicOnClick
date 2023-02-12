@@ -73,3 +73,7 @@ def contact(request):
              print('The form is Not Valid')
     context = get_context()
     return render(request ,'Base/contact.html',context)
+
+def test(request):
+
+    return render(request,'dashboard.html')

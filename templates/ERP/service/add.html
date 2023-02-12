@@ -4,26 +4,28 @@
 <h1>Hi {{request.user}} !</h1>  
 <form  method="post">
     {% csrf_token %}
-    <select name="vehical">
+    <input list="vehical-list" name = 'vehical'>
+    <datalist id = "vehical-list">
         {% for vehical in vehicals %}
         <option value="{{vehical.id}}">{{vehical}}</option>
         {% endfor %}
-      </select><br><br>
+    </datalist><br><br>
     
     <!-- <label for="time">Service Estimate Time</label>
     <input type="time" name="service_time" ><br><br> -->
     <!-- <label for="date">Service Date</label>
     <input type="date" name="service_date" ><br><br> -->
-    <input type="number" name="estimate" placeholder="Amount Estimate"><br><br>
+    
     <select name="services" multiple>
         {% for service in services %}
         <option value="{{service.id}}">{{service}}</option>
         {% endfor %}
       </select><br><br>
+      <input type="number" name="add_ser_amt" placeholder="Amount For Additional Services"><br><br>
       <input type="text" name="add_services" placeholder="Additional Services"><br><br>
       
     
-    <button type="submit"> Add Your Vehical </button>
+    <button type="submit"> Add Service </button>
    
 </form>
 

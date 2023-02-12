@@ -9,7 +9,7 @@ from .reports import make_report
 import os
 from account.forms import RoleForm
 from MOC.settings import MEDIA_ROOT , BASE_DIR
-#  Employee Service Updates
+#Employee Service Updates
 @login_required(login_url= 'login_page')
 @allowed_users(allowed_roles=[User.Role.EMPLOYEE,User.Role.ADMIN])
 def employee_service_updates(request,pk):
@@ -40,17 +40,14 @@ def add_service(request):
     center = employee.center
     if request.method == 'POST':
         try :
-            print('1')
-            
             vehical = Vehical.objects.get(id = request.POST['vehical'])
-            
-            print('2')
             print('Center = '+ str(center))
             service_ids = request.POST['services']
             services = []
             for id in service_ids:
                 services.append(CenterServices.objects.get(id=id))
             additional_services = request.POST['add_services']
+            additional_services_cost = request.POST['add_ser_amt']
         
            
             service = Service.objects.create(
@@ -60,6 +57,7 @@ def add_service(request):
                 center = center,
                 progress = Service.Progress.WAITING,
                 additional_services = additional_services,
+                additional_services_cost = additional_services_cost
                 )
 
             
@@ -76,8 +74,6 @@ def add_service(request):
     'vehicals' : vehicals
     }
     return render(request , 'ERP/service/add.html' , context)
-#
-
 @login_required(login_url= 'login_page')
 @allowed_users(allowed_roles=[User.Role.EMPLOYEE,User.Role.ADMIN])
 def employee_service_list(request):
@@ -181,12 +177,18 @@ def genrate_estimate(request , pk):
     print(service)
     file_name = os.path.join(BASE_DIR ,MEDIA_ROOT , 'media' , 'estimates' ,f'{str(service.id)}{str(service.vehical)}.pdf')
     table_data = [['Name' , 'Price' , 'Tax' , 'Total']]
+    total_estimate = 0
     for ser in list(service.services.all()):
         tot = ser.price * ((100 + ser.tax)/100)
+        total_estimate += tot
         x = [ser.name , ser.price , ser.tax , tot]
         table_data.append(x)
+    # Adding Additional Services Cost with 5% GST
     tot = service.additional_services_cost * 1.05
+    total_estimate += tot
     x = [service.additional_services , service.additional_services_cost , '5' , tot]
+    table_data.append(x)
+    x = ['', '' ,'Total' , total_estimate]
     table_data.append(x)
     print(table_data)
     make_report(table_data=table_data , file_name=file_name , center_name=str(service.center))
