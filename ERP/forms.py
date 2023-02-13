@@ -1,6 +1,10 @@
-from django.forms import ModelForm , Form
+from django.forms import ModelForm , DateInput , Form
 from .models import Service ,Update , Vehical ,PaySlip
 from django import forms
+
+# Widgets 
+class DatePickerInput(DateInput):
+    input_type = 'date'
 class ServiceForm(ModelForm):
     class Meta:
         model = Service
@@ -19,3 +23,6 @@ class PaySlipForm(ModelForm):
         model = PaySlip
         fields = ['amount' , 'date' , 'slip' , 'txnid' ]
         #fields = '__all__'
+        widgets = {
+            'date' : DatePickerInput()
+        }
