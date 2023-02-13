@@ -74,5 +74,5 @@ class PaySlip(models.Model):
     amount = models.FloatField()
     date = models.DateField(default= datetime.date.today)
     slip = models.FileField(null=True , blank=True)
-    proof = models.FileField(null=True , blank=True)
+    #proof = models.FileField(null=True , blank=True)
     txnid = models.CharField(max_length=100)

@@ -152,6 +152,17 @@ def change_role(request , pk):
     }
 
     return render(request , 'ERP/HR/change_role_page.html',context)
+
+@login_required(login_url= 'login_page')
+@allowed_users(allowed_roles=[User.Role.ADMIN])
+def add_pay_slip(request , pk):
+    employee = Employee.objects.get(id = pk)
+    admin = Employee.objects.get(user = request.user)
+    if employee.center == admin.center:
+        pass
+    else:
+        return redirect('unauth_page')
+
 @login_required(login_url= 'login_page')
 @allowed_users(allowed_roles=[User.Role.EMPLOYEE,User.Role.ADMIN , User.Role.CUSTOMER])
 def dashboard(request):
@@ -202,7 +213,7 @@ def genrate_estimate(request , pk):
         messages.error(request , 'Only one estimate can be genrated for a service.')
         return redirect('employee_service_list')
     
-   
+ 
     
 
 @login_required(login_url= 'login_page')
