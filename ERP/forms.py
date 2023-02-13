@@ -1,5 +1,5 @@
 from django.forms import ModelForm , Form
-from .models import Service ,Update , Vehical
+from .models import Service ,Update , Vehical ,PaySlip
 from django import forms
 class ServiceForm(ModelForm):
     class Meta:
@@ -13,3 +13,9 @@ class UpdateForm(ModelForm):
 class UpdateProgressForm(Form):
     #progress = forms.CharField(max_length=20 , choices=Service.Progress.choices , default= Service.Progress.WAITING)
     progress = forms.ChoiceField(choices= Service.Progress.choices )
+
+class PaySlipForm(ModelForm):
+    class Meta : 
+        model = PaySlip
+        fields = ['amount' , 'date' , 'slip' , 'txnid' ]
+        #fields = '__all__'

@@ -1,0 +1,30 @@
+{% extends 'ERP/base.html' %}
+{% load static %}
+{% block content %}
+<h1>Hi {{request.user}} !</h1>  
+<h1>Employees</h1>
+{% include 'ERP/search_widget.html' %}
+<table id="myTable" class = 'table'>
+    <tr>
+        <th>Date</th>
+        <th>Amount</th>
+        <th>Transaction ID</th>
+        <th>Actions</th>
+        </tr>
+        
+
+        {% for slip in slips %}
+        <tr>
+            <td>{{slip.date}}</td>
+            <td>{{slip.amount}}</td>
+            <td>{{slip.txnid}}</td>
+            <td> 
+               <a class="btn btn-outline-info" href=" {{slip.slip.url}} ">View Slip</a>   
+            </td>
+        </tr>
+        {% endfor %}
+        </table>
+        
+<a href="{% url 'add_pay_slip' emp_id %}"> Add Another</a>
+       
+{% endblock %}

@@ -73,6 +73,9 @@ class PaySlip(models.Model):
     employee = models.ForeignKey(Employee , null=True , blank= True ,  on_delete= models.SET_NULL)
     amount = models.FloatField()
     date = models.DateField(default= datetime.date.today)
-    slip = models.FileField(null=True , blank=True)
+    slip = models.FileField(upload_to='media/payslips')
     #proof = models.FileField(null=True , blank=True)
     txnid = models.CharField(max_length=100)
+
+    def __str__(self) -> str:
+        return str(self.employee) + ' - ' + str(self.date)

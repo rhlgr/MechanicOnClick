@@ -1,9 +1,9 @@
 from django.shortcuts import render , redirect
 from account.decorators import allowed_users
 from django.contrib.auth.decorators import login_required
-from .forms import UpdateForm , UpdateProgressForm
+from .forms import UpdateForm , UpdateProgressForm , PaySlipForm
 from account.models import User , Customer , Employee
-from .models import Vehical  ,Service , Update , CenterServices , Estimate
+from .models import Vehical  ,Service , Update , CenterServices , Estimate , PaySlip
 from django.contrib import messages
 from .reports import make_report
 import os
@@ -155,11 +155,40 @@ def change_role(request , pk):
 
 @login_required(login_url= 'login_page')
 @allowed_users(allowed_roles=[User.Role.ADMIN])
+def show_pay_slips(request , pk):
+    employee = Employee.objects.get(id = pk)
+    slips = PaySlip.objects.filter(employee = employee)
+    context = {
+        'slips' : slips,
+        'emp_id' : pk,
+        }
+
+    return render(request , 'ERP/HR/pay_slips_page.html',context)
+    
+@login_required(login_url= 'login_page')
+@allowed_users(allowed_roles=[User.Role.ADMIN])
 def add_pay_slip(request , pk):
+    context = {}
     employee = Employee.objects.get(id = pk)
     admin = Employee.objects.get(user = request.user)
+    context['emloyee'] = admin
     if employee.center == admin.center:
-        pass
+        if request.method == 'POST':
+            try :
+                form = PaySlipForm(request.POST, request.FILES)
+                
+                slip = form.save(commit=False)
+                print('Hi')
+                slip.employee = employee
+                slip.save()
+                return redirect('pay_slips' , pk)
+            except Exception as e:
+                print('exe')
+                print(e)
+                messages.error(request , "Something Went Wrong")
+                return redirect('add_pay_slip' , pk)
+        context['form'] = PaySlipForm()
+        return render(request , 'ERP/HR/add_pay_slip.html' , context)
     else:
         return redirect('unauth_page')
 
