@@ -79,3 +79,15 @@ class PaySlip(models.Model):
 
     def __str__(self) -> str:
         return str(self.employee) + ' - ' + str(self.date)
+
+class Attendance(models.Model):
+    class AttendanceStatus(models.TextChoices):
+        NOT_MARKED = 'NOT MARKED' , 'NOT MARKED'
+        PRESENT = 'PRESENT' , 'PRESENT'
+        ABSENT = 'ABSENT' , 'ABSENT'
+    employee = models.ForeignKey(Employee , null=True , blank=True , on_delete=models.SET_NULL)
+    status =  models.CharField(max_length=50 , choices=AttendanceStatus.choices ,default= AttendanceStatus.NOT_MARKED)
+    date = models.DateField()
+
+    class Meta:
+        unique_together = ('employee' , 'date')
