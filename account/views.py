@@ -100,44 +100,4 @@ def employee_register(request):
         centers = Center.objects.all()
         context['centers'] = centers
         return render(request , 'account/employee_register.html' , context=context)
-# Employee Register
 
-def admin_register(request):
-    context ={}
-    if request.method == "POST":
-        first_name = request.POST['first_name']
-        last_name = request.POST['last_name']
-        username = request.POST['username']
-        phone = request.POST['phone']
-        password1 = request.POST['password1']
-        password2 = request.POST['password2']
-        center = Center.objects.get(id =request.POST['center'])
-        #emp_img = request.POST['emp_img'] 
-        try :
-            if password1 == password2:
-                user = User.objects.create_user(username=username ,role = User.Role.ADMIN, password = password1 , phone = phone , first_name = first_name , last_name = last_name)
-                user.save()
-                print("done")
-                #location = "Bhopal"
-                try :
-                    #print('Trying')
-                    employee = Employee.objects.create(user = user , center = center )
-                    employee.save()
-                    #print('Hurray')
-                    messages.info(request, 'You can login as admin If Authorized By MOC')
-                    return redirect('login_page')
-                except Exception as e :
-                    print(e)
-                    user.delete()
-                    messages.error(request, 'Something Went Wrong')
-                    return redirect('employee_admin_register')
-                
-        except Exception as e :
-            print('Oops')
-            print(e)
-            messages.error(request, 'Something Went Wrong')
-            return redirect('employee_admin_register')
-    else :
-        centers = Center.objects.all()
-        context['centers'] = centers
-        return render(request , 'account/employee_register.html' , context=context)

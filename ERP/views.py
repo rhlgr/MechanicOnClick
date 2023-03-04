@@ -253,6 +253,8 @@ def delete_estimate(request , pk):
     estimate.delete()
     return redirect('estimates')
 
+@login_required(login_url= 'login_page')
+@allowed_users(allowed_roles=[User.Role.HR,User.Role.ADMIN])
 def mark_attendance(request , pk , date):
     employee = Employee.objects.get(id = pk)
     message = "Something Went Wrong"
@@ -274,7 +276,8 @@ def mark_attendance(request , pk , date):
     context = {'message' : message}
     return render(request , 'ERP/HR/partials/attendance_msg.html' , context)
 
-
+@login_required(login_url= 'login_page')
+@allowed_users(allowed_roles=[User.Role.HR,User.Role.ADMIN])
 def attendance_table(request):
     #print('here')
     date = request.GET.get('att_date')
@@ -289,6 +292,9 @@ def attendance_table(request):
 
     print(date)
     return render(request , 'ERP/HR/partials/attendance_table.html', context)
+
+@login_required(login_url= 'login_page')
+@allowed_users(allowed_roles=[User.Role.HR,User.Role.ADMIN])
 def attendance(request):
     return render(request ,'ERP/HR/attendance.html')
 
