@@ -1,1 +1,30 @@
-<h1>Table</h1>
+{% include 'ERP/search_widget.html' %}
+<table id="myTable" class = 'table'>
+    <tr>
+        <th>Employee Name</th>
+        <th>Status</th>
+        <th>Role</th>
+        <th>Action</th>
+        </tr>
+        
+
+        {% for record in records %}
+        <tr>
+            <td>{{record.employee}}</td>
+            <td>{{record.status}}</td>
+            <td>{{record.employee.user.role}}</td>
+            <td> 
+                <select class="round" name="{{record.id}}_status" hx-get="{% url 'mark_attendance' record.employee.id record.date %}" hx-trigger="change" hx-target="#tar">
+                    <option selected>Change Attendance Status</option>
+                    <option value="1">PRESENT</option>
+                    <option value="2">ABSENT</option>
+                    
+                </select>
+                
+            </td>
+        </tr>
+        {% endfor %}
+        
+        </table>
+        <div id="tar"></div>
+        <input class="btn btn-outline-primary" type=button value="Previous Page" onClick="javascript:history.go(-1);">

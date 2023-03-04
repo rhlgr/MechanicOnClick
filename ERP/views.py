@@ -253,11 +253,42 @@ def delete_estimate(request , pk):
     estimate.delete()
     return redirect('estimates')
 
+def mark_attendance(request , pk , date):
+    employee = Employee.objects.get(id = pk)
+    message = "Something Went Wrong"
+    try :
+        record = Attendance.objects.get(employee= employee , date = date)
+        name = str(record.id) + "_status"
+        status = request.GET.get(name)
+        if status == '1':
+            record.status = Attendance.AttendanceStatus.PRESENT
+            record.save()
+            message = f"{employee} Attendance Marked as Present"
+        elif status == '2':
+            record.status = Attendance.AttendanceStatus.PRESENT
+            record.save()
+            message = f"{employee}'s Attendance Marked as Absent"
+        
+    except Exception as e:
+        print(e)
+    context = {'message' : message}
+    return render(request , 'ERP/HR/partials/attendance_msg.html' , context)
+
+
 def attendance_table(request):
     #print('here')
     date = request.GET.get('att_date')
+    admin = Employee.objects.get(user = request.user ) 
+    center = admin.center
+    employees = Employee.objects.filter(center = center)
+    records = []
+    for employee in employees:
+        record , created = Attendance.objects.get_or_create(date = date , employee = employee )
+        records.append(record)
+    context = {'records' : records}
+
     print(date)
-    return render(request , 'ERP/HR/partials/attendance_table.html')
+    return render(request , 'ERP/HR/partials/attendance_table.html', context)
 def attendance(request):
     return render(request ,'ERP/HR/attendance.html')
 

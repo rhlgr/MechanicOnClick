@@ -97,6 +97,7 @@ class Attendance(models.Model):
     employee = models.ForeignKey(Employee , null=True , blank=True , on_delete=models.SET_NULL)
     status =  models.CharField(max_length=50 , choices=AttendanceStatus.choices ,default= AttendanceStatus.NOT_MARKED)
     date = models.DateField()
-
+    def __str__(self) -> str:
+        return str(self.employee) + " - " + str(self.date)
     class Meta:
         unique_together = ('employee' , 'date')
