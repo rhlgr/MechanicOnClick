@@ -1,6 +1,7 @@
 from django.urls import path
 from .views import ( add_service  , employee_service_updates , employee_service_list , update_progress , dashboard , genrate_estimate,
- estimates , delete_estimate , approve_page , activate_employee , deactivate_employee , change_role , show_pay_slips , add_pay_slip
+ estimates , delete_estimate , approve_page , activate_employee , deactivate_employee , change_role , show_pay_slips , add_pay_slip , attendance
+ ,attendance_table
  )
 from .customer_views import (add_vehical , edit_vehical , info_vehical , customer_services , approve_service, approve_estimate, 
  service_updates , vehical_services )
@@ -32,4 +33,7 @@ urlpatterns = [
     # Pay Slip Paths
     path('payslip/view/<str:pk>', show_pay_slips , name ='pay_slips'),
     path('payslip/add/<str:pk>', add_pay_slip , name ='add_pay_slip'),
+    #Attendance Paths
+    path('attendance/', attendance , name ='attendance'),
+    path('attendance/table', attendance_table , name ='attendance_table'),
     ]

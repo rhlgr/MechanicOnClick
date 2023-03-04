@@ -10,6 +10,7 @@
           <p>Search for your vehicle</p>
           <form method="post">
             {% csrf_token %}
+            <input type="hidden" id = 'city' value="Bhopal">
               <select class="round" name="type" hx-get="{% url 'get_brands' %}" hx-trigger="change" hx-target="#brands">
                 <option selected>Select Type</option> 
                 <option value="1">Two Wheeler</option>

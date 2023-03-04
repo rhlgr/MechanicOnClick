@@ -24,6 +24,15 @@ class CenterServices(models.Model):
     tax = models.FloatField(default=5)
     def __str__(self) -> str:
         return str(self.name) + ' - ' + str(self.center) + '- ' + str(self.price)
+# class CenterProduct(models.Model):
+#     name = models.CharField(max_length=100)
+#     description = models.CharField(max_length=400, default="Diam dolor diam ipsum sit amet diam et eos erat ipsum")
+#     price = models.IntegerField(default=500)
+#     center = models.ForeignKey(Center,on_delete= models.CASCADE)
+#     tax = models.FloatField(default=5)
+#     stock = models.IntegerField(default=0)
+#     def __str__(self) -> str:
+#         return str(self.name) + ' - ' + str(self.center) + '- ' + str(self.price)
 
 class Service(models.Model):
     class Progress(models.TextChoices):

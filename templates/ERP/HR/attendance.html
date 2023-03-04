@@ -1,0 +1,8 @@
+{% extends 'ERP/base.html' %}
+{% load static %}
+{% block content %}
+<h1>Hi {{request.user}} !</h1> 
+ 
+<input name="att_date" type="date" hx-get = "{% url 'attendance_table' %}" hx-trigger="change" hx-target="#tab" >
+       <div id="tab"></div>
+{% endblock %}

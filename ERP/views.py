@@ -3,7 +3,7 @@ from account.decorators import allowed_users
 from django.contrib.auth.decorators import login_required
 from .forms import UpdateForm , UpdateProgressForm , PaySlipForm
 from account.models import User , Customer , Employee
-from .models import Vehical  ,Service , Update , CenterServices , Estimate , PaySlip
+from .models import Vehical  ,Service , Update , CenterServices , Estimate , PaySlip , Attendance
 from django.contrib import messages
 from .reports import make_report
 import os
@@ -44,7 +44,9 @@ def add_service(request):
         try :
             vehical = Vehical.objects.get(number = request.POST['vehical'])
             print('Center = '+ str(center))
-            service_ids = request.POST['services']
+            #print(request.POST)
+            print(list(request.POST.getlist('cb')))
+            service_ids = list(request.POST.getlist('cb'))
             services = []
             for id in service_ids:
                 services.append(CenterServices.objects.get(id=id))
@@ -241,9 +243,6 @@ def genrate_estimate(request , pk):
     except :
         messages.error(request , 'Only one estimate can be genrated for a service.')
         return redirect('employee_service_list')
-    
- 
-    
 
 @login_required(login_url= 'login_page')
 @allowed_users(allowed_roles=[User.Role.EMPLOYEE,User.Role.ADMIN])
@@ -253,7 +252,13 @@ def delete_estimate(request , pk):
     estimate.service.save()
     estimate.delete()
     return redirect('estimates')
-   
 
-  
+def attendance_table(request):
+    #print('here')
+    date = request.GET.get('att_date')
+    print(date)
+    return render(request , 'ERP/HR/partials/attendance_table.html')
+def attendance(request):
+    return render(request ,'ERP/HR/attendance.html')
+
     
