@@ -101,3 +101,15 @@ class Attendance(models.Model):
         return str(self.employee) + " - " + str(self.date)
     class Meta:
         unique_together = ('employee' , 'date')
+
+class Task(models.Model):
+    title = models.CharField(max_length=50 )
+    description = models.CharField(max_length=200)
+    services = models.ManyToManyField(Service)
+    class TaskStatus(models.TextChoices):
+        ACCEPTED = 'ACCEPTED' , 'ACCEPTED'
+        REJECTED = 'REJECTED' , 'REJECTED'
+        DONE = 'DONE' , 'DONE'
+        PENDING = 'PENDING' , 'PENDING'
+        FAILED = 'FAILED' , 'FAILED'
+    status = models.CharField(max_length=50 , choices=TaskStatus.choices ,default= TaskStatus.NOT_MARKED)
