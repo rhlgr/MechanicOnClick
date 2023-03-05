@@ -298,4 +298,15 @@ def attendance_table(request):
 def attendance(request):
     return render(request ,'ERP/HR/attendance.html')
 
-    
+def assign_task(request):
+    context = {
+        'employees' : [],
+        'services' : []
+        }
+    admin = Employee.objects.get(user=request.user)
+    center = admin.center
+    employees = Employee.objects.filter(center = center)
+    context['employees'] = employees
+    services = Service.objects.filter(center = center)
+    context['services'] = services
+    return render(request ,'ERP/HR/Task/add.html' , context)

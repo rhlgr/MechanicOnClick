@@ -42,6 +42,7 @@ class Service(models.Model):
     center = models.ForeignKey(Center , on_delete=models.SET_NULL , null=True , blank= True)
     services = models.ManyToManyField(CenterServices)
     progress = models.CharField(max_length=20 , choices=Progress.choices , default= Progress.WAITING)
+    date = models.DateTimeField(auto_now_add=True)
     # Customer Already in vehical
     additional_services = models.CharField(max_length=200 ,default = None)
     additional_services_cost = models.IntegerField(default=0)
@@ -49,7 +50,7 @@ class Service(models.Model):
     #customer = models.ForeignKey(Customer , on_delete=models.SET_NULL, blank=True , null= True)
 
     def __str__(self) -> str:
-        return str(self.vehical.number) + ' - ' + str(self.center.name)
+        return str(self.vehical.number) + ' - ' + str(self.date.date())
 
 class Estimate(models.Model):
     id = models.UUIDField(
@@ -105,11 +106,14 @@ class Attendance(models.Model):
 class Task(models.Model):
     title = models.CharField(max_length=50 )
     description = models.CharField(max_length=200)
-    services = models.ManyToManyField(Service)
+    services = models.ForeignKey(Service , null=True , blank= True , on_delete=models.SET_NULL)
+    employee = models.ForeignKey(Employee , on_delete=models.CASCADE)
+
     class TaskStatus(models.TextChoices):
+        NA = 'NA' , 'NA'
         ACCEPTED = 'ACCEPTED' , 'ACCEPTED'
         REJECTED = 'REJECTED' , 'REJECTED'
         DONE = 'DONE' , 'DONE'
         PENDING = 'PENDING' , 'PENDING'
         FAILED = 'FAILED' , 'FAILED'
-    status = models.CharField(max_length=50 , choices=TaskStatus.choices ,default= TaskStatus.NOT_MARKED)
+    status = models.CharField(max_length=50 , choices=TaskStatus.choices ,default= TaskStatus.NA)

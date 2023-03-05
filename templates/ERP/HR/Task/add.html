@@ -1,0 +1,39 @@
+{% extends 'ERP/base.html' %}
+{% load static %}
+{% block content %}
+<h1>Hi {{request.user}} !</h1>  
+
+
+<div>
+     
+    <form  method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <input type="text" placeholder="Enter Task Title" name="title">
+        <br><br>
+        <textarea name="description" placeholder="Add task description here" id="" cols="50" rows="5"></textarea>
+        <br><br>
+        <input list="service-list" placeholder="Enter Service" name = 'service'>
+    <datalist id = "service-list">
+        {% for service in services %}
+        <option value="{{service.id}}">{{service}}</option>
+        {% endfor %}
+    </datalist><br><br>
+    <input list="employee-list" placeholder="Enter Employee" name = 'employee'>
+    <datalist id = "employee-list">
+        {% for employee in employees %}
+        <option value="{{employee.id}}">{{employee}}</option>
+        {% endfor %}
+    </datalist><br><br>
+    <input type="submit" value="submit">
+    </form>
+    <input class="btn btn-outline-primary" type=button value="Previous Page" onClick="javascript:history.go(-1);">
+</div>
+{% if messages %}
+<ul class="messages">
+    {% for message in messages %}
+    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+    {% endfor %}
+</ul>
+{% endif %}
+       
+{% endblock %}
