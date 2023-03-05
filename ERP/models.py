@@ -117,3 +117,5 @@ class Task(models.Model):
         PENDING = 'PENDING' , 'PENDING'
         FAILED = 'FAILED' , 'FAILED'
     status = models.CharField(max_length=50 , choices=TaskStatus.choices ,default= TaskStatus.NA)
+    def __str__(self) -> str:
+        return str(self.employee) + ' - ' + str(self.title)

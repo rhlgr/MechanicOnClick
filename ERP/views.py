@@ -3,7 +3,7 @@ from account.decorators import allowed_users
 from django.contrib.auth.decorators import login_required
 from .forms import UpdateForm , UpdateProgressForm , PaySlipForm
 from account.models import User , Customer , Employee
-from .models import Vehical  ,Service , Update , CenterServices , Estimate , PaySlip , Attendance
+from .models import Vehical  ,Service , Update , CenterServices , Estimate , PaySlip , Attendance ,Task
 from django.contrib import messages
 from .reports import make_report
 import os
@@ -299,6 +299,26 @@ def attendance(request):
     return render(request ,'ERP/HR/attendance.html')
 
 def assign_task(request):
+
+    if request.method == 'POST':
+        try :
+            title = request.POST['title']
+            description = request.POST['description']
+            service = Service.objects.get(id = request.POST['service'])
+            employee = Employee.objects.get(id = request.POST['employee'])
+            task = Task.objects.create(
+                title = title,
+                description = description,
+                services = service,
+                employee = employee
+            )
+            task.save()
+            messages.info(request , 'New task added')
+        except Exception as e :
+            print(e)
+            messages.error(request , 'Something went wrong')
+    
+
     context = {
         'employees' : [],
         'services' : []
