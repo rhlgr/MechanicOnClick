@@ -1,7 +1,7 @@
 from django.urls import path
 from .views import ( add_service  , employee_service_updates , employee_service_list , update_progress , dashboard , genrate_estimate,
  estimates , delete_estimate , approve_page , activate_employee , deactivate_employee , change_role , show_pay_slips , add_pay_slip , attendance
- ,attendance_table , mark_attendance , assign_task
+ ,attendance_table , mark_attendance , assign_task , get_tasks , tasks_list
  )
 from .customer_views import (add_vehical , edit_vehical , info_vehical , customer_services , approve_service, approve_estimate, 
  service_updates , vehical_services )
@@ -39,4 +39,6 @@ urlpatterns = [
     path('attendance/mark/<str:pk>/<str:date>', mark_attendance , name ='mark_attendance'),
     #Task Paths
     path('task/add', assign_task , name ='assign_task'),
+    path('tasks/list', tasks_list , name ='tasks_list'),
+    path('tasks/get', get_tasks , name ='get_tasks'),
     ]

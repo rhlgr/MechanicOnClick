@@ -107,8 +107,9 @@ class Task(models.Model):
     title = models.CharField(max_length=50 )
     description = models.CharField(max_length=200)
     services = models.ForeignKey(Service , null=True , blank= True , on_delete=models.SET_NULL)
-    employee = models.ForeignKey(Employee , on_delete=models.CASCADE)
-
+    employee = models.ForeignKey(Employee , null=True , blank=True , on_delete=models.SET_NULL)
+    date = models.DateField(default= datetime.date.today)
+    center = models.ForeignKey(Center , on_delete=models.CASCADE)
     class TaskStatus(models.TextChoices):
         NA = 'NA' , 'NA'
         ACCEPTED = 'ACCEPTED' , 'ACCEPTED'

@@ -1,0 +1,27 @@
+
+{% include 'ERP/search_widget.html' %}
+<table id="myTable" class = 'table'>
+    <tr>
+        <th>Employee Name</th>
+        <th>Title</th>
+        <th>Service</th>
+        <th>Status</th>
+        <th>Role</th>
+        
+        </tr>
+        
+
+        {% for task in tasks %}
+        <tr>
+            <td>{{task.employee}}</td>
+            <td> {{task.title}}  </td>
+            <td> {{task.services}}  </td>
+            <td>{{task.status}}</td>
+            <td>{{task.employee.user.role}}</td>
+            
+        </tr>
+        {% endfor %}
+        
+        </table>
+        <div id="tar"></div>
+        <input class="btn btn-outline-primary" type=button value="Previous Page" onClick="javascript:history.go(-1);">

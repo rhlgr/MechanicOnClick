@@ -299,7 +299,8 @@ def attendance(request):
     return render(request ,'ERP/HR/attendance.html')
 
 def assign_task(request):
-
+    admin = Employee.objects.get(user=request.user)
+    center = admin.center
     if request.method == 'POST':
         try :
             title = request.POST['title']
@@ -310,7 +311,8 @@ def assign_task(request):
                 title = title,
                 description = description,
                 services = service,
-                employee = employee
+                employee = employee,
+                center = center
             )
             task.save()
             messages.info(request , 'New task added')
@@ -323,10 +325,28 @@ def assign_task(request):
         'employees' : [],
         'services' : []
         }
-    admin = Employee.objects.get(user=request.user)
-    center = admin.center
+    
     employees = Employee.objects.filter(center = center)
     context['employees'] = employees
     services = Service.objects.filter(center = center)
     context['services'] = services
     return render(request ,'ERP/HR/Task/add.html' , context)
+def tasks_list(request):
+    admin = Employee.objects.get(user=request.user)
+    center = admin.center
+    employees = Employee.objects.filter(center = center)
+    context = {'employees' : employees}
+    return render(request , 'ERP/HR/Task/admin_page.html' , context)
+
+def get_tasks(request):
+    emp = request.GET.get('emp')
+    if emp == 'ALL':
+        admin = Employee.objects.get(user=request.user)
+        center = admin.center
+        tasks = Task.objects.filter(center = center).order_by('date')
+        context = {'tasks' : tasks}
+    else :
+        emp = Employee.objects.get(id = emp)
+        tasks = Task.objects.filter(employee = emp).order_by('date')
+        context = {'tasks' : tasks}
+    return render(request , 'ERP/HR/Task/list_view.html' , context)

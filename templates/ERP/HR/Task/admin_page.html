@@ -1,0 +1,14 @@
+{% extends 'ERP/base.html' %}
+{% load static %}
+{% block content %}
+<h1>Hi {{request.user}} !</h1> 
+ 
+<select class="round" name="emp" hx-get="{% url 'get_tasks' %}" hx-trigger="change" hx-target="#tasktab">
+    <option selected>Select Employee</option>
+    <option value="ALL"> All </option>
+    {% for employee in employees %}
+    <option value="{{employee.id}}">{{employee}}</option>
+    {% endfor %}
+</select>
+<div id="tasktab"></div>
+{% endblock %}
