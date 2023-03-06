@@ -1,4 +1,4 @@
-from django.shortcuts import render , redirect
+from django.shortcuts import render , redirect , HttpResponse
 from account.decorators import allowed_users
 from django.contrib.auth.decorators import login_required
 from .forms import UpdateForm , UpdateProgressForm , PaySlipForm
@@ -297,7 +297,8 @@ def attendance_table(request):
 @allowed_users(allowed_roles=[User.Role.HR,User.Role.ADMIN])
 def attendance(request):
     return render(request ,'ERP/HR/attendance.html')
-
+@login_required(login_url= 'login_page')
+@allowed_users(allowed_roles=[User.Role.HR,User.Role.ADMIN])
 def assign_task(request):
     admin = Employee.objects.get(user=request.user)
     center = admin.center
@@ -331,6 +332,8 @@ def assign_task(request):
     services = Service.objects.filter(center = center)
     context['services'] = services
     return render(request ,'ERP/HR/Task/add.html' , context)
+@login_required(login_url= 'login_page')
+@allowed_users(allowed_roles=[User.Role.HR,User.Role.ADMIN])
 def tasks_list(request):
     admin = Employee.objects.get(user=request.user)
     center = admin.center
@@ -338,6 +341,8 @@ def tasks_list(request):
     context = {'employees' : employees}
     return render(request , 'ERP/HR/Task/admin_page.html' , context)
 
+@login_required(login_url= 'login_page')
+@allowed_users(allowed_roles=[User.Role.HR,User.Role.ADMIN])
 def get_tasks(request):
     emp = request.GET.get('emp')
     if emp == 'ALL':
@@ -350,3 +355,35 @@ def get_tasks(request):
         tasks = Task.objects.filter(employee = emp).order_by('date')
         context = {'tasks' : tasks}
     return render(request , 'ERP/HR/Task/list_view.html' , context)
+
+@login_required(login_url= 'login_page')
+def update_task_status(request , pk):
+    message = 'Something went wrong'
+    try :
+        print('here')
+        task = Task.objects.get(id = pk)
+        status = request.GET.get('status')
+        status_code = {
+            'AC' : Task.TaskStatus.ACCEPTED,
+            'RJ' : Task.TaskStatus.REJECTED,
+            'DO' : Task.TaskStatus.DONE,
+            'PE' : Task.TaskStatus.PENDING,
+            'FA' : Task.TaskStatus.FAILED,
+        }
+        task.status = status_code[status]
+        task.save()
+        message = 'Status updated succesfully refresh to see results'
+    except Exception as e:
+        print(e)
+
+    return HttpResponse(message)
+
+@login_required(login_url= 'login_page')
+def employee_tasks(request , pk):
+    
+    employee = Employee.objects.get(id = pk)
+    if request.user != employee.user:
+        return redirect('unauth_page')
+    tasks = Task.objects.filter(employee = employee)
+    context = {'tasks' : tasks}
+    return render(request , 'ERP/HR/Task/emp_page.html' , context)
