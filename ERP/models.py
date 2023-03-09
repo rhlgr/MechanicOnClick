@@ -7,7 +7,7 @@ import datetime
 
 class Vehical(models.Model):
     customer = models.ForeignKey(Customer , on_delete=models.CASCADE)
-    number = models.CharField(max_length=20 , unique= True)
+    number = models.CharField(max_length=20 , unique= True , blank=False , null= False)
     type = models.CharField(max_length=20)
     def save(self,*args , **kwargs):
         self.number = self.number.upper()

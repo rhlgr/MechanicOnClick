@@ -195,14 +195,12 @@ def add_pay_slip(request , pk):
         return redirect('unauth_page')
 
 @login_required(login_url= 'login_page')
-@allowed_users(allowed_roles=[User.Role.EMPLOYEE,User.Role.ADMIN , User.Role.CUSTOMER])
 def dashboard(request):
     if request.user.role == User.Role.CUSTOMER:
-        return render(request ,'ERP/dashboard/customer.html')
-    if request.user.role == User.Role.EMPLOYEE:
-        return render(request ,'ERP/dashboard/employee.html')
-    if request.user.role == User.Role.ADMIN:
-        return render(request ,'ERP/dashboard/admin.html')
+        return redirect('info_vehical_page')
+    else :
+        employee = Employee.objects.get(user = request.user)
+        return redirect('employee_tasks' , employee.id)
 @login_required(login_url= 'login_page')
 @allowed_users(allowed_roles=[User.Role.EMPLOYEE,User.Role.ADMIN])
 def estimates(request):
@@ -379,11 +377,9 @@ def update_task_status(request , pk):
     return HttpResponse(message)
 
 @login_required(login_url= 'login_page')
-def employee_tasks(request , pk):
+def employee_tasks(request):
     
-    employee = Employee.objects.get(id = pk)
-    if request.user != employee.user:
-        return redirect('unauth_page')
+    employee = Employee.objects.get(user = request.user)
     tasks = Task.objects.filter(employee = employee)
     context = {'tasks' : tasks}
     return render(request , 'ERP/HR/Task/emp_page.html' , context)

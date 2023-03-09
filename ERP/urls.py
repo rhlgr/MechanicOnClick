@@ -41,6 +41,6 @@ urlpatterns = [
     path('task/add', assign_task , name ='assign_task'),
     path('tasks/list', tasks_list , name ='tasks_list'),
     path('tasks/get', get_tasks , name ='get_tasks'),
-    path('tasks/employee/get/<str:pk>', employee_tasks , name ='employee_tasks'),
+    path('tasks/employee/get', employee_tasks , name ='employee_tasks'),
     path('task/status/update/<str:pk>',update_task_status,name = 'update_task_status')
     ]

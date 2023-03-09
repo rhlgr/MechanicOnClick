@@ -41,45 +41,10 @@
 		<li><a href="#"><ion-icon name="chatbox-ellipses-outline"></ion-icon>Message</a></li>
 		<li><a href="#"><ion-icon name="notifications-outline"></ion-icon>Notification</a></li>
 		<li><a href="#"><ion-icon name="settings-outline"></ion-icon>Help and Setting</a></li>
-		<li><a href="#"><ion-icon name="log-out-outline"></ion-icon>Log Out</a></li>
+		<li><a href="{% url 'logout' %}"><ion-icon name="log-out-outline"></ion-icon>Log Out</a></li>
 	  </ul>
 	</div> 
-	<div class="sidebar">
-		<div class="sidebar_inner">
-		<ul>
-			<li>
-				<a href=" vehical resistration/vehical.html ">
-					<span class="icon"><i class="fa fa-qrcode"></i></span>
-					<span class="text">Vehical Resistration</span>
-				</a>
-			</li>
-			<li>
-				<a href="#">
-					<span class="icon"><i class="fa fa-link"></i></span>
-					<span class="text">Status</span>
-				</a>
-			</li>
-			<li>
-				<a href="#">
-					<span class="icon"><i class="fa fa-eye"></i></span>
-					<span class="text">Overview</span>
-				</a>
-			</li>
-			<li>
-				<a href="#">
-					<span class="icon"><i class="fa fa-book"></i></span>
-					<span class="text">Service History</span>
-				</a>
-			</li>
-			<li>
-				<a href="#">
-					<span class="icon"><i class="fa fa-question-circle"></i></span>
-					<span class="text">Estimate/Bill</span>
-				</a>
-			</li>
-		</ul>
-		</div>
-	</div>
+	{% include 'ERP/dashboard/main_dash.html' %}
 	<div class="box">
         {% block content %}
 	

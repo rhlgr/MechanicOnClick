@@ -110,6 +110,8 @@ def approve_estimate(request , pk):
 
     else:
         return redirect('unauth_page')
+    
+
 # Customer Service Updates
 @login_required(login_url= 'login_page')
 @allowed_users(allowed_roles=[User.Role.CUSTOMER])
@@ -118,7 +120,8 @@ def service_updates(request, pk):
     updates = Update.objects.filter(service = pk)
     context['updates'] = updates
     return render(request,'ERP/service/customer_update_view.html',context)
-
+@login_required(login_url= 'login_page')
+@allowed_users(allowed_roles=[User.Role.CUSTOMER])
 def vehical_services(request , pk):
     vehical = Vehical.objects.get(id = pk)
     #services = Service.objects.filter(vehical = vehical)
