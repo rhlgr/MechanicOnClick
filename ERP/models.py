@@ -25,15 +25,16 @@ class CenterServices(models.Model):
     def __str__(self) -> str:
         return str(self.name) + ' - ' + str(self.center) + '- ' + str(self.price)
     
-# class CenterProduct(models.Model):
-#     name = models.CharField(max_length=100)
-#     description = models.CharField(max_length=400, default="Diam dolor diam ipsum sit amet diam et eos erat ipsum")
-#     price = models.IntegerField(default=500)
-#     center = models.ForeignKey(Center,on_delete= models.CASCADE)
-#     tax = models.FloatField(default=5)
-#     stock = models.IntegerField(default=0)
-#     def __str__(self) -> str:
-#         return str(self.name) + ' - '  + str(self.price)
+class CenterProduct(models.Model):
+    name = models.CharField(max_length=100)
+    description = models.CharField(max_length=400, default="Diam dolor diam ipsum sit amet diam et eos erat ipsum")
+    price = models.IntegerField(default=500)
+    center = models.ForeignKey(Center,on_delete= models.CASCADE)
+    serial_number = models.CharField(max_length=50 , unique=True)
+    tax = models.FloatField(default=5)
+    stock = models.IntegerField(default=0)
+    def __str__(self) -> str:
+        return str(self.name) + ' - '  + str(self.price)
 
 class Service(models.Model):
     class Progress(models.TextChoices):
@@ -42,6 +43,7 @@ class Service(models.Model):
     vehical = models.ForeignKey(Vehical , on_delete=models.SET_NULL, blank=True , null= True)   
     center = models.ForeignKey(Center , on_delete=models.SET_NULL , null=True , blank= True)
     services = models.ManyToManyField(CenterServices)
+    products = models.ManyToManyField(CenterProduct)
     progress = models.CharField(max_length=20 , choices=Progress.choices , default= Progress.WAITING)
     date = models.DateTimeField(auto_now_add=True)
     # Customer Already in vehical
@@ -83,6 +85,7 @@ class Update(models.Model):
     service = models.ForeignKey(Service , on_delete=models.CASCADE)
     def __str__(self):
         return self.update_title
+
 class PaySlip(models.Model):
     employee = models.ForeignKey(Employee , null=True , blank= True ,  on_delete= models.SET_NULL)
     amount = models.FloatField()

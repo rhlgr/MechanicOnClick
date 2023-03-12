@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Service , Vehical , Update , CenterServices , Estimate , PaySlip , Attendance , Task
+from .models import Service , Vehical , Update , CenterServices , Estimate , PaySlip , Attendance , Task , CenterProduct
 
 # Register your models here.
 
@@ -12,3 +12,4 @@ admin.site.register(Estimate)
 admin.site.register(PaySlip)
 admin.site.register(Attendance)
 admin.site.register(Task)
+admin.site.register(CenterProduct)
