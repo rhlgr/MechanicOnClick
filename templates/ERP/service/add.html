@@ -1,7 +1,7 @@
 {% extends 'ERP/base.html' %}
 {% load static %}
 {% block content %}
-<h1>Hi {{request.user}} !</h1>  
+
 <form  method="post">
     {% csrf_token %}
     <input list="vehical-list" placeholder="Vehical Number" name = 'vehical'>

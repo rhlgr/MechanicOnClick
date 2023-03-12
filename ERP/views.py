@@ -88,6 +88,27 @@ def employee_service_list(request):
     context['services'] = services
     return render(request , 'ERP/service/employee_list.html', context)
 
+def add_center_service(request):
+    admin = Employee.objects.get(user = request.user ) 
+    if request.method == 'POST':
+        center = admin.center
+        name = request.POST['name']
+        price = request.POST['price']
+        tax = request.POST['tax']
+        description = request.POST['desc']
+        try :
+            center_service = CenterServices.objects.create(
+                name = name,
+                center = center ,
+                decription = description,
+                price = price ,
+                tax = tax
+            )
+            center_service.save()
+        except Exception as e:
+            pass
+    return render(request , 'ERP/service/add_center_service.html')
+
 @login_required(login_url= 'login_page')
 @allowed_users(allowed_roles=[User.Role.EMPLOYEE,User.Role.ADMIN])
 def update_progress(request,pk):

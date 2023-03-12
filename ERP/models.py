@@ -24,6 +24,7 @@ class CenterServices(models.Model):
     tax = models.FloatField(default=5)
     def __str__(self) -> str:
         return str(self.name) + ' - ' + str(self.center) + '- ' + str(self.price)
+    
 # class CenterProduct(models.Model):
 #     name = models.CharField(max_length=100)
 #     description = models.CharField(max_length=400, default="Diam dolor diam ipsum sit amet diam et eos erat ipsum")
@@ -63,13 +64,13 @@ class Estimate(models.Model):
     report = models.FileField(null=True , blank=True)
     created_at = models.DateTimeField(auto_now_add=True , editable=False)
     def save(self, *args, **kwargs):
-        print("hello")
+        
         self.serial_number = str(self.service.id) +'-ES-'+ str(self.service.center)  
-        print("he")
+        
         services = list(self.service.services.all())
         self.price = 0
         for service in services:
-            self.price += service.price + (1 + service.tax/100)
+            self.price += service.price * (1 + service.tax/100)
         self.price += self.service.additional_services_cost
         super(Estimate, self).save(*args, **kwargs)
     def __str__(self) -> str:
