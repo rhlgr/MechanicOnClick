@@ -7,7 +7,7 @@
 <tr><th>ID</th><th>Service</th><th>Price</th><th>Date</th><th>Download</th></tr>
 {% for estimate in estimates %}
 <tr>
-    <td>{{estimate.id}}</td>
+    <td>{{estimate.serial_number}}</td>
     <td>{{estimate.service}}</td>
     <td>{{estimate.price}}</td>
     <td>{{estimate.created_at}}</td>
@@ -16,5 +16,4 @@
 </tr>
 {% endfor %}
 </table>
-<input class="btn btn-outline-primary" type=button value="Previous Page" onClick="javascript:history.go(-1);">
 {% endblock %}

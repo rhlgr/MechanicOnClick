@@ -43,9 +43,9 @@ def add_service(request):
     if request.method == 'POST':
         try :
             vehical = Vehical.objects.get(number = request.POST['vehical'])
-            print('Center = '+ str(center))
+            #print('Center = '+ str(center))
             #print(request.POST)
-            print(list(request.POST.getlist('cb')))
+            #print(list(request.POST.getlist('cb')))
             service_ids = list(request.POST.getlist('cb'))
             services = []
             for id in service_ids:
@@ -200,7 +200,7 @@ def dashboard(request):
         return redirect('info_vehical_page')
     else :
         employee = Employee.objects.get(user = request.user)
-        return redirect('employee_tasks' , employee.id)
+        return redirect('employee_tasks')
 @login_required(login_url= 'login_page')
 @allowed_users(allowed_roles=[User.Role.EMPLOYEE,User.Role.ADMIN])
 def estimates(request):
@@ -216,7 +216,7 @@ def estimates(request):
 def genrate_estimate(request , pk):
 
     service = Service.objects.get(id = pk)
-    print(service)
+    #print(service)
     file_name = os.path.join(BASE_DIR ,MEDIA_ROOT , 'media' , 'estimates' ,f'{str(service.id)}{str(service.vehical)}.pdf')
     table_data = [['Name' , 'Price' , 'Tax' , 'Total']]
     total_estimate = 0
@@ -232,13 +232,14 @@ def genrate_estimate(request , pk):
     table_data.append(x)
     x = ['', '' ,'Total' , total_estimate]
     table_data.append(x)
-    print(table_data)
+    #print(table_data)
     make_report(table_data=table_data , file_name=file_name , center_name=str(service.center))
     try :
         new_estimate = Estimate.objects.create(service = service , report = file_name)
         new_estimate.save()
         return redirect('estimates')
-    except :
+    except Exception as e :
+        print('Err0r' + str(e))
         messages.error(request , 'Only one estimate can be genrated for a service.')
         return redirect('employee_service_list')
 

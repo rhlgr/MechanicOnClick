@@ -1,13 +1,30 @@
-{% extends 'ERP/base.html' %}
-{% load static %}
-{% block content %}
-<h1>Hi {{request.user}} !</h1>
-<div class="services">
-    <h3 class="pg-header">Our Services</h3>
-    <div id="carser">
-<a href="{% url 'add_vehical_page' %}" class="btn btn-outline-warning btn-lg">Add Vehical</a> 
-<a href="{% url 'info_vehical_page' %}" class="btn btn-outline-warning btn-lg">Vehical Information</a> 
-<a href="{% url 'customer_service_page' %}" class="btn btn-outline-warning btn-lg">View Services</a> 
 
+
+<div class="sidebar">
+    <div class="sidebar_inner">
+    <ul>
+        <li>
+            <a href=" {% url 'add_vehical_page' %} ">
+                <span class="icon"><i class="fa fa-qrcode"></i></span>
+                <span class="text">Add Vehical</span>
+            </a>
+        </li>
+        <li>
+            <a href="{% url 'info_vehical_page' %}">
+                <span class="icon"><i class="fa fa-link"></i></span>
+                <span class="text">My Vehcials</span>
+            </a>
+        </li>
+        <li>
+            <a href="{% url 'customer_service_page' %}">
+                <span class="icon"><i class="fa fa-link"></i></span>
+                <span class="text">My services</span>
+            </a>
+        </li>
+        
+        
+    </ul>
+    </div>
 </div>
-{% endblock %}
+
+
