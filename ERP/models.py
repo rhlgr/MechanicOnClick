@@ -28,6 +28,7 @@ class CenterServices(models.Model):
 class CenterProduct(models.Model):
     name = models.CharField(max_length=100)
     description = models.CharField(max_length=400, default="Diam dolor diam ipsum sit amet diam et eos erat ipsum")
+    purchase_price = models.IntegerField(default=300)
     price = models.IntegerField(default=500)
     center = models.ForeignKey(Center,on_delete= models.CASCADE)
     serial_number = models.CharField(max_length=50 , unique=True)

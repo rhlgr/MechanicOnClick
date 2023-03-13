@@ -4,11 +4,12 @@
  
 <form  method="post">
     {% csrf_token %}
-   <input type="text" name="name" placeholder="Enter Name of Service">
-   <input type="text" name="desc" placeholder="Enter Description">
-   <input type="number" name="price" placeholder="Enter Price of Service">
-   <input type="number" name="tax" placeholder="Enter Tax of Service">
-   
+   <input type="text" name="name" placeholder="Enter Name of Product"><br><br>
+   <textarea name="description" placeholder="Add task description here" id="" cols="50" rows="5"></textarea><br><br>
+   <input type="number" name="purchase_price" placeholder="Enter Purchase Price"><br><br>
+   <input type="number" name="price" placeholder="Enter Price of Product"><br><br>
+   <input type="number" name="tax" placeholder="Enter Tax "><br><br>
+   <button type="submit">Add Product</button><br>
 </form>
 
 {% endblock %}

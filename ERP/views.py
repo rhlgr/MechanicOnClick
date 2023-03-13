@@ -417,5 +417,27 @@ def center_product_list(request):
         }
 
     return render(request,'ERP/product/list_view.html',context)
+
 def add_product(request):
-    pass
+    if request.method == 'POST':
+        admin = Employee.objects.get(user = request.user ) 
+        center = admin.center
+        name = request.POST['name']
+        description = request.POST['description']
+        purchase_price = request.POST['purchase_price']
+        price = request.POST['price']
+        tax = request.POST['tax']
+        try :
+            product = CenterProduct.objects.create(
+                name = name,
+                description = description,
+                center = center,
+                purchase_price = purchase_price,
+                price = price,
+                tax = tax
+            )
+            product.save()
+            return redirect('center_product_list')
+        except Exception as e:
+            return redirect('add_product')
+    return render(request , 'ERP/product/add.html')
