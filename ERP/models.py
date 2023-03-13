@@ -35,6 +35,27 @@ class CenterProduct(models.Model):
     stock = models.IntegerField(default=0)
     def __str__(self) -> str:
         return str(self.name) + ' - '  + str(self.price)
+    
+    def save(self, *args , **kwargs):
+       
+
+       if CenterProduct.objects.filter(center = self.center).exists():
+           
+           last = CenterProduct.objects.filter(center = self.center).latest('id')
+           n=  int(last.serial_number[:-(len(str(self.center.code))+1)])
+           n +=1
+           self.serial_number = str(n) +'-' + str(self.center.code)
+
+       else :
+           self.serial_number = '1-' + str(self.center.code)
+           
+
+
+
+
+    
+
+       return super(CenterProduct, self).save(*args, **kwargs)
 
 class Service(models.Model):
     class Progress(models.TextChoices):

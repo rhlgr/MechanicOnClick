@@ -3,7 +3,7 @@ from account.decorators import allowed_users
 from django.contrib.auth.decorators import login_required
 from .forms import UpdateForm , UpdateProgressForm , PaySlipForm
 from account.models import User , Customer , Employee
-from .models import Vehical  ,Service , Update , CenterServices , Estimate , PaySlip , Attendance ,Task
+from .models import Vehical  ,Service , Update , CenterServices , Estimate , PaySlip , Attendance ,Task , CenterProduct
 from django.contrib import messages
 from .reports import make_report
 import os
@@ -247,9 +247,9 @@ def genrate_estimate(request , pk):
         x = [ser.name , ser.price , ser.tax , tot]
         table_data.append(x)
     # Adding Additional Services Cost with 5% GST
-    tot = service.additional_services_cost * 1.05
+    tot = service.additional_services_cost 
     total_estimate += tot
-    x = [service.additional_services , service.additional_services_cost , '5' , tot]
+    x = [service.additional_services , service.additional_services_cost , '0' , tot]
     table_data.append(x)
     x = ['', '' ,'Total' , total_estimate]
     table_data.append(x)
@@ -405,3 +405,17 @@ def employee_tasks(request):
     tasks = Task.objects.filter(employee = employee)
     context = {'tasks' : tasks}
     return render(request , 'ERP/HR/Task/emp_page.html' , context)
+@login_required(login_url= 'login_page')
+@allowed_users(allowed_roles=[User.Role.EMPLOYEE,User.Role.ADMIN])
+
+def center_product_list(request):
+    admin = Employee.objects.get(user = request.user ) 
+    center = admin.center
+    products = CenterProduct.objects.filter(center = center)
+    context = {
+        'products' : products
+        }
+
+    return render(request,'ERP/product/list_view.html',context)
+def add_product(request):
+    pass

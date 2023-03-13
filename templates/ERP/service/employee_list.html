@@ -1,8 +1,7 @@
 {% extends 'ERP/base.html' %}
 {% load static %}
 {% block content %}
-<h1>Hi {{request.user}} !</h1>  
-<h1>Services</h1>
+
 {% include 'ERP/search_widget.html' %}
 {% if messages %}
 <ul class="messages">

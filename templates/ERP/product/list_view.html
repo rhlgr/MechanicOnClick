@@ -1,0 +1,47 @@
+{% extends 'ERP/base.html' %}
+{% load static %}
+{% block content %}
+
+{% include 'ERP/search_widget.html' %}
+{% if messages %}
+<ul class="messages">
+    {% for message in messages %}
+    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+    {% endfor %}
+</ul>
+{% endif %}
+
+<table id="myTable" class = 'table'>
+    <tr>
+        <th>Serial Number</th>
+        <th>Name</th>
+        <th>Description</th>
+        <th>Price</th>
+        <th>Tax</th>
+        <th>Stock</th>
+        <th>Action</th>
+        </tr> 
+        
+
+        {% for product in products %}
+        <tr>
+            <td>{{product.serial_number}}</td>
+            <td>{{product.name}}</td>
+           
+            <td>{{product.description}}</td>
+            <td>{{product.price}}</td>
+            <td>{{product.tax}}</td>
+            <td>{{product.stock}}</td>
+            <td>{{product.additional_products}}</td>
+            <td> 
+                <a class="btn btn-outline-info" href="">Edit</a>
+                
+            </td>
+        </tr>
+        {% endfor %}
+        </table>
+        <input class="btn btn-outline-primary" type=button value="Previous Page" onClick="javascript:history.go(-1);">
+        
+
+       
+{% endblock %}
