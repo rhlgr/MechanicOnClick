@@ -354,6 +354,7 @@ def assign_task(request):
     return render(request ,'ERP/HR/Task/add.html' , context)
 @login_required(login_url= 'login_page')
 @allowed_users(allowed_roles=[User.Role.HR,User.Role.ADMIN])
+
 def tasks_list(request):
     admin = Employee.objects.get(user=request.user)
     center = admin.center
@@ -427,6 +428,7 @@ def add_product(request):
         purchase_price = request.POST['purchase_price']
         price = request.POST['price']
         tax = request.POST['tax']
+        stock = request.POST['stock']
         try :
             product = CenterProduct.objects.create(
                 name = name,
@@ -434,10 +436,44 @@ def add_product(request):
                 center = center,
                 purchase_price = purchase_price,
                 price = price,
-                tax = tax
+                tax = tax,
+                stock = stock
             )
             product.save()
             return redirect('center_product_list')
         except Exception as e:
             return redirect('add_product')
     return render(request , 'ERP/product/add.html')
+
+def edit_product(request , pk):
+    product = CenterProduct.objects.get(id = pk)
+    if request.method == 'POST':
+        admin = Employee.objects.get(user = request.user ) 
+        center = admin.center
+        if center != product.center:
+            raise ValueError('Wrong User')
+        name = request.POST['name']
+        description = request.POST['description']
+        purchase_price = request.POST['purchase_price']
+        price = request.POST['price']
+        tax = request.POST['tax']
+        stock = request.POST['stock']
+        try :
+            
+            product.name = name
+            product.description = description
+            product.center = center
+            product.purchase_price = purchase_price
+            product.price = price
+            product.tax = tax
+            product.stock = stock
+            
+            product.save()
+            return redirect('center_product_list')
+        except Exception as e:
+            return redirect('edit_product')
+    
+    context = {'product' : product}
+    return render(request , 'ERP/product/edit.html' , context)
+
+

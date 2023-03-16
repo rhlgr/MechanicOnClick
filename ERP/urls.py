@@ -1,7 +1,8 @@
 from django.urls import path
 from .views import ( add_service  , employee_service_updates , employee_service_list , update_progress , dashboard , genrate_estimate,
  estimates , delete_estimate , approve_page , activate_employee , deactivate_employee , change_role , show_pay_slips , add_pay_slip , attendance
- ,attendance_table , mark_attendance , assign_task , get_tasks , tasks_list , update_task_status , employee_tasks , center_product_list , add_product
+ ,attendance_table , mark_attendance , assign_task , get_tasks , tasks_list , update_task_status , employee_tasks , center_product_list , add_product,
+ edit_product
  )
 from .customer_views import (add_vehical , edit_vehical , info_vehical , customer_services , approve_service, approve_estimate, 
  service_updates , vehical_services )
@@ -46,4 +47,5 @@ urlpatterns = [
     # Product Paths
     path('products/', center_product_list , name ='center_product_list'),
     path('product/add', add_product , name ='add_product'),
+    path('product/edit/<str:pk>', edit_product , name ='edit_product'),
     ]
