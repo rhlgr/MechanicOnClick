@@ -21,8 +21,8 @@
             <td> 
                 <a class="btn btn-outline-info" href="{% url 'activate_employee' employee.id %}">Activate Employee Id</a>
                 <a class="btn btn-outline-info" href="{% url 'deactivate_employee' employee.id %}">Deactivate Employee Id</a>
-                <a class="btn btn-outline-secondary" href="{% url 'change_role' employee.id %}"">Change Role</a>
-                <a class="btn btn-outline-secondary" href="{% url 'pay_slips' employee.id %}"">View Pay Slips</a>
+                <a class="btn btn-outline-secondary" href="{% url 'change_role' employee.id %}">Change Role</a>
+                <a class="btn btn-outline-secondary" href="{% url 'pay_slips' employee.id %}">View Pay Slips</a>
             </td>
         </tr>
         {% endfor %}

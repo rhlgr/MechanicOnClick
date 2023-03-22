@@ -354,7 +354,6 @@ def assign_task(request):
     return render(request ,'ERP/HR/Task/add.html' , context)
 @login_required(login_url= 'login_page')
 @allowed_users(allowed_roles=[User.Role.HR,User.Role.ADMIN])
-
 def tasks_list(request):
     admin = Employee.objects.get(user=request.user)
     center = admin.center
