@@ -34,6 +34,7 @@ def employee_service_updates(request,pk):
     context['form'] = UpdateForm()
 
     return render(request,'ERP/service/employee_update_form.html',context)
+
 # Employee Views :- 
 @login_required(login_url= 'login_page')
 @allowed_users(allowed_roles=[User.Role.EMPLOYEE,User.Role.ADMIN])
@@ -43,15 +44,7 @@ def add_service(request):
     if request.method == 'POST':
         try :
             vehical = Vehical.objects.get(number = request.POST['vehical'])
-            #print('Center = '+ str(center))
-            #print(request.POST)
-            #print(list(request.POST.getlist('cb')))
-            service_ids = list(request.POST.getlist('cb'))
-            services = []
-            for id in service_ids:
-                services.append(CenterServices.objects.get(id=id))
-            additional_services = request.POST['add_services']
-            additional_services_cost = request.POST['add_ser_amt']
+            
         
            
             service = Service.objects.create(
@@ -60,17 +53,17 @@ def add_service(request):
                 #service_date = datetime.datetime.strptime(service_date, "%Y-%m-%d").date(),
                 center = center,
                 progress = Service.Progress.WAITING,
-                additional_services = additional_services,
-                additional_services_cost = additional_services_cost
+                # additional_services = additional_services,
+                # additional_services_cost = additional_services_cost
                 )
 
             
             service.save()
-            service.services.set(services)
-            return redirect('employee_service_list')
+            #service.services.set(services)
+            return redirect('add_services' , service.id)
         except Exception as e:
             print('-------------------------------------------------------------------------------')
-            print(e)
+            print('error is '+str(e))
             return redirect('home_page')
     services = CenterServices.objects.filter(center = center)
     vehicals = Vehical.objects.all()
@@ -78,6 +71,73 @@ def add_service(request):
     'vehicals' : vehicals
     }
     return render(request , 'ERP/service/add.html' , context)
+
+
+@login_required(login_url= 'login_page')
+@allowed_users(allowed_roles=[User.Role.EMPLOYEE,User.Role.ADMIN])
+def add_services(request , pk):
+    employee = Employee.objects.get(user = request.user)
+    center = employee.center
+    if request.method == 'POST':
+        try :
+            service_ids = list(request.POST.getlist('cb'))
+            services = []
+            for id in service_ids:
+                services.append(CenterServices.objects.get(id=id))
+            # additional_services = request.POST['add_services']
+            # additional_services_cost = request.POST['add_ser_amt']
+        
+           
+            service = Service.objects.get(id = pk)
+
+            
+            
+            service.services.set(services)
+            service.save()
+            return redirect('add_extra_services' , service.id)
+        except Exception as e:
+            print('-------------------------------------------------------------------------------')
+            print('error is '+str(e))
+            return redirect('home_page')
+    
+    services = CenterServices.objects.filter(center = center)
+    context = {'services':services,
+    }
+    
+    return render(request , 'ERP/service/add_services.html' , context)
+
+
+
+@login_required(login_url= 'login_page')
+@allowed_users(allowed_roles=[User.Role.EMPLOYEE,User.Role.ADMIN])
+def add_extra_services(request , pk):
+    if request.method == 'POST':
+        try :
+            additional_services = request.POST['add_services']
+            additional_services_cost = request.POST['add_ser_amt']
+        
+           
+            service = Service.objects.get(id = pk)
+
+            
+            
+            service.additional_services = additional_services
+            service.additional_services_cost = additional_services_cost
+            service.save()
+            return redirect('add_service_product' , service.id)
+        except Exception as e:
+            print('-------------------------------------------------------------------------------')
+            print('error is '+str(e))
+            return redirect('home_page')
+        
+    return render(request , 'ERP/service/add_extra_service.html')
+
+def add_service_product(request ,pk):
+
+    products = CenterProduct.objects.all()
+    context = {'products' : products}
+    return render(request , 'ERP/service/add_product.html' , context)
+
 @login_required(login_url= 'login_page')
 @allowed_users(allowed_roles=[User.Role.EMPLOYEE,User.Role.ADMIN])
 def employee_service_list(request):
@@ -88,6 +148,8 @@ def employee_service_list(request):
     context['services'] = services
     return render(request , 'ERP/service/employee_list.html', context)
 
+@login_required(login_url= 'login_page')
+@allowed_users(allowed_roles=[User.Role.EMPLOYEE,User.Role.ADMIN])
 def add_center_service(request):
     admin = Employee.objects.get(user = request.user ) 
     if request.method == 'POST':
@@ -287,7 +349,7 @@ def mark_attendance(request , pk , date):
             record.save()
             message = f"{employee} Attendance Marked as Present"
         elif status == '2':
-            record.status = Attendance.AttendanceStatus.PRESENT
+            record.status = Attendance.AttendanceStatus.ABSENT
             record.save()
             message = f"{employee}'s Attendance Marked as Absent"
         
@@ -405,9 +467,9 @@ def employee_tasks(request):
     tasks = Task.objects.filter(employee = employee)
     context = {'tasks' : tasks}
     return render(request , 'ERP/HR/Task/emp_page.html' , context)
+
 @login_required(login_url= 'login_page')
 @allowed_users(allowed_roles=[User.Role.EMPLOYEE,User.Role.ADMIN])
-
 def center_product_list(request):
     admin = Employee.objects.get(user = request.user ) 
     center = admin.center
@@ -418,6 +480,9 @@ def center_product_list(request):
 
     return render(request,'ERP/product/list_view.html',context)
 
+
+@login_required(login_url= 'login_page')
+@allowed_users(allowed_roles=[User.Role.EMPLOYEE,User.Role.ADMIN])
 def add_product(request):
     if request.method == 'POST':
         admin = Employee.objects.get(user = request.user ) 
@@ -444,6 +509,8 @@ def add_product(request):
             return redirect('add_product')
     return render(request , 'ERP/product/add.html')
 
+@login_required(login_url= 'login_page')
+@allowed_users(allowed_roles=[User.Role.EMPLOYEE,User.Role.ADMIN])
 def edit_product(request , pk):
     product = CenterProduct.objects.get(id = pk)
     if request.method == 'POST':
@@ -476,3 +543,12 @@ def edit_product(request , pk):
     return render(request , 'ERP/product/edit.html' , context)
 
 
+@login_required(login_url= 'login_page')
+@allowed_users(allowed_roles=[User.Role.EMPLOYEE,User.Role.ADMIN])
+def sell_product(request , pk):
+    print('here-------------------------------------')
+    qty = request.GET.get('qty')
+    context = {'pk' : pk,
+               'qty' : qty
+               }
+    return render(request , 'ERP/product/service_list.html' , context)

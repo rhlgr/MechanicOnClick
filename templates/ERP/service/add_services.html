@@ -1,0 +1,27 @@
+{% extends 'ERP/base.html' %}
+{% load static %}
+{% block content %}
+<form  method="post">
+    {% csrf_token %}
+{% include 'ERP/search_widget.html' %}
+      <br><br>
+      <div class="table-wrap">
+      <table id="myTable" class = 'table'>
+       <tr> <th>Service</th> <th>Select</th></tr> 
+        {% for service in services %}
+        <tr>
+        
+        <td>{{service}}</td>
+        <td><input type="checkbox" name="cb" id="cb" value="{{service.id}}"></td>
+    </tr>
+        {% endfor %}
+    </table>
+      </div>
+      <button type="submit"> Add Services </button>
+   
+</form>
+<br>
+<br>
+<input class="btn btn-outline-primary" type=button value="Previous Page" onClick="javascript:history.go(-1);">
+
+{% endblock %}

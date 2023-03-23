@@ -2,7 +2,7 @@ from django.urls import path
 from .views import ( add_service  , employee_service_updates , employee_service_list , update_progress , dashboard , genrate_estimate,
  estimates , delete_estimate , approve_page , activate_employee , deactivate_employee , change_role , show_pay_slips , add_pay_slip , attendance
  ,attendance_table , mark_attendance , assign_task , get_tasks , tasks_list , update_task_status , employee_tasks , center_product_list , add_product,
- edit_product
+ edit_product , sell_product , add_services , add_extra_services , add_service_product
  )
 from .customer_views import (add_vehical , edit_vehical , info_vehical , customer_services , approve_service, approve_estimate, 
  service_updates , vehical_services )
@@ -14,6 +14,9 @@ urlpatterns = [
     path('vehical/services/<str:pk>', vehical_services ,name='vehical_services_page'),
     # Service Paths
     path('service/add/', add_service ,name='add_service_page'),
+    path('services/add/<str:pk>', add_services ,name='add_services'),
+    path('services/extra/add/<str:pk>', add_extra_services ,name='add_extra_services'),
+    path('service/product/<str:pk>', add_service_product ,name='add_service_product'),
     path('services/', customer_services ,name='customer_service_page'),
     path('services/view/update/<str:pk>', service_updates , name ='customer_service_updates_page'),
     path('services/approve/<str:pk>', approve_service , name='approve_service'),
@@ -48,4 +51,5 @@ urlpatterns = [
     path('products/', center_product_list , name ='center_product_list'),
     path('product/add', add_product , name ='add_product'),
     path('product/edit/<str:pk>', edit_product , name ='edit_product'),
+    path('product/sell/<str:pk>', sell_product , name ='sell_product'),
     ]

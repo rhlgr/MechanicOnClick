@@ -1,0 +1,18 @@
+{% extends 'ERP/base.html' %}
+{% load static %}
+{% block content %}
+
+<form  method="post">
+    {% csrf_token %}
+<input type="number" name="add_ser_amt" placeholder="Amount For Additional Services"><br><br>
+<input type="text" name="add_services" placeholder="Additional Services"><br><br>
+    
+<button type="submit"> Proceed</button>
+   
+</form>
+
+<br>
+<br>
+<input class="btn btn-outline-primary" type=button value="Previous Page" onClick="javascript:history.go(-1);">
+
+{% endblock %}

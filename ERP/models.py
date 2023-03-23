@@ -69,7 +69,7 @@ class Service(models.Model):
     progress = models.CharField(max_length=20 , choices=Progress.choices , default= Progress.WAITING)
     date = models.DateTimeField(auto_now_add=True)
     # Customer Already in vehical
-    additional_services = models.CharField(max_length=200 ,default = None)
+    additional_services = models.CharField(max_length=200 ,null=True , blank=True)
     additional_services_cost = models.IntegerField(default=0)
     is_approved = models.BooleanField(default=False)
     #customer = models.ForeignKey(Customer , on_delete=models.SET_NULL, blank=True , null= True)

@@ -3,6 +3,7 @@
 {% block content %}
 
 <form  method="post">
+    <h1>Choose vehical</h1>
     {% csrf_token %}
     <input list="vehical-list" placeholder="Vehical Number" name = 'vehical'>
     <datalist id = "vehical-list">
@@ -10,36 +11,11 @@
         <option value="{{vehical.number}}"></option>
         {% endfor %}
     </datalist><br><br>
-    
-    <!-- <label for="time">Service Estimate Time</label>
-    <input type="time" name="service_time" ><br><br> -->
-    <!-- <label for="date">Service Date</label>
-    <input type="date" name="service_date" ><br><br> -->
-    
-    <!-- <select name="services" multiple>
-        {% for service in services %}
-        <option value="{{service.id}}">{{service}}</option>
-        {% endfor %}
-      </select><br><br> -->
-      <input type="number" name="add_ser_amt" placeholder="Amount For Additional Services"><br><br>
-      <input type="text" name="add_services" placeholder="Additional Services"><br><br>
-      {% include 'ERP/search_widget.html' %}
-      <br><br>
-      <div class="table-wrap">
-      <table id="myTable" class = 'table'>
-       <tr> <th>Service</th> <th>Select</th></tr> 
-        {% for service in services %}
-        <tr>
-        
-        <td>{{service}}</td>
-        <td><input type="checkbox" name="cb" id="cb" value="{{service.id}}"></td>
-    </tr>
-        {% endfor %}
-    </table>
-      </div>
-      <br><br>
-    <button type="submit"> Add Service </button>
+ 
+      
+     
+    <button type="submit"> Proceed</button>
    
 </form>
-<input class="btn btn-outline-primary" type=button value="Previous Page" onClick="javascript:history.go(-1);">
+
 {% endblock %}
