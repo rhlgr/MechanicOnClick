@@ -13,6 +13,7 @@
 
 <table id="myTable" class = 'table'>
     <tr>
+        <th>ID</th>
         <th>Number</th>
         <th>Type</th>
      
@@ -27,6 +28,7 @@
 
         {% for service in services %}
         <tr>
+            <td>{{service.id}}</td>
             <td>{{service.vehical.number}}</td>
             <td>{{service.vehical.type}}</td>
            

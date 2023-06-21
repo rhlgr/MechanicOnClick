@@ -2,7 +2,7 @@ from django.urls import path
 from .views import ( add_service  , employee_service_updates , employee_service_list , update_progress , dashboard , genrate_estimate,
  estimates , delete_estimate , approve_page , activate_employee , deactivate_employee , change_role , show_pay_slips , add_pay_slip , attendance
  ,attendance_table , mark_attendance , assign_task , get_tasks , tasks_list , update_task_status , employee_tasks , center_product_list , add_product,
- edit_product , sell_product , add_services , add_extra_services , add_service_product
+ edit_product , sell_product , add_services , add_extra_services , add_service_product , view_service
  )
 from .customer_views import (add_vehical , edit_vehical , info_vehical , customer_services , approve_service, approve_estimate, 
  service_updates , vehical_services )
@@ -22,6 +22,7 @@ urlpatterns = [
     path('services/approve/<str:pk>', approve_service , name='approve_service'),
     path('services/update/<str:pk>', employee_service_updates , name ='employee_service_update_page'),
     path('services/list/', employee_service_list ,name='employee_service_list'),
+    path('service/view/<str:pk>', view_service ,name='view_service_page'),
     path('services/update/progress/<str:pk>', update_progress , name ='progress_update_page'),
     path('dashboard/', dashboard , name ='dashboard'),
     #Estimate Paths

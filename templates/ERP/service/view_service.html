@@ -1,0 +1,26 @@
+{% extends 'ERP/base.html' %}
+{% load static %}
+{% block content %}
+ 
+<h1>{{service}}</h1>
+<h3>{{service.vehical}}</h3>
+<h3>{{service.center}}</h3>
+<h3>{{service.progress}}</h3>
+<h3>Additional services :-{{service.additional_services}}</h3>
+<h3>Additional services cost :-{{service.additional_services_cost}}</h3>
+<h3>Services :-</h3>
+<ol>
+    {% for ser in service.services.all %}
+        <li>{{ser}}</li>
+    {% endfor %}
+</ol>
+
+<h3>Products :-</h3>
+<ol>
+    {% for pro in service.products.all %}
+        <li>{{pro}}</li>
+    {% endfor %}
+</ol>
+
+
+{% endblock %}

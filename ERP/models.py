@@ -164,6 +164,7 @@ class ProductSale(models.Model):
             pro.stock = pro.stock - self.quantity
             self.amount = self.quantity * pro.price*((100+pro.tax)/100)
             pro.save()
+            self.service.products.add(pro)
         return super().save(*args , **kwargs)
     def __str__(self) -> str:
         return str(self.product) + ' - ' + str(self.quantity)

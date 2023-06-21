@@ -69,6 +69,12 @@ def add_service(request):
     }
     return render(request , 'ERP/service/add.html' , context)
 
+def view_service(request , pk):
+    service = Service.objects.get( id = pk)
+    context = {
+        'service' : service
+    }
+    return render(request , 'ERP/service/view_service.html' , context)
 
 @login_required(login_url= 'login_page')
 @allowed_users(allowed_roles=[User.Role.EMPLOYEE,User.Role.ADMIN])
@@ -140,7 +146,7 @@ def add_service_product(request ,pk):
         'pk' : pk
         }
     if request.method == 'POST':
-        pass
+        return redirect('view_service_page' , pk)
     return render(request , 'ERP/service/add_product.html' , context)
 
 @login_required(login_url= 'login_page')
