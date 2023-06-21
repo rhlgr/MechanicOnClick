@@ -3,7 +3,7 @@ from account.decorators import allowed_users
 from django.contrib.auth.decorators import login_required
 from .forms import UpdateForm , UpdateProgressForm , PaySlipForm
 from account.models import User , Customer , Employee
-from .models import Vehical  ,Service , Update , CenterServices , Estimate , PaySlip , Attendance ,Task , CenterProduct
+from .models import (Vehical  ,Service , Update , CenterServices , Estimate , PaySlip , Attendance ,Task , CenterProduct , ProductSale)
 from django.contrib import messages
 from .reports import make_report
 import os
@@ -44,9 +44,6 @@ def add_service(request):
     if request.method == 'POST':
         try :
             vehical = Vehical.objects.get(number = request.POST['vehical'])
-            
-        
-           
             service = Service.objects.create(
                 vehical=vehical,
                 #service_time = service_time,
@@ -132,10 +129,18 @@ def add_extra_services(request , pk):
         
     return render(request , 'ERP/service/add_extra_service.html')
 
+@login_required(login_url= 'login_page')
+@allowed_users(allowed_roles=[User.Role.EMPLOYEE,User.Role.ADMIN])
 def add_service_product(request ,pk):
-
-    products = CenterProduct.objects.all()
-    context = {'products' : products}
+    employee = Employee.objects.get(user = request.user)
+    center = employee.center
+    products = CenterProduct.objects.filter(center = center)
+    context = {
+        'products' : products,
+        'pk' : pk
+        }
+    if request.method == 'POST':
+        pass
     return render(request , 'ERP/service/add_product.html' , context)
 
 @login_required(login_url= 'login_page')
@@ -545,10 +550,31 @@ def edit_product(request , pk):
 
 @login_required(login_url= 'login_page')
 @allowed_users(allowed_roles=[User.Role.EMPLOYEE,User.Role.ADMIN])
-def sell_product(request , pk):
-    print('here-------------------------------------')
-    qty = request.GET.get('qty')
-    context = {'pk' : pk,
-               'qty' : qty
-               }
+def sell_product(request , pk , sid):
+   
+    context = {}
+    try :
+        product = CenterProduct.objects.get(id = pk)
+        service = Service.objects.get(id = sid)
+        qty = request.GET.get(f'qty-{pk}')
+        
+        
+        sale = ProductSale.objects.create(
+            service = service,
+            quantity = int(qty),
+            product = product,
+            amount = 0
+        )
+        product.stock = product.stock - int(qty)
+        print(service)
+        sale.save()
+        products = CenterProduct.objects.filter(service = 27)
+        print(service.id)
+        print(products)
+        context['products'] = products
+    except ValueError:
+        
+        messages.error(request , 'Please Check Your Stock')
+    except Exception as e:
+        messages.error(request , e)
     return render(request , 'ERP/product/service_list.html' , context)

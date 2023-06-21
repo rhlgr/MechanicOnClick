@@ -149,3 +149,23 @@ class Task(models.Model):
     status = models.CharField(max_length=50 , choices=TaskStatus.choices ,default= TaskStatus.NA)
     def __str__(self) -> str:
         return str(self.employee) + ' - ' + str(self.title)
+    
+
+class ProductSale(models.Model):
+    service = models.ForeignKey(Service , on_delete=models.CASCADE)
+    product = models.ForeignKey(CenterProduct , on_delete=models.CASCADE)
+    quantity = models.IntegerField(default=0)
+    amount = models.FloatField(default=0)
+    def save(self, *args , **kwargs):
+        if self.id is None:
+            pro = CenterProduct.objects.get(id = self.product.id)
+            if pro.stock < self.quantity:
+                raise ValueError
+            pro.stock = pro.stock - self.quantity
+            self.amount = self.quantity * pro.price*((100+pro.tax)/100)
+            pro.save()
+        return super().save(*args , **kwargs)
+    def __str__(self) -> str:
+        return str(self.product) + ' - ' + str(self.quantity)
+    class Meta:
+        unique_together = ('service' ,  'product')

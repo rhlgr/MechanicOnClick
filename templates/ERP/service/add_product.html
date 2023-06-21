@@ -7,16 +7,29 @@
     {% for product in products %}
     <tr>
     <td> {{product.name}}</td>
-    <td> <input name= 'qty-{{product.id}}' type="number" placeholder="Qty"></td>
+    <td > 
+        
+        <input name= 'qty-{{product.id}}' type="number" placeholder="Qty">
+    
+    </td>
     <td>
-        <a class="btn btn-primary"  hx-get = "{% url 'sell_product' product.id %}" hx-trigger="click" hx-target="#listpro" hx-include = '[name = "qty-{{product.id}}"]' > Add</a>
+        <a class="btn btn-primary"  hx-get = "{% url 'sell_product' product.id pk %}" hx-trigger="click" hx-target="#listpro" hx-include = '[name = "qty-{{product.id}}"] , [name = "sid"]' > Add</a>
     </td>
 </tr>
 {% endfor %}
  </table>
-  <div id = 'listpro'></div>
+  <div id = 'listpro'>
+
+    
+  </div>
   <br>
 <br>
 <input class="btn btn-outline-primary" type=button value="Previous Page" onClick="javascript:history.go(-1);">
-
+{% if messages %}
+<ul class="messages">
+    {% for message in messages %}
+    <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+    {% endfor %}
+</ul>
+{% endif %}
 {% endblock %}

@@ -51,5 +51,5 @@ urlpatterns = [
     path('products/', center_product_list , name ='center_product_list'),
     path('product/add', add_product , name ='add_product'),
     path('product/edit/<str:pk>', edit_product , name ='edit_product'),
-    path('product/sell/<str:pk>', sell_product , name ='sell_product'),
+    path('product/sell/<str:pk>/<str:sid>', sell_product , name ='sell_product'),
     ]
