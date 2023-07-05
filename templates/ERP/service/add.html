@@ -1,21 +1,358 @@
 {% extends 'ERP/base.html' %}
 {% load static %}
 {% block content %}
-
+<!-- 
 <form  method="post">
-    <h1>Choose vehical</h1>
+    <h1>Enter your vehical Number</h1> -->
     {% csrf_token %}
-    <input list="vehical-list" placeholder="Vehical Number" name = 'vehical'>
-    <datalist id = "vehical-list">
+    <!-- <input list="vehical-list" placeholder="Vehical Number" name = 'vehical'> -->
+    <!-- <datalist id = "vehical-list"> -->
         {% for vehical in vehicals %}
-        <option value="{{vehical.number}}"></option>
+        <!-- <option value="{{vehical.number}}"></option> -->
         {% endfor %}
-    </datalist><br><br>
- 
+    <!-- </datalist><br><br> -->
+     <div class="advisor">
+        <form id="jobcard_form" class="jobbcarddformm" method="post" action="/trash/estimate">
+          <!-- advisro top  -->
+          <div class="advisor-top">
+            <div class="jobCardDesc">
+              <h1>Vehicle Job Card</h1>
+            </div>
+            <div class="tax_desc">
+              <div class="gstin_no">
+                <label for="gstIN">GSTIN No:-</label>
+                <input id="gstIN" value="<%= user.gstno %>" name="gstIN" readonly>
+              </div>
+              <div class="invoice_no">
+                <label for="invoiceNo">Invoice No.-</label>
+                <input class="currentInvoiveNumber" id="invoiceNo" type="text" placeholder="******" name="invoiceNo">
+              </div>
+            </div>
+            <button type="button" class="btn btn-danger me-1 refeashBtn">Clear</button>
+          </div>
+          <!-- advisor top ends  -->
+
+          <div class="advisor-middle">
+
+            <div class="jobcard1">
+
+              <div class="job_no">
+                <label for="JobNo">Job No</label> <br>
+                <input id="jobCardNo" type="number" placeholder="******" name="jobnumber">
+              </div>
+
+              <div class="job_date">
+                <label for="JobDate">Job Date</label> <br>
+                <input id="jobCardDate" type="date" placeholder="20/03/23" name="date">
+              </div>
+
+              <div class="vehicle-rc">
+                <label for="Vehicle-rc">Vehicle Registration No</label> <br>
+                <input id="jobCardRegNo" type="text" placeholder="**********" maxlength="16" name="jobCardRegNo" required>
+              </div>
+
+              <div class="kilometer">
+                <label for="km">Kilometer</label> <br>
+                <input id="jobCardKM" type="number" placeholder="**********" name="jobCardKM" required>
+              </div>
+
+              <div class="timeIn">
+                <label for="Timein">TimeIN</label> <br>
+                <input id="jobCardTime" type="time" name="timeIn">
+              </div>
+
+              <div class="timeOut">
+                <label for="Timein">TimeOut</label> <br>
+                <input id="jobCardTimeOut" type="time" name="timeOut">
+              </div>
+
+            </div>
+
+            <div class="jobcard2 d-flex input-group">
+              <div class="Vehicle-Type jobcard2M">
+                <label for="Vehicle-Type">Vehicle type</label> <br>
+                <select id="jobCardVehicleType" class="form-select Vehicle-Type" placeholder="select Your Vehicle " required>
+                  <!-- <option value="2">2-Wheeler</option> -->
+                  <option value="4">4-Wheeler</option>
+                </select>
+              </div>
+              <div class="company_name jobcard2M">
+                <label for="company-name">Vehicle Make</label>
+                <select class="form-select " id="jobCardVehicleMake" name="jobCardVehicleMake" aria-label="Default select example" required>
+                  <option value="" disabled selected>Brand</option>
+                  <option value="Tata">Tata</option>
+                  <option value="Maruti">Maruti</option>
+                  <option value="Mahindra">Mahindra</option>
+                  <option value="Hyundai">Hyundai</option>
+                  <option value="Honda">Honda</option>
+                  <option value="Ford">Ford</option>
+                  <option value="KIA">KIA</option>
+                  <option value="Renault">Renault</option>
+                  <option value="Volkswagen">Volkswagen</option>
+                  <option value="Toyota">Toyota</option>
+                  <option value="MG">MG</option>
+                  <option value="Jeep">Jeep</option>
+                  <option value="Audi">Audi</option>
+                  <option value="BMW">BMW</option>
+                  <option value="Mercedes">Mercedes</option>
+                  <option value="Mitsubishi">Mitsubishi</option>
+                  <option value="Skoda">Skoda</option>
+                  <option value="Chevrolet">Chevrolet</option>
+                </select>
+              </div>
+
+              <div class="company_model jobcard2M">
+                <label for="company-model">Model</label> <br>
+                <select class="form-select" id="jobCardVehicleModel" name="jobCardVehicleModel" aria-label="Default select example" required>
+                  <option value="" disabled selected>Model</option>
+                </select>
+              </div>
+
+
+              <div class="customer_name jobcard2M">
+                <label for="customer_name">Customer Name</label> <br>
+                <input id="jobCardCustomerName" class="form-control" type="text" placeholder="Customer Name" name="jobCardCustomerName" required>
+              </div>
+
+              <div class="contact_no jobcard2M">
+                <label for="contact_no">Contact No</label> <br>
+                <input id="jobCardCustomerContact" class="form-control" type="number" placeholder="Contact no" name="jobCardCustomerContact" required>
+              </div>
+
+            </div>
+
+            <div class="jobcard3">
+
+              <div class="address">
+                <label for="address">Address</label> <br>
+                <textarea id="jobCardCustomerAddress" placeholder="Address" name="address"></textarea>
+              </div>
+
+              <div class="address">
+                <label for="address">Work Required</label> <br>
+                <textarea id="jobCardWorkRequired" placeholder="Work Required" name="address"></textarea>
+              </div>
+
+              <div class="address">
+                <label for="contact_no">Work Done</label> <br>
+                <textarea id="jobCardWorkDone" placeholder="Work Done" name="address"></textarea>
+              </div>
+
+            </div>
+
+            <div class="bill-calc">
+
+              <div class=" hsn-inpt">
+                <label for="HSN" class="form-label lbl">HSN/SAC</label> <br>
+                <input type="number" id="HSN">
+              </div>
+
+              <div class="reqpart">
+                <label for="part" class="form-label lbl">Part Type</label> <br>
+                <select class="form-select" name="part" id="partAB">
+                  <option value="Type of Part" disabled selected>Type of Part</option>
+                  <option value="air_conditioning">Air Conditioning</option>
+                  <option value="belts_chains_rollers">Belts Chains Rollers</option>
+                  <option value="body">Body</option>
+                  <option value="brake_system">Brake System</option>
+                  <option value="car_accessories">Car Accessories</option>
+                  <option value="control_cables">Control Cables</option>
+                  <option value="clutch_system">Clutch System</option>
+                  <option value="electric_components">Electric Components</option>
+                  <option value="engine">Engine</option>
+                  <option value="engine_cooling_system">Engine Cooling System</option>
+                  <option value="exhaust_system">Exhaust System</option>
+                  <option value="filters">Filters</option>
+                  <option value="fuel_supply_system">Fuel Supply System</option>
+                  <option value="gaskets_sealing_rings">Gaskets Sealing Rings</option>
+                  <option value="ignition_glowplug_system">Ignition Glowplug System</option>
+                  <option value="interior_comfort">Interior Comfort</option>
+                  <option value="lighting">Lighting</option>
+                  <option value="oils_fluids">Oils Fluids</option>
+                  <option value="pipes_hoses">Pipes Hoses</option>
+                  <option value="repair_kits">Repair Kits</option>
+                  <option value="sensors_relays_control_units">Sensors Relays Control Units</option>
+                  <option value="steering">Steering</option>
+                  <option value="suspension_arms">Suspension Arms</option>
+                  <option value="towbar_parts">Towbar Parts</option>
+                  <option value="transmission">Transmission</option>
+                  <option value="trims">Trims</option>
+                  <option value="tyres_alloys">Tyres Alloys</option>
+                  <option value="universal">Universal</option>
+                  <option value="wheels">Wheels</option>
+                  <option value="windscreen_cleaning_system">Windscreen Cleaning System</option>
+                </select>
+              </div>
+
+              <div class="reqpart">
+                <label for="part" class="form-label lbl">Part Details</label> <br>
+                <select class="form-select" name="part" id="partJobCard">
+                  <option value="Type of Part" disabled selected>Part Detail</option>
+                  <option value="accompressorclutch">AC Compressor Clutch</option>
+                  <option value="accompressoroil">AC Compressor Oil</option>
+                  <option value="accompressorvalve">AC Compressor Valve</option>
+                  <option value="accontrolunit">AC Control Unit</option>
+                  <option value="acpressureswitch">AC Pressure Switch</option>
+                  <option value="acrepairkit">AC Repair Kit</option>
+                  <option value="accompressor">AC Compressor</option>
+                  <option value="airduct">Air Duct</option>
+                  <option value="airvent">Air Vent</option>
+                  <option value="blowermotor">Blower Motor</option>
+                  <option value="blowermotorresistor">Blower Motor Resistor</option>
+                  <option value="cabinfilter">Cabin Filter</option>
+                  <option value="cabintemperature">Cabin Temperature Sensor</option>
+                  <option value="condenser">Condenser</option>
+                  <option value="condenserfan">Condenser Fan</option>
+                  <option value="condenserfancowling">Condenser Fan Cowling</option>
+                  <option value="defrosterhose">Defroster Hose</option>
+                  <option value="evaporator">Evaporator</option>
+                  <option value="expansionvalve">Expansion Valve</option>
+                  <option value="hvachose">HVAC Hose</option>
+                  <option value="heatexchanger">Heat Exchanger</option>
+                  <option value="receiverdrier">Receiver Drier</option>
+                  <option value="refrigerant">Refrigerant</option>
+                  <option value="vbelt">V-Belt</option>
+                </select>
+              </div>
+
+              <div class=" qtn">
+                <label for="Qnt" class="form-label lbl">Quantity</label> <br>
+                <input type="number" id="Qnt">
+              </div>
+
+              <div class=" unit">
+                <label for="unit" class="form-label lbl">Unit Price</label> <br>
+                <input type="number" id="unit">
+              </div>
+
+              <div class=" partsSubtotal">
+                <label for="partsSubtotal" class="form-label lbl">Sub Total</label> <br>
+                <input type="number" id="partsSubtotal">
+              </div>
+
+              <div class="taxableAmt">
+                <label for="taxableAmt" class="form-label lbl">Taxable Amount</label> <br>
+                <input type="number" id="taxableAmt">
+              </div>
+
+              <div class=" TAX">
+                <label for="tax" id="taxonpart">TAX %</label> <br>
+                <select name="" id="tax">
+                  <option value="5">5%</option>
+                  <option value="12">12%</option>
+                  <option value="18">18%</option>
+                  <option value="28">28%</option>
+                </select>
+              </div>
+
+              <div class="taxOnParts">
+                <label for="total" class="form-label lbl">Tax On Parts</label> <br>
+                <input type="number" id="taxOnParts">
+              </div>
+
+              <div class="sub-total">
+                <label for="total" class="form-label lbl">Sub Total</label> <br>
+                <input type="number" id="total">
+              </div>
+
+              <input type="hidden" id="ab_parts_array" name="arr" value='[]'>
+              <div class="addbtn" id="add">
+                <i class="ri-add-line"></i>
+              </div>
+
+
+            </div>
+
+            <div class="table-wrapper">
+              <table id="preview-table">
+                <tbody>
+
+                </tbody>
+              </table>
+            </div>
+
+            <div class="gross">
+              <div class="Gross_Amount">
+                <label for="total" class="form-label lbl">Gross Amount</label>
+                <input type="number" id="grossAmount" name="parts_subtotal">
+              </div>
+            </div>
+
+            <div class="amount_calc">
+
+              <div class=" labour">
+                <label for="labour" class="form-label lbl">Labour Description</label> <br>
+                <input type="text" id="labourDesc">
+              </div>
+
+              <div class=" labour">
+                <label for="labour" class="form-label lbl">Labour Charge</label> <br>
+                <input type="number" id="labour">
+              </div>
+
+              <div class="taxOnLabour">
+                <label for="total" id="taxonlbr" class="form-label lbl">Tax%</label> <br>
+                <select name="" type="number" id="taxOnLabour">
+                  <option type="number" value="18">18%</option>
+                </select>
+              </div>
+
+              <div class="taxOnLabour">
+                <label for="total" id="taxonlbr" class="form-label lbl">Tax On Labour</label> <br>
+                <input type="text" id="taxOnLabourB">
+                </select>
+              </div>
+
+              <div class="sub-total">
+                <label for="labour_total" class="form-label lbl">Sub Total</label> <br>
+                <input type="number" id="labour_total">
+              </div>
+
+              <input type="hidden" id="ab_labour_array" name="Labour_arr" value='[]'>
+
+              <div class="addbtn1" id="add">
+                <i class="ri-add-line"></i>
+              </div>
+
+            </div>
+
+            <div class="table-wrapper1">
+              <table id="preview-table1">
+                <tbody>
+
+                </tbody>
+              </table>
+            </div>
+
+            <div class="last">
+
+              <div class="gross1">
+
+                <div class="Gross_Amount">
+                  <label for="total" class="form-label lbl">Gross Parts Amount</label>
+                  <input type="number" id="grossAmount1" name="labour_subtotal">
+                </div>
+
+              </div>
+
+              <div class="jobCard_submit">
+
+                <div class="Gross_Total">
+                  <label for="total" class="form-label lbl">Gross Total</label>
+                  <input type="number" name="grandTotal" id="grossTotal">
+                </div>
+              </div>
+            </div>
+            <!-- <button id="estimateButton">Estimate</button> -->
+            <button id="jobCardButton" type="button">Job Card</button>
+          </div>
+
+        </form>
+      </div>
       
      
-    <button type="submit"> Proceed</button>
+    <!-- <button type="submit"> Proceed</button>
    
-</form>
+</form> -->
 
 {% endblock %}

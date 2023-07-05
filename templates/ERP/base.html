@@ -9,42 +9,46 @@
    <!-- Required meta tags -->
    <meta charset="utf-8">
    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-   <link rel="stylesheet" href="{% static 'css/dashboard.css' %}">
+   <!-- <link rel="stylesheet" href="{% static 'css/dashboard.css' %}"> -->
+   <link rel="stylesheet" href="{% static 'css/dashboard1.css' %}">
    <!-- Bootstrap CSS -->
    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-
    <title>ERP MOC</title>
    <!---htmx--->
 <script src="https://unpkg.com/htmx.org@1.6.0"></script>
- </head>
   <script src="https://kit.fontawesome.com/b99e675b6e.js"></script>
+  <style>
+  </style>
 </head>
 <body>
 <div id="main">
  <div class="wrapper hover_collapse">
 	<div class="top_navbar">
-		<div class="logo"><img src="{% static 'img/MoC.png' %}" alt=""></div>
-		<div class="menu">
-			<div class="hamburger">
-				<i class="fas fa-bars"></i>
-			</div>
-		</div>
+    <div class="nav-left">
+		<div class="logo" ><img src="{% static 'img/MoC.png' %}" alt=""></div>
+		      <!-- <h4>Welcome</h4> -->
+        </div>
+        <div class="center">
+          <h1>Welcome</h1>
+          <div id="datetime"></div>
+      </div>
+        <div class="nav-right">
+          <div class="navigation">
+            <div class="menuToggle"></div>
+              <ul class="menu2">
+            <li><a href="#"><ion-icon name="person-outline"></ion-icon>My profile</a></li>
+            <li><a href="#"><ion-icon name="chatbox-ellipses-outline"></ion-icon>Message</a></li>
+            <li><a href="#"><ion-icon name="notifications-outline"></ion-icon>Notification</a></li>
+            <li><a href="#"><ion-icon name="settings-outline"></ion-icon>Help and Setting</a></li>
+            <li><a href="{% url 'logout' %}"><ion-icon name="log-out-outline"></ion-icon>Log Out</a></li>
+            </ul>
+          </div> 
+        </div>
 	</div>
-    <div class="navigation">
-		<div class="userBx">
-			
-			<p class="username">{{request.user}}</p>
-		</div>
-		<div class="menuToggle"></div>
-      <ul class="menu2">
-		<li><a href="#"><ion-icon name="person-outline"></ion-icon>My profile</a></li>
-		<li><a href="#"><ion-icon name="chatbox-ellipses-outline"></ion-icon>Message</a></li>
-		<li><a href="#"><ion-icon name="notifications-outline"></ion-icon>Notification</a></li>
-		<li><a href="#"><ion-icon name="settings-outline"></ion-icon>Help and Setting</a></li>
-		<li><a href="{% url 'logout' %}"><ion-icon name="log-out-outline"></ion-icon>Log Out</a></li>
-	  </ul>
-	</div> 
+<div class="content">
+  <div class="employee_profile">
 	{% include 'ERP/dashboard/main_dash.html' %}
+</div>
 	<div class="box">
         {% block content %}
 	
@@ -52,6 +56,7 @@
         {% endblock %}
               
 	</div>
+</div>
 </div>
    
 </div>
@@ -65,6 +70,23 @@
     menuToggle.onclick = function(){
     navigation.classList.toggle('active')
 }
+document.addEventListener('DOMContentLoaded', function() {
+var datetimeContainer = document.getElementById('datetime')
+    setInterval(updateDateTime, 1000);
+    function updateDateTime() {
+      var date = new Date();
+      var options = {
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric',
+        hour: 'numeric',
+        minute: 'numeric',
+        second:'numeric'
+      };
+      var formattedDateTime = date.toLocaleString(undefined, options);
+      datetimeContainer.textContent = formattedDateTime;
+    }
+  });
 </script>
 </body>
 </html>

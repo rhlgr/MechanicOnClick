@@ -23,7 +23,7 @@ body {
   left: 0;
   width: 100%;
   height: 75px;
-  background: #f3f3f3;
+  background: #000000;
   box-shadow: 1px 0 2px rgba(0, 0, 0, 0.125);
   display: flex;
   align-items: center;
@@ -38,7 +38,7 @@ body {
 }
 
 .top_navbar > .logo > img {
-  width: 110px;
+  width: 10px;
 }
 
 .top_navbar .menu {

@@ -1,0 +1,925 @@
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    font-family: Arial, Helvetica, sans-serif;
+  }
+  
+  html,
+  body {
+    width: 100%;
+    height: 100%;
+  }
+  
+  * {
+    scrollbar-width: auto;
+    scrollbar-color: #8f54a0 #ffffff;
+  }
+  
+  *::-webkit-scrollbar {
+    width: 10px;
+  }
+  
+  *::-webkit-scrollbar-track {
+    background: #ffffff;
+  }
+  
+  *::-webkit-scrollbar-thumb {
+    background-color: rgba(128, 128, 128, 0.529);
+    border-radius: 10px;
+    border: 1px solid #f2f2f286;
+  }
+  
+  .main {
+    width: 100%;
+  }
+  
+  .customer_panel_nav {
+    width: 100%;
+    height: 10vh;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #bacdd8;
+    padding: 0 0.5vw;
+  }
+  
+  .cpn_left {
+    height: inherit;
+    display: flex;
+    align-items: center;
+  }
+  
+  .cpn_left img {
+    height: 5vw;
+  }
+  .cpn_center h1 {
+    font-size: 2.2vw;
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: 500;
+    margin-top: 1vh;
+  }
+  
+  .cpn_right svg {
+    height: 2.5vw;
+    margin-left: 2vw;
+    display: none;
+  }
+  
+  .cpn_right button {
+    padding: 1vh 1vw;
+    background-color: #39811dc4;
+    color: white;
+    border-radius: 0.4vw;
+    border: none;
+    font-size: 1.2vw;
+  }
+  
+  /* baki jageh pe isse syd problem aaskti hai kisi aour hisab se bna hua higa to */
+  .box {
+    width: 100%;
+    height: 90vh;
+    display: flex;
+    color: white;
+    background-color: #1a5772;
+    overflow: auto;
+  }
+  
+  .box1 {
+    width: 15%;
+    height: 90vh;
+    border-right: 1px solid white;
+    overflow: auto;
+  }
+  
+  .box1 li {
+    height: 8vh;
+    margin-bottom: 0.5vh;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    padding-left: 0.5vw;
+    cursor: pointer;
+    margin-left: -2vw;
+  }
+  
+  .box1 li :hover {
+    width: 100%;
+    height: 8vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(0, 0, 0, 0.137);
+    transition: 1s all ease-in;
+  }
+  
+  .box1 li a {
+    color: white;
+    text-decoration: none;
+    /* padding: .5vw; */
+  }
+  
+  .advisor {
+    width: 85%;
+    height: 90vh;
+    overflow: auto;
+    border-left: 1px solid white;
+    display: none;
+  }
+  
+  .advisorButton {
+    width: 100%;
+    height: 100vh;
+    background-color: transparent;
+    color: #000000;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    display: none;
+  }
+  
+  .advisorButton button {
+    margin-bottom: 18vw;
+    width: 18vw;
+    height: 10vh;
+    border-radius: 12px;
+    border: none;
+    font-size: 1.6vw;
+  }
+  
+  .advisor-top {
+    width: 100%;
+    border-bottom: 1px solid white;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .jobCardDesc {
+    width: 50%;
+  }
+  .tax_desc {
+    width: 40%;
+    display: flex;
+    justify-content: space-around;
+  }
+  .tax_desc input {
+    padding: 0.2vw;
+    border-radius: 0.3vw;
+    border: none;
+    outline: none;
+    width: 11vw;
+  }
+  
+  .advisor-top h1 {
+    margin: 0.6vw;
+  }
+  
+  .advisor-middle {
+    padding: 1vw;
+  }
+  
+  .jobcard1,
+  .jobcard3 {
+    display: flex;
+    padding: 0.8vw;
+  }
+  
+  .jobcard1 input,
+  .jobcard3 textarea,
+  .part input,
+  .jobpart3 input,
+  .jobpart4 input,
+  .jobpart4 select {
+    padding: 1vh 1vw;
+    border-radius: 0.3vw;
+    border: none;
+    outline: none;
+    margin: 1vw;
+  }
+  .jobcard1 label,
+  .jobcard3 label,
+  .part label,
+  .jobpart3 label,
+  .jobpart4 label,
+  .jobpart4 label {
+    margin: 0 1vw;
+  }
+  
+  .jobcard3 textarea {
+    padding: 1vh 1vw;
+    border-radius: 0.3vw;
+    border: none;
+    outline: none;
+    width: 25vw;
+    height: 20vh;
+    resize: none;
+  }
+  .part {
+    width: 100%;
+    align-items: center;
+    justify-content: space-between;
+    display: flex;
+    padding: 1vw;
+  }
+  
+  #plus {
+    font-size: 2vw;
+    font-weight: 900;
+    color: rgb(120, 255, 120);
+    cursor: pointer;
+    margin-left: -3vw;
+    background-color: white;
+    padding: 1vw;
+  }
+  
+  #listcard {
+    width: 10vw;
+    height: 10vh;
+    background-color: white;
+    border-radius: 0.5vw;
+  }
+  
+  #listcard li {
+    list-style-type: none;
+  }
+  
+  #jobCardButton,
+  #estimateButton {
+    padding: 0.6vw 1vw;
+    font-size: 1vw;
+    border-radius: 1vw;
+    background-color: green;
+    border: none;
+    cursor: pointer;
+    color: #ffffff;
+    margin-left: 1vw;
+  }
+  /*...............................nav boder..........................  */
+  .nav-available {
+    border-right: 9px solid rgb(7, 31, 28);
+    border-radius: 5px;
+    background-color: #0f621356;
+  }
+  
+  .jobpart4 {
+    width: 50%;
+    align-items: center;
+    justify-content: space-between;
+    display: flex;
+    padding: 1vw;
+  }
+  
+  .overlay1 {
+    width: 100%;
+    height: 100vh;
+    background-color: #1a5772;
+    position: fixed;
+    display: none;
+    top: 0;
+  }
+  
+  .cross1 {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding: 2vh 2vw;
+  }
+  
+  .overlay1 .cross1 h1 {
+    font-size: 2vh;
+    cursor: pointer;
+  }
+  
+  .overlay1 .sidebar {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: start;
+    flex-direction: column;
+  }
+  
+  .overlay1 .sidebar ul {
+    list-style-type: none;
+  }
+  
+  .overlay1 .sidebar ul li a {
+    text-decoration: none;
+    font-size: 6vw;
+    color: white;
+  }
+  
+  .overlay1 .sidebar ul li {
+    margin-top: 2vh;
+  }
+  
+  .bill-calc {
+    width: 80%;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 1vw;
+  }
+  
+  .amount_calc {
+    width: 80%;
+    height: 10vh;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 1vw;
+  }
+  
+  .bill-calc input,
+  .amount_calc input {
+    padding: 1vh 0vw;
+    border-radius: 0.3vw;
+    border: none;
+    outline: none;
+    width: 10vw;
+    margin: 1vw;
+  }
+  .bill-calc label,
+  .amount_calc label {
+    margin: 0 1vw;
+  }
+  #taxonpart,
+  #taxonlbr {
+    margin-top: -10vw;
+  }
+  
+  .addbtn,
+  .addbtn1 {
+    margin-top: 1vmax;
+  }
+  
+  .addbtn i,
+  .addbtn1 i {
+    color: rgb(120, 255, 120);
+    font-size: 2vmax;
+    padding: 0.5vmax;
+    background-color: rgba(3, 3, 3, 0.458);
+    border-radius: 50%;
+  }
+  
+  .addbtn:hover,
+  .addbtn1:hover {
+    cursor: pointer;
+  }
+  
+  .table-wrapper,
+  .table-wrapper1 {
+    padding: 2vmax;
+    width: 95%;
+  }
+  
+  table {
+    width: 100%;
+    background-color: rgba(35, 116, 130, 0.314);
+    border: 1px solid white;
+    color: white;
+  }
+  
+  .tr {
+    border: 1px solid white;
+  }
+  
+  .th {
+    background-color: rgba(0, 0, 0, 0.305);
+    border: 1px solid white;
+    text-align: center;
+  }
+  
+  .td {
+    border: 1px solid white;
+    text-align: center;
+    cursor: pointer;
+  }
+  
+  .td_cross {
+    border: 1px solid white;
+    text-align: center;
+    cursor: pointer;
+  }
+  
+  #taxOnLabour,
+  #tax {
+    padding: 1vh 0vw;
+    border-radius: 0.3vw;
+    border: none;
+    outline: none;
+    cursor: pointer;
+  }
+  #taxonpart,
+  #taxonlbr {
+    margin-bottom: 2vh;
+    margin-left: -0.2vw;
+  }
+  select {
+    font-size: 1.1vw;
+    margin-bottom: 1vh;
+  }
+  
+  .gross,
+  .gross1,
+  .jobCard_submit {
+    display: flex;
+    align-items: center;
+    margin-bottom: 4vw;
+    padding: 0 2vw;
+  }
+  
+  #grossAmount,
+  #grossAmount1,
+  #grossTotal {
+    padding: 1vh 0vw;
+    border-radius: 0.3vw;
+    border: none;
+    outline: none;
+    margin-left: 2vw;
+    width: 10vw;
+  }
+  .last {
+    display: flex;
+  }
+  .Gross_Amount {
+    display: flex;
+    align-items: center;
+  }
+  
+  .Gross_Total {
+    display: flex;
+    align-items: center;
+  }
+  
+  /* ________________________ Administrator fati me hai deadline aagya hai ____________________________ */
+  
+  #administrator {
+    width: 85%;
+    min-height: 100vh;
+    /* background-color: rgb(35, 35, 39); */
+    overflow: auto;
+  }
+  
+  #admintop {
+    width: 100%;
+    min-height: 50vh;
+    /* background-color: #888; */
+    display: flex;
+    justify-content: space-evenly;
+    /* gap: 1vw; */
+    align-items: center;
+    padding: 2vmax 0;
+  }
+  
+  #admintop img {
+    width: 20vmax;
+    height: 20vmax;
+    object-fit: cover;
+    object-position: center;
+    border-radius: 10px;
+    border: 5px solid #243c4ac9;
+  }
+  
+  #admin-company {
+    min-height: 20vmax;
+    width: 60%;
+    background-color: #243c4ac9;
+    border-radius: 10px;
+    padding: 15px 30px;
+  }
+  
+  #admin-company h1 {
+    color: #eeeeee;
+    font-size: 3.8vmax;
+    line-height: 3.5vmax;
+    padding-bottom: 10px;
+    font-weight: 600;
+  }
+  
+  #admin-company h4 {
+    margin-bottom: 5%;
+  }
+  
+  #admin-extra-dets {
+    min-width: 60%;
+  }
+  
+  #admin-extra-dets {
+    font-size: 0.5vmax;
+  }
+  
+  /* to match the padding of image */
+  .dashboard-profile-bottom {
+    padding: 0 calc((85% - 20vw - 46%) / 3);
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    margin-bottom: 25px;
+    /* display: none; */
+  }
+  
+  .dashboard-profile-bottom button {
+    width: calc(100% / 3 - 15px);
+    padding: 12px 0px;
+    font-size: max(1.3vmax, 20px);
+  }
+  .jobcard-option {
+    width: 85%;
+    align-items: start;
+    justify-content: space-evenly;
+    margin-top: 20vh;
+  }
+  .serviceAdvisorButton {
+    display: none;
+  }
+  
+  /* ________________________ loding animation  ____________________________ */
+  @keyframes spin {
+    0% {
+      transform: translate(2px, 1px) rotate(0deg);
+    }
+  
+    10% {
+      transform: translate(-1px, -3px) rotate(36deg);
+    }
+  
+    20% {
+      transform: translate(-2px, 0px) rotate(72deg);
+    }
+  
+    30% {
+      transform: translate(1px, 2px) rotate(108deg);
+    }
+  
+    40% {
+      transform: translate(1px, -1px) rotate(144deg);
+    }
+  
+    50% {
+      transform: translate(-1px, 3px) rotate(180deg);
+    }
+  
+    60% {
+      transform: translate(-1px, 1px) rotate(216deg);
+    }
+  
+    70% {
+      transform: translate(3px, 1px) rotate(252deg);
+    }
+  
+    80% {
+      transform: translate(-2px, -1px) rotate(288deg);
+    }
+  
+    90% {
+      transform: translate(2px, 1px) rotate(324deg);
+    }
+  
+    100% {
+      transform: translate(1px, -2px) rotate(360deg);
+    }
+  }
+  
+  @keyframes speed {
+    0% {
+      transform: translate(2px, 1px) rotate(0deg);
+    }
+  
+    10% {
+      transform: translate(-1px, -3px) rotate(-1deg);
+    }
+  
+    20% {
+      transform: translate(-2px, 0px) rotate(1deg);
+    }
+  
+    30% {
+      transform: translate(1px, 2px) rotate(0deg);
+    }
+  
+    40% {
+      transform: translate(1px, -1px) rotate(1deg);
+    }
+  
+    50% {
+      transform: translate(-1px, 3px) rotate(-1deg);
+    }
+  
+    60% {
+      transform: translate(-1px, 1px) rotate(0deg);
+    }
+  
+    70% {
+      transform: translate(3px, 1px) rotate(-1deg);
+    }
+  
+    80% {
+      transform: translate(-2px, -1px) rotate(1deg);
+    }
+  
+    90% {
+      transform: translate(2px, 1px) rotate(0deg);
+    }
+  
+    100% {
+      transform: translate(1px, -2px) rotate(-1deg);
+    }
+  }
+  
+  @keyframes strikes {
+    from {
+      left: 25px;
+    }
+  
+    to {
+      left: -80px;
+      opacity: 0;
+    }
+  }
+  
+  @keyframes dots {
+    from {
+      width: 0px;
+    }
+  
+    to {
+      width: 35px;
+    }
+  }
+  
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+  
+    to {
+      opacity: 1;
+    }
+  }
+  
+  body {
+    background: #333;
+    font-family: "Lato", "Lucida Grande", "Lucida Sans Unicode", Tahoma,
+      Sans-Serif;
+  }
+  
+  .fadeIn,
+  .loading-window {
+    animation: fadeIn 0.4s both;
+  }
+  
+  .loading-window {
+    background: transparent;
+    border-radius: 6px;
+    color: #ffe4e1;
+    height: 200px;
+    left: 55%;
+    margin-left: -150px;
+    margin-top: -100px;
+    position: fixed;
+    top: 50%;
+    width: 300px;
+    z-index: 99;
+    transform: scale(2.5);
+    display: none;
+  }
+  
+  .loading-window .text {
+    font-size: 16px;
+    position: absolute;
+    width: auto;
+    top: 65%;
+    left: 23%;
+    margin: 0 auto;
+  }
+  
+  .loading-window .dots {
+    display: inline-block;
+    width: 5px;
+    overflow: hidden;
+    vertical-align: bottom;
+    animation: dots 1.5s linear infinite;
+    transition: 1;
+  }
+  
+  .car {
+    position: absolute;
+    width: 117px;
+    height: 42px;
+    left: 92px;
+    top: 70px;
+  }
+  
+  .car .strike {
+    position: absolute;
+    width: 15px;
+    height: 1.2px;
+    background: #ffe4e1;
+    animation: strikes 0.2s linear infinite;
+  }
+  
+  .car .strike2 {
+    top: 11px;
+    animation-delay: 0.05s;
+  }
+  
+  .car .strike3 {
+    top: 22px;
+    animation-delay: 0.1s;
+  }
+  
+  .car .strike4 {
+    top: 33px;
+    animation-delay: 0.15s;
+  }
+  
+  .car .strike5 {
+    top: 44px;
+    animation-delay: 0.2s;
+  }
+  
+  .car-detail {
+    position: absolute;
+    display: block;
+    background: #ffe4e1;
+    animation: speed 0.5s linear infinite;
+  }
+  
+  .car-detail.spoiler {
+    width: 0;
+    height: 0;
+    top: 7px;
+    background: none;
+    border: 20px solid transparent;
+    border-bottom: 8px solid #ffe4e1;
+    border-left: 20px solid #ffe4e1;
+  }
+  
+  .car-detail.back {
+    height: 20px;
+    width: 92px;
+    top: 15px;
+    left: 0px;
+  }
+  
+  .car-detail.center {
+    height: 35px;
+    width: 75px;
+    left: 12px;
+    border-top-left-radius: 30px;
+    border-top-right-radius: 45px 40px;
+    border: 4px solid #ffe4e1;
+    background: none;
+    box-sizing: border-box;
+  }
+  
+  .car-detail.center1 {
+    height: 35px;
+    width: 35px;
+    left: 12px;
+    border-top-left-radius: 30px;
+  }
+  
+  .car-detail.front {
+    height: 20px;
+    width: 50px;
+    top: 15px;
+    left: 67px;
+    border-top-right-radius: 50px 40px;
+    border-bottom-right-radius: 10px;
+  }
+  
+  .car-detail.wheel {
+    height: 20px;
+    width: 20px;
+    border-radius: 50%;
+    top: 20px;
+    left: 12px;
+    border: 3px solid #333;
+    background: linear-gradient(
+        45deg,
+        transparent 45%,
+        #ffe4e1 46%,
+        #ffe4e1 54%,
+        transparent 55%
+      ),
+      linear-gradient(
+        -45deg,
+        transparent 45%,
+        #ffe4e1 46%,
+        #ffe4e1 54%,
+        transparent 55%
+      ),
+      linear-gradient(
+        90deg,
+        transparent 45%,
+        #ffe4e1 46%,
+        #ffe4e1 54%,
+        transparent 55%
+      ),
+      linear-gradient(
+        0deg,
+        transparent 45%,
+        #ffe4e1 46%,
+        #ffe4e1 54%,
+        transparent 55%
+      ),
+      radial-gradient(#ffe4e1 29%, transparent 30%, transparent 50%, #ffe4e1 51%),
+      #333;
+    animation-name: spin;
+  }
+  /* ...............................Inventory Start ...........................................*/
+  #SpareManager {
+    overflow: auto;
+  }
+  #SpareManager > h2 {
+    font-size: 3.6vw;
+  }
+  .bg-custom {
+    background-color: #000000;
+  }
+  .tableBoder tr {
+    border-bottom: 1.2px solid rgb(48, 48, 48);
+  }
+  
+  .car-detail.wheel2 {
+    left: 82px;
+  }
+  @media (max-width: 600px) {
+    #admintop {
+      flex-direction: column;
+    }
+  
+    #administrator {
+      width: 100%;
+    }
+  
+    #admintop img {
+      width: 80vw;
+      height: 80vw;
+    }
+  
+    #admin-company {
+      min-width: 80%;
+      margin-top: 15px;
+      padding: 15px 15px;
+    }
+  
+    .admin-bottom button {
+      width: 80vw;
+    }
+  
+    .admin-bottom {
+      flex-direction: column;
+      align-items: center;
+    }
+    .loading-window {
+      transform: scale(1.5);
+    }
+    .serviceAdvisorButton {
+      width: 100%;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+    .serviceAdvisorButton button {
+      width: 75vw;
+      padding: 1vw;
+    }
+    .dashboard-profile-bottom {
+      width: 100%;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+    .dashboard-profile-bottom button {
+      width: 80vw;
+    }
+  
+    /* #addSpareInputs section{
+      flex-direction: column;
+    } */
+  
+    #addSpareInputs form {
+      flex-direction: column;
+    }
+  }
+  
+  #addSpareInputs {
+    display: none;
+  }
+  
+  .closeAddPartToDB {
+    display: none;
+  }
+  .jobcard2 {
+    padding: 0.2vw;
+  }
+  .jobcard2M {
+    margin-left: 2vw !important;
+  }
+  .jobcard2 label {
+    font-size: 1vw;
+  }
+  

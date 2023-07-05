@@ -17,3 +17,21 @@ li_items.forEach((li_item)=>{
     hamburger.addEventListener("click", () => {
 	hamburger.closest(".wrapper").classList.toggle("hover_collapse");
 })
+
+document.addEventListener('DOMContentLoaded', function() {
+	var datetimeContainer = document.getElementById('datetime')
+		setInterval(updateDateTime, 1000);
+		function updateDateTime() {
+		  var date = new Date();
+		  var options = {
+			year: 'numeric',
+			month: 'long',
+			day: 'numeric',
+			hour: 'numeric',
+			minute: 'numeric',
+			second:'numeric'
+		  };
+		  var formattedDateTime = date.toLocaleString(undefined, options);
+		  datetimeContainer.textContent = formattedDateTime;
+		}
+	  });
